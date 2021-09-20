@@ -1,0 +1,89 @@
+{
+  "name": "openresumeapp",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/main.js",
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
+    "@fontsource/inter": "^4.5.0",
+    "@reduxjs/toolkit": "^1.6.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.6",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-redux": "^7.1.18",
+    "@types/react-transition-group": "^4.4.3",
+    "custom-electron-titlebar": "^3.2.7",
+    "electron": "^14.0.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-store": "^8.0.1",
+    "focus-visible": "^5.2.0",
+    "formik": "^2.2.9",
+    "framer-motion": "4",
+    "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-month-picker": "^2.2.1",
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.2",
+    "typescript": "^4.4.2",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.0.1",
+    "webfontloader": "^1.6.28",
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron-dev": "electron .",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.19",
+    "@types/react-router-dom": "^5.1.9",
+    "@types/uuid": "^8.3.1",
+    "@types/webfontloader": "^1.6.33",
+    "electron-devtools-installer": "^3.2.0",
+    "tsconfig.json": "^1.0.10"
+  }
+}
