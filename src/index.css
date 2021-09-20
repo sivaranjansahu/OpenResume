@@ -1,13 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;600;700&display=swap");
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: "inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* //Animations */
+
+.listitem-enter {
+  opacity: 0;
+}
+.listitem-enter-active {
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+}
+.listitem-exit {
+  opacity: 1;
+}
+.listitem-exit-active {
+  opacity: 0;
+  transition: opacity 100ms ease-in;
+}
+
+.selected li {
+  border-right-color: #4299e1;
 }
