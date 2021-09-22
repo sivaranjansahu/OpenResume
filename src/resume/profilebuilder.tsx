@@ -113,7 +113,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
       // gridTemplateColumns="1fr 1fr"
       h="100vh"
     >
-      <Flex p="4rem" gridGap={24} minW="1200px">
+      <Flex p="4rem" gridGap={24} minW="1600px">
         <Box width="700px" mx="auto">
           <Heading size="md" mb={8} color="gray.500">
             Profile editor
@@ -168,7 +168,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Accordion>
         </Box>
         {showPreview && (
-          <Container height="100%">
+          <Container maxW="container.xl" height="100%">
             <Heading size="md" mb={8} color="gray.500">
               Resume preview
             </Heading>
