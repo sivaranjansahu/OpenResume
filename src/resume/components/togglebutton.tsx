@@ -7,7 +7,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
   title,
 }) => {
   return (
-    <Heading as="h2">
+    <Heading as="h4">
       <Box
         flex="1"
         px={8}
@@ -16,7 +16,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
         backgroundColor="#FAFAFA"
         position="relative"
       >
-        {isExpanded && <Heading size="md">{title}</Heading>}
+        {isExpanded && <Heading size="sm">{title}</Heading>}
         <AccordionButton
           position="absolute"
           padding={0}

@@ -3,6 +3,7 @@ import resumereducers from "../resume/modules/resumereducers";
 import skillsReducer from "../resume/modules/skills/reducers";
 import workHistoryReducer from "../resume/modules/workhistory/reducers";
 import educationReducer from "../resume/modules/education/reducers";
+import basicInfoReducer from "../resume/modules/basicinfo/reducers";
 // ...
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
     skills: skillsReducer,
     workHistory: workHistoryReducer,
     education: educationReducer,
+    baseicInfo: basicInfoReducer,
     meta: resumereducers,
   },
 });

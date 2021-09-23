@@ -30,6 +30,16 @@ code {
   transition: opacity 100ms ease-in;
 }
 
+.leftnav li {
+  border-right-color: transparent;
+  border-right-width: 2px;
+  height: 70px;
+}
+.leftnav li:hover {
+  background-color: #f0f0f0;
+}
 .selected li {
   border-right-color: #4299e1;
+  border-right-width: 2px;
+  color: #4299e1;
 }

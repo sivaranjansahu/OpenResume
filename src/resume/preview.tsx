@@ -3,28 +3,30 @@ import { Select } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/layout";
 import { IProfile, ISkill } from "./interfaces/forminterfaces";
 import Template1 from "./templates/template1";
-import Template from "./templates/templateselector"
+import Template from "./templates/templateselector";
 import { useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import MyDocument from "./pdf";
 import { useAppSelector } from "../store/reduxhooks";
+import DownloadType from "./components/filetypeswitch";
 
 interface temp {
   resumeData: IProfile;
 }
 export default function Preview({ resumeData }: temp) {
-  const [templateId,setTemplateId] = useState<string>("temp1");
+  const [templateId, setTemplateId] = useState<string>("temp1");
   const state = useAppSelector((state) => state);
   return (
     <Box>
-      <InputGroup>
+      <DownloadType />
+      {/* <InputGroup>
         <Select placeholder="Select option" onChange={(e)=>setTemplateId(e.target.value)}>
           <option value="temp1">Option 1</option>
           <option value="temp2">Option 2</option>
           <option value="temp3">Option 3</option>
         </Select>
-      </InputGroup>
-      <MyDocument state={state}/>
+      </InputGroup> */}
+      <MyDocument state={state} />
       {/* <TransformWrapper
         initialScale={0.6}
         initialPositionX={0}
@@ -47,7 +49,6 @@ export default function Preview({ resumeData }: temp) {
           </>
         )}
       </TransformWrapper> */}
-
     </Box>
   );
 }

@@ -113,8 +113,8 @@ const ProfileBuilder = ({ allProfiles }: any) => {
       // gridTemplateColumns="1fr 1fr"
       h="100vh"
     >
-      <Flex p="4rem" gridGap={24} minW="1600px">
-        <Box width="700px" mx="auto">
+      <Flex py={6} gridGap={24} minW="1600px">
+        <Box width="1000px" mx="auto">
           <Heading size="md" mb={8} color="gray.500">
             Profile editor
           </Heading>

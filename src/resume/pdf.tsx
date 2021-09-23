@@ -16,6 +16,7 @@ import InterMedium from "../fonts/Inter/Inter-Medium.ttf";
 import InterRegular from "../fonts/Inter/Inter-Regular.ttf";
 import { useAppSelector } from "../store/reduxhooks";
 import { ISkill } from "./interfaces/forminterfaces";
+import SkillsView from "./modules/skills/resumeview";
 // const source ='https://fonts.googleapis.com/css2?family=Pacifico&display=swap';
 Font.register({
   family: "VisbyCF",
@@ -180,7 +181,7 @@ const LI = ({ children, ...props }: any) => {
 // Create Document Component
 const MyDocument = (props: any) => {
   const { state } = props;
-  const {skills,workHistory,education} = state;
+  const { skills, workHistory, education } = state;
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -195,23 +196,20 @@ const MyDocument = (props: any) => {
               <Text style={{ ...styles.h3, ...styles.blockHeader }}>
                 Skills
               </Text>
-              <View style={{ flexDirection: "row" }}>
+              <SkillsView skills={state.skills.list} />
+              {/* <View style={{ flexDirection: "row" }}>
                 <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
                   <Text style={{ ...styles.sm, fontWeight: "bold" }}>
                     Proficient
                   </Text>
                   <Text style={{ width: "30%" }}>
-                  {
-                      skills && skills.list.filter((d:ISkill)=>d.skillLevel==3).map((skill:any,i:number)=>{
-                        return(
-                            
-                    <>{skill.skillName},</>
-                  
-                        )
-                      })
-                  }
+                    {skills &&
+                      skills.list
+                        .filter((d: ISkill) => d.skillLevel == 3)
+                        .map((skill: any, i: number) => {
+                          return <>{skill.skillName},</>;
+                        })}
                   </Text>
-                  
                 </View>
                 <View style={{ flexGrow: 1, marginRight: 10 }}>
                   <Text style={{ ...styles.sm, fontWeight: "bold" }}>
@@ -229,7 +227,7 @@ const MyDocument = (props: any) => {
                     JavaScript, React, JavaScript, React,JavaScript, React,
                   </Text>
                 </View>
-              </View>
+              </View> */}
             </View>
             {/* Workex */}
             <View style={styles.contentblock}>
@@ -420,7 +418,7 @@ const PDFView = (props: any) => {
   console.log(props);
   return (
     <>
-      <LazyDownloadPDFButton />
+      {/* <LazyDownloadPDFButton /> */}
       <PDFViewer width="100%" height="900px" showToolbar={true}>
         <MyDocument name="siva" state={props.state} />
       </PDFViewer>
