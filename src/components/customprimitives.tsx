@@ -13,6 +13,7 @@ import {
   Switch as ChakraSwitch,
   Textarea as ChakraTextarea,
   Tooltip,
+  Text,
 } from "@chakra-ui/react";
 import {
   Field,
@@ -145,7 +146,9 @@ function Input(props: any) {
       {({ field, form }: any) => {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
+            <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+              {label}
+            </FormLabel>
             <ChakraInput id={name} {...rest} {...field} size="sm" bg="white" />
             <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
           </FormControl>
@@ -156,17 +159,42 @@ function Input(props: any) {
 }
 
 function Textarea(props: any) {
-  const { label, name, ...rest } = props;
+  const { label, name, help, ...rest } = props;
+  //let previousLength = 0;
+  const [previousLength, setPreviousLength] = useState(0);
+
+  const handleInput = (event: any) => {
+    const bullet = "\u2022";
+    const newLength = event.target.value.length;
+    const characterCode = event.target.value.substr(-1).charCodeAt(0);
+
+    if (newLength > previousLength) {
+      if (characterCode === 10) {
+        event.target.value = `${event.target.value}${bullet} `;
+      } else if (newLength === 1) {
+        event.target.value = `${bullet} ${event.target.value}`;
+      }
+    }
+
+    setPreviousLength(newLength);
+    console.log(event.target.value);
+  };
   return (
     <Field name={name}>
       {({ field, form }: any) => {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
+            <Flex alignItems="baseline">
+              <FormLabel fontSize="sm" htmlFor={name} fontWeight="semibold">
+                {label}
+              </FormLabel>
+              {help && <Text fontSize="10px">{help}</Text>}
+            </Flex>
             <ChakraTextarea
               id={name}
               {...rest}
               {...field}
+              // onChange={handleInput}
               size="sm"
               bg="white"
             />
@@ -185,7 +213,9 @@ function RadioButtons(props: any) {
       {({ field, form }: FieldProps) => (
         <FormControl isInvalid={!!form.errors[name] && !!form.touched[name]}>
           <Flex alignItems="center">
-            <FormLabel htmlFor={name}>{label}</FormLabel>
+            <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+              {label}
+            </FormLabel>
             {help && help.length > 0 && (
               <Tooltip label={help} fontSize="md" placement="top">
                 <QuestionIcon boxSize={3} color="green.600" />
@@ -217,7 +247,9 @@ function Select(props: any) {
     <Field name={name}>
       {({ field, form }: FieldProps) => (
         <FormControl isInvalid={!!form.errors[name] && !!form.touched[name]}>
-          <FormLabel htmlFor={name}>{label}</FormLabel>
+          <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+            {label}
+          </FormLabel>
           <ChakraSelect {...field} id={name} {...props} size="sm" bg="white">
             {options.map((option: any, index: number) => (
               <option {...field} value={option.value} key={index}>

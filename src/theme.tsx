@@ -45,8 +45,21 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        fontWeight: "600",
+        //color: "red", -> this works
       },
+    },
+    Form: {
+      baseStyle: {
+        control: {
+          marginBottom: "2rem",
+        },
+        label: {
+          marginBottom: "10rem",
+        },
+      },
+    },
+    FormLabel: {
+      fontWeight: "bold",
     },
     AccordionIcon: {
       baseStyle: {

@@ -11,7 +11,7 @@ export default function BasicInfo() {
           <Switch
             colorScheme="blue"
             name="basicInfoIsActive"
-            checked={true}
+            isChecked={true}
             isDisabled={true}
             onChange={(e) => {
               //dispatch(setActive(e.target.checked));

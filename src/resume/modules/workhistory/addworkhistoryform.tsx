@@ -121,6 +121,7 @@ export default function WorkHistoryForm() {
                           type="text"
                           label="Description"
                           name="jobDescription"
+                          help="You can separate sentences with '|' character to create bullet points. "
                           required
                         />
 

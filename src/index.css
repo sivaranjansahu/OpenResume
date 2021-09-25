@@ -30,6 +30,51 @@ code {
   transition: opacity 100ms ease-in;
 }
 
+/* //Transitions */
+/* .page {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+} */
+
+.page-enter {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+}
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.leftnav li {
+  border-right-color: transparent;
+  border-right-width: 2px;
+  height: 70px;
+}
+.leftnav li:hover {
+  background-color: #f0f0f0;
+}
 .selected li {
   border-right-color: #4299e1;
+  border-right-width: 2px;
+  color: #4299e1;
+}
+
+.frame::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+iframe::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
 }
