@@ -1,13 +1,14 @@
 import { InputGroup } from "@chakra-ui/input";
-import { Select } from "@chakra-ui/react";
+import { Button, Select } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/layout";
 import { IProfile, ISkill } from "./interfaces/forminterfaces";
 import Template1 from "./templates/template1";
 import Template from "./templates/templateselector"
-import { useState } from "react";
+import React, { useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import MyDocument from "./pdf";
 import { useAppSelector } from "../store/reduxhooks";
+import generateTestDoc from "./generators/docx/docxgen";
 
 interface temp {
   resumeData: IProfile;
@@ -17,13 +18,7 @@ export default function Preview({ resumeData }: temp) {
   const state = useAppSelector((state) => state);
   return (
     <Box>
-      <InputGroup>
-        <Select placeholder="Select option" onChange={(e)=>setTemplateId(e.target.value)}>
-          <option value="temp1">Option 1</option>
-          <option value="temp2">Option 2</option>
-          <option value="temp3">Option 3</option>
-        </Select>
-      </InputGroup>
+      <Button onClick={generateTestDoc}> Doc</Button>
       <MyDocument state={state}/>
       {/* <TransformWrapper
         initialScale={0.6}

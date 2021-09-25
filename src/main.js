@@ -154,3 +154,12 @@ ipcMain.on(channels.DELETE_PROFILE, (event, arg) => {
   const { proppath, statevalue } = arg;
   store.delete("profiles." + proppath);
 });
+
+// ipcMain.on(channels.CREATE_DOCX, (event, arg) => {
+//   console.log(arg);
+//   const { proppath, statevalue } = arg;
+//   store.delete("profiles." + proppath);
+// });
+// const fs = require('fs');
+// try { fs.writeFileSync('myfile.txt', 'the text to write in the file', 'utf-8'); }
+// catch(e) { alert('Failed to save the file !'); }

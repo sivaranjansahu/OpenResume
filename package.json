@@ -22,6 +22,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-transition-group": "^4.4.3",
     "custom-electron-titlebar": "^3.2.7",
+    "docx": "^6.0.3",
     "electron": "^14.0.0",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-store": "^8.0.1",
