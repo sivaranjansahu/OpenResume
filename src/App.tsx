@@ -27,9 +27,6 @@ import LeftNav from "./components/leftnav";
 import Tracker from "./tracker/tracker";
 
 function App() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [placement, setPlacement] = useState<SlideDirection>("left");
-
   useEffect(() => {
     console.log("app refresh");
   }, []);
@@ -42,13 +39,7 @@ function App() {
     >
       <Router>
         <LeftNav />
-        <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay />
-          <DrawerContent sx={{ left: "100px" }}>
-            <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-            <DrawerBody></DrawerBody>
-          </DrawerContent>
-        </Drawer>
+
         <Switch>
           <Route path="/profiles" key={document.location.href}>
             <Dashboard key={document.location.href} />

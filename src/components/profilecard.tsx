@@ -1,6 +1,6 @@
 import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Box, Flex, LinkBox, LinkOverlay } from "@chakra-ui/layout";
-import { Text, useDisclosure, Icon } from "@chakra-ui/react";
+import { Text, useDisclosure, Icon, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiFileCopyLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "../components/modals/confirmdelete";
@@ -47,21 +47,41 @@ const ProfileCard = ({
         py={3}
         justifyContent="flex-end"
       >
-        <Icon
-          as={RiFileCopyLine}
-          color="blue.500"
-          cursor="pointer"
-          mr={2}
-          onClick={() => copyProfile(allProfiles, profileKey)}
-        />
-        <Icon
-          as={RiDeleteBinLine}
-          stroke="red.500"
-          fill="red"
-          cursor="pointer"
-          onClick={() => onOpen()}
-          //deleteProfile(profileKey)
-        />
+        <Tooltip
+          hasArrow
+          label="Copy to a new profile"
+          bg="gray.300"
+          color="gray.600"
+          placement="top"
+        >
+          <Box p={0} mr={2}>
+            <Icon
+              as={RiFileCopyLine}
+              color="blue.500"
+              cursor="pointer"
+              onClick={() => copyProfile(allProfiles, profileKey)}
+            />
+          </Box>
+        </Tooltip>
+        <Tooltip
+          hasArrow
+          label="Delete profile"
+          bg="gray.300"
+          color="gray.600"
+          placement="top"
+        >
+          <Box p={0}>
+            <Icon
+              as={RiDeleteBinLine}
+              //stroke="red.500"
+
+              cursor="pointer"
+              onClick={() => onOpen()}
+              _hover={{ fill: "red" }}
+              //deleteProfile(profileKey)
+            />
+          </Box>
+        </Tooltip>
       </Flex>
     </Flex>
   );

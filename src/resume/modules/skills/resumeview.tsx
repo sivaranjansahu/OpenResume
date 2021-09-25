@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { ISkill } from "../../interfaces/forminterfaces";
 type propsType = {
   skills: ISkill[];
+  active?: boolean;
+  styles?: any;
 };
 type maptype = {
   Intermediate: ISkill[];
@@ -11,6 +13,7 @@ type maptype = {
 };
 
 function SkillsView(props: propsType) {
+  const { styles, active } = props;
   const [skillsMap, setSkillsMap] = useState<maptype>({
     Intermediate: [],
     Expert: [],
@@ -35,38 +38,46 @@ function SkillsView(props: propsType) {
     });
     setSkillsMap(map);
   }, [props.skills]);
+
+  if (!active) {
+    return null;
+  }
+
   return (
-    <View style={{ flexDirection: "row" }}>
-      {skillsMap?.Expert.length > 0 && (
-        <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-          <Text style={{ fontWeight: "bold" }}>Expert</Text>
-          <Text style={{ width: "30%" }}>
-            {skillsMap?.Expert.map((skill: ISkill, index: number) => {
-              return <Text>{skill.skillName},</Text>;
-            })}
-          </Text>
-        </View>
-      )}
-      {skillsMap?.Intermediate.length > 0 && (
-        <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-          <Text style={{ fontWeight: "bold" }}>Intermediate</Text>
-          <Text style={{ width: "30%" }}>
-            {skillsMap?.Intermediate.map((skill: ISkill, index: number) => {
-              return <Text>{skill.skillName},</Text>;
-            })}
-          </Text>
-        </View>
-      )}
-      {skillsMap?.Beginner.length > 0 && (
-        <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-          <Text style={{ fontWeight: "bold" }}>Beginner</Text>
-          <Text style={{ width: "30%" }}>
-            {skillsMap?.Beginner.map((skill: ISkill, index: number) => {
-              return <Text>{skill.skillName},</Text>;
-            })}
-          </Text>
-        </View>
-      )}
+    <View style={styles.contentblock}>
+      <Text style={{ ...styles.h3, ...styles.blockHeader }}>Skills</Text>
+      <View style={{ flexDirection: "row" }}>
+        {skillsMap?.Expert.length > 0 && (
+          <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
+            <Text style={{ fontWeight: "bold" }}>Expert</Text>
+            <Text style={{ width: "30%" }}>
+              {skillsMap?.Expert.map((skill: ISkill, index: number) => {
+                return <Text>{skill.skillName},</Text>;
+              })}
+            </Text>
+          </View>
+        )}
+        {skillsMap?.Intermediate.length > 0 && (
+          <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
+            <Text style={{ fontWeight: "bold" }}>Intermediate</Text>
+            <Text style={{ width: "30%" }}>
+              {skillsMap?.Intermediate.map((skill: ISkill, index: number) => {
+                return <Text>{skill.skillName},</Text>;
+              })}
+            </Text>
+          </View>
+        )}
+        {skillsMap?.Beginner.length > 0 && (
+          <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
+            <Text style={{ fontWeight: "bold" }}>Beginner</Text>
+            <Text style={{ width: "30%" }}>
+              {skillsMap?.Beginner.map((skill: ISkill, index: number) => {
+                return <Text>{skill.skillName},</Text>;
+              })}
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 }

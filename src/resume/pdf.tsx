@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   pdf,
   Page,
@@ -17,6 +17,8 @@ import InterRegular from "../fonts/Inter/Inter-Regular.ttf";
 import { useAppSelector } from "../store/reduxhooks";
 import { ISkill } from "./interfaces/forminterfaces";
 import SkillsView from "./modules/skills/resumeview";
+import WorkHistoryView from "./modules/workhistory/resumeview";
+import BasicInfoView, { Contactview } from "./modules/basicinfo/resumeview";
 // const source ='https://fonts.googleapis.com/css2?family=Pacifico&display=swap';
 Font.register({
   family: "VisbyCF",
@@ -27,9 +29,9 @@ Font.register({
   ],
 });
 const colors = {
-  accent: "#4299E1",
+  accent: "#3182CE",
   body: "#111",
-  heading: "#444",
+  heading: "#3182CE",
 };
 
 // Create styles
@@ -64,7 +66,6 @@ const styles = StyleSheet.create({
   h1: {
     fontSize: 18,
     fontWeight: 500,
-    color: colors.heading,
     // fontFamily: 'Pacifico'
   },
   h2: {
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     borderBottom: "0.2px solid #888",
     paddingBottom: 4,
     marginBottom: 8,
+    color: colors.heading,
     // width: "100%",
   },
   subBlockHeader: {
@@ -133,21 +135,6 @@ async function getProps() {
   };
 }
 
-const LazyDownloadPDFButton = () => (
-  <button
-    onClick={async () => {
-      const props = await getProps();
-      const doc = <MyDocument {...props} />;
-      const asPdf = pdf(); // {} is important, throws without an argument
-      asPdf.updateContainer(doc);
-      const blob = await asPdf.toBlob();
-      saveAs(blob, "document.pdf");
-    }}
-  >
-    Download PDF
-  </button>
-);
-
 const Bullet = () => {
   return (
     <View
@@ -180,157 +167,47 @@ const LI = ({ children, ...props }: any) => {
 
 // Create Document Component
 const MyDocument = (props: any) => {
-  const { state } = props;
-  const { skills, workHistory, education } = state;
+  const { state, accentColor } = props;
+  const { skills, workHistory, education, basicInfo } = state;
+  styles.blockHeader.color = accentColor;
+  // useEffect(() => {
+  //   styles.blockHeader.color = accentColor;
+  //   console.log("selected color", accentColor);
+  // }, [accentColor]);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <View style={styles.main}>
-            <View style={styles.contentblock}>
-              <Text style={styles.h1}>{state.meta.profileName}</Text>
+            <BasicInfoView info={state.basicInfo.info} styles={styles} />
+            {/* <View style={styles.contentblock}>
+              <Text style={styles.h2}>{state.meta.profileName}</Text>
               <Text style={styles.h4}>Senior Designer, Microsoft</Text>
-            </View>
+            </View> */}
             {/* Skills */}
-            <View style={styles.contentblock}>
-              <Text style={{ ...styles.h3, ...styles.blockHeader }}>
-                Skills
-              </Text>
-              <SkillsView skills={state.skills.list} />
-              {/* <View style={{ flexDirection: "row" }}>
-                <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-                  <Text style={{ ...styles.sm, fontWeight: "bold" }}>
-                    Proficient
-                  </Text>
-                  <Text style={{ width: "30%" }}>
-                    {skills &&
-                      skills.list
-                        .filter((d: ISkill) => d.skillLevel == 3)
-                        .map((skill: any, i: number) => {
-                          return <>{skill.skillName},</>;
-                        })}
-                  </Text>
-                </View>
-                <View style={{ flexGrow: 1, marginRight: 10 }}>
-                  <Text style={{ ...styles.sm, fontWeight: "bold" }}>
-                    Intermediate
-                  </Text>
-                  <Text style={{ width: "30%" }}>
-                    JavaScript, React, JavaScript, React,JavaScript, React,
-                  </Text>
-                </View>
-                <View style={{ flexGrow: 1 }}>
-                  <Text style={{ ...styles.sm, fontWeight: "bold" }}>
-                    Beginner
-                  </Text>
-                  <Text style={{ width: "30%" }}>
-                    JavaScript, React, JavaScript, React,JavaScript, React,
-                  </Text>
-                </View>
-              </View> */}
-            </View>
+
+            <SkillsView
+              skills={state.skills.list}
+              active={state.skills.active}
+              styles={styles}
+            />
             {/* Workex */}
-            <View style={styles.contentblock}>
-              <Text style={{ ...styles.h3, ...styles.blockHeader }}>
-                Relevant Experience
-              </Text>
-              <View style={styles.subsection}>
-                <View style={styles.expHeader}>
-                  <View>
-                    <Text style={styles.subBlockHeader}>
-                      Software Engineer{" "}
-                      <Text style={{ color: "red" }}>IBM</Text>
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={styles.sm}>Jun 2004 to Dec 2007</Text>
-                  </View>
-                </View>
 
-                <UL style={{}}>
-                  <LI>
-                    <Text>
-                      Designed and developed a multilayered solution to generate
-                      synthetic medical pill images from seed images. ThreeJS,
-                      NodeJS, Blender, React
-                    </Text>
-                  </LI>
-                  <LI>
-                    <Text>
-                      Designed and developed a mobile app (React Native) to
-                      identify prescription pills from images, leveraging the CV
-                      service built by the team. The app was shown to Microsoft
-                      CEO Satya Nadella and Bill Gates as part of an MSR
-                      presentation.
-                    </Text>
-                  </LI>
-                  <LI>
-                    <Text>
-                      The app was shown to Microsoft CEO Satya Nadella and Bill
-                      Gates as part of an MSR presentation.
-                    </Text>
-                  </LI>
-                </UL>
-              </View>
-              <View style={styles.subsection}>
-                <View style={styles.expHeader}>
-                  <View>
-                    <Text style={styles.subBlockHeader}>
-                      Senior UX Consultant{" "}
-                      <Text style={{ color: "red" }}>Microsoft</Text>
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={styles.sm}>Jun 2004 to Dec 2007</Text>
-                  </View>
-                </View>
-
-                <UL style={{}}>
-                  <LI>
-                    <Text>
-                      Designed and developed a mobile app (React Native) to
-                      identify prescription pills from images, leveraging the CV
-                      service built by the team.
-                    </Text>
-                  </LI>
-                  <LI>
-                    <Text>
-                      The app was shown to Microsoft CEO Satya Nadella and Bill
-                      Gates as part of an MSR presentation.
-                    </Text>
-                  </LI>
-                </UL>
-              </View>
-              <View style={styles.subsection}>
-                <View style={styles.expHeader}>
-                  <View>
-                    <Text style={{ ...styles.subBlockHeader }}>
-                      Senior Designer
-                      <Text style={{ color: "red" }}> Microsoft</Text>
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={styles.sm}>Jun 2004 to Dec 2007</Text>
-                  </View>
-                </View>
-
-                <UL style={{}}>
-                  <LI>
-                    <Text>
-                      Designed and developed a mobile app (React Native) to
-                      identify prescription pills from images, leveraging the CV
-                      service built by the team.
-                    </Text>
-                  </LI>
-                  <LI>
-                    <Text>
-                      The app was shown to Microsoft CEO Satya Nadella and Bill
-                      Gates as part of an MSR presentation.
-                    </Text>
-                  </LI>
-                </UL>
-              </View>
-            </View>
+            <WorkHistoryView
+              history={state.workHistory.list}
+              active={state.workHistory.active}
+              styles={{
+                ...styles,
+                jobTitle: {
+                  fontWeight: "semibold",
+                },
+                companyName: {
+                  color: colors.accent,
+                  fontSize: 8,
+                  fontWeight: "normal",
+                },
+              }}
+            />
 
             {/* Education */}
             <View style={styles.contentblock}>
@@ -341,7 +218,7 @@ const MyDocument = (props: any) => {
                 <View style={styles.expHeader}>
                   <View>
                     <Text style={styles.subBlockHeader}>
-                      Masters <Text style={{ color: "red" }}>CalTech</Text>
+                      Masters <Text>CalTech</Text>
                     </Text>
                   </View>
                   <View>
@@ -363,8 +240,7 @@ const MyDocument = (props: any) => {
                 <View style={styles.expHeader}>
                   <View>
                     <Text style={styles.subBlockHeader}>
-                      Bachelor of Engineering{" "}
-                      <Text style={{ color: "red" }}>IIT</Text>
+                      Bachelor of Engineering <Text>IIT</Text>
                     </Text>
                   </View>
                   <View>
@@ -384,12 +260,13 @@ const MyDocument = (props: any) => {
           </View>
         </View>
         <View style={styles.aside}>
-          <View style={styles.contentblock}>
+          {/* <Contactview info={state.basicInfo.info} styles={styles} /> */}
+          {/* <View style={styles.contentblock}>
             <Text style={{ ...styles.h4, ...styles.blockHeader }}>Contact</Text>
             <Text style={styles.sm}>sivaranjan.sahu@gmail.com</Text>
             <Text style={styles.sm}>Issaquah,WA</Text>
             <Text style={styles.sm}>+1 425-588-6161</Text>
-          </View>
+          </View> */}
 
           <View style={styles.contentblock}>
             <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
@@ -426,4 +303,4 @@ const PDFView = (props: any) => {
   );
 };
 
-export default PDFView;
+export default MyDocument;

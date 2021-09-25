@@ -40,6 +40,7 @@ import { useParams } from "react-router-dom";
 import { channels } from "../shared/constants";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import { setInitialEducation } from "./modules/education/reducers";
+import { setBasicInfo } from "./modules/basicinfo/reducers";
 const electron = window.require("electron");
 
 export const WorkExContext = React.createContext<
@@ -90,6 +91,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setInitialWorkHistory(allProfiles[profileId].workHistory));
     dispatch(setInitialEducation(allProfiles[profileId].education));
     dispatch(setInitialMeta(allProfiles[profileId].meta));
+    dispatch(setBasicInfo(allProfiles[profileId].basicInfo));
   };
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
@@ -115,7 +117,13 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     >
       <Flex py={6} gridGap={24} minW="1600px">
         <Box width="1000px" mx="auto">
-          <Heading size="md" mb={8} color="gray.500">
+          <Heading
+            size="sm"
+            mb="4"
+            pb={2}
+            borderBottomColor="gray.200"
+            borderBottomWidth={1}
+          >
             Profile editor
           </Heading>
           <Flex as="header" justifyContent="space-between">
@@ -169,7 +177,13 @@ const ProfileBuilder = ({ allProfiles }: any) => {
         </Box>
         {showPreview && (
           <Container maxW="container.xl" height="100%">
-            <Heading size="md" mb={8} color="gray.500">
+            <Heading
+              size="sm"
+              mb="4"
+              pb={2}
+              borderBottomColor="gray.200"
+              borderBottomWidth={1}
+            >
               Resume preview
             </Heading>
             <Preview resumeData={allState} />

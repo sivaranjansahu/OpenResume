@@ -11,7 +11,7 @@ const store = configureStore({
     skills: skillsReducer,
     workHistory: workHistoryReducer,
     education: educationReducer,
-    baseicInfo: basicInfoReducer,
+    basicInfo: basicInfoReducer,
     meta: resumereducers,
   },
 });

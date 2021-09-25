@@ -1,12 +1,12 @@
 import { VStack, Button, Box, Grid } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import FormikControl from "../../../components/customprimitives";
 import { BasicInfoContext, SkillsContext } from "../../profilebuilder";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
 import { setBasicInfo } from "./reducers";
-import { useAppDispatch } from "../../../store/reduxhooks";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 
 const validationSchema = Yup.object({
   fullName: Yup.string()
@@ -26,15 +26,27 @@ const validationSchema = Yup.object({
 
 export default function BasicInfoBlock() {
   //const { basicInfo, updateBasicInfo } = useContext(BasicInfoContext);
+  const basicInfo = useAppSelector((state) => state.basicInfo || {});
+  //const [currentInfo,setCurrentInfo]=setState();
+
+  console.log("basic info now", basicInfo);
   const dispatch = useAppDispatch();
   return (
     <Box px={8} pb={8}>
       <Formik
-        initialValues={{}}
+        enableReinitialize={true}
+        initialValues={{
+          fullName: basicInfo.info.fullName,
+          about: basicInfo.info.about,
+          address: basicInfo.info.address || "",
+          email: basicInfo.info.email || "",
+          linkedIn: basicInfo.info.linkedIn || "",
+          website: basicInfo.info.website || "",
+          phoneno: basicInfo.info.phoneno || "",
+        }}
         onSubmit={(values: any) => {
           //updateBasicInfo && updateBasicInfo({ ...values, id: uuidv4() });
-          dispatch(setBasicInfo({ ...values }));
-          console.log("values", values);
+          dispatch(setBasicInfo({ info: values }));
         }}
         validationSchema={validationSchema}
       >
@@ -81,7 +93,7 @@ export default function BasicInfoBlock() {
                   control="input"
                   type="text"
                   label="LinkedIn Url"
-                  name="linkedinUrl"
+                  name="linkedIn"
                   required
                 />
                 <FormikControl

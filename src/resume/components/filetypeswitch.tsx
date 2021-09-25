@@ -1,6 +1,6 @@
 import { Box, HStack, useRadio, useRadioGroup } from "@chakra-ui/react";
 import React from "react";
-
+const options = ["Pdf", "docx"];
 // 1. Create a component that consumes the `useRadio` hook
 function RadioCard(props: any) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -14,7 +14,8 @@ function RadioCard(props: any) {
       <Box
         {...checkbox}
         cursor="pointer"
-        borderRadius="md"
+        borderLeftRadius={props.index === 0 ? "md" : "none"}
+        borderRightRadius={props.index === options.length - 1 ? "md" : "none"}
         boxShadow="md"
         _checked={{
           bg: "blue.600",
@@ -23,6 +24,7 @@ function RadioCard(props: any) {
         _focus={{
           boxShadow: "outline",
         }}
+        m={0}
         px={5}
         py={2}
       >
@@ -34,8 +36,6 @@ function RadioCard(props: any) {
 
 // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
 function DownloadType() {
-  const options = ["Pdf", "docx"];
-
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
     defaultValue: "react",
@@ -45,11 +45,16 @@ function DownloadType() {
   const group = getRootProps();
 
   return (
-    <HStack {...group} mb={3}>
-      {options.map((value) => {
+    <HStack {...group} mb={3} gridGap={0}>
+      {options.map((value, index) => {
         const radio = getRadioProps({ value });
         return (
-          <RadioCard key={value} {...radio}>
+          <RadioCard
+            key={value}
+            {...radio}
+            index={index}
+            sx={{ marginInlineStart: 0 }}
+          >
             {value}
           </RadioCard>
         );
