@@ -3,7 +3,7 @@ export interface IBasicInfo {
   about: string;
   email: string;
   address: string;
-  phoneNumber: string;
+  phoneno: string;
   linkedIn: string;
   website: string;
 }
@@ -72,5 +72,9 @@ export interface IProfile {
   education: {
     active: boolean;
     list: IEducation[];
+  };
+  basicInfo: {
+    info: IBasicInfo;
+    active: boolean;
   };
 }
