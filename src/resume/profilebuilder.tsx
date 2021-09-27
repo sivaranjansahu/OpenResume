@@ -1,46 +1,33 @@
-import React, { useEffect } from "react";
+import { CheckIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   Box,
   Button,
-  Checkbox,
   Container,
   Flex,
   Grid,
   Heading,
-  HStack,
   Input,
-  Link,
-  List,
-  ListIcon,
-  ListItem,
-  Switch,
-  Textarea,
+  Textarea
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { setInitialSkills } from "../resume/modules/skills/reducers";
+import { channels } from "../shared/constants";
+import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
 import {
   IBasicInfo,
-  IProfile,
-  ISkill,
-  IWorkHistory,
+  IProfile
 } from "./interfaces/forminterfaces";
-import AccordionUnit from "./components/accordionunit";
-import Skills from "./modules/skills/skills";
-import Education from "./modules/education/education";
 import BasicInfo from "./modules/basicinfo/basicinfo";
+import { setBasicInfo } from "./modules/basicinfo/reducers";
+import Education from "./modules/education/education";
+import { setInitialEducation } from "./modules/education/reducers";
+import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
+import Skills from "./modules/skills/skills";
+import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
-import FormikControl from "../components/customprimitives";
-import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
-import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
-import { CheckIcon } from "@chakra-ui/icons";
-import { setInitialSkills } from "../resume/modules/skills/reducers";
-import { useParams } from "react-router-dom";
-import { channels } from "../shared/constants";
-import { setInitialWorkHistory } from "./modules/workhistory/reducers";
-import { setInitialEducation } from "./modules/education/reducers";
-import { setBasicInfo } from "./modules/basicinfo/reducers";
 const electron = window.require("electron");
 
 export const WorkExContext = React.createContext<
@@ -147,7 +134,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
               leftIcon={<CheckIcon />}
               disabled={
                 !allState.meta.profileName ||
-                allState.meta.profileName.length == 0
+                allState.meta.profileName.length === 0
               }
             >
               Save

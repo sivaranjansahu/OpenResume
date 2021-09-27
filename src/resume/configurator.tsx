@@ -20,6 +20,7 @@ import DownloadType from "./components/filetypeswitch";
 import { IProfile } from "./interfaces/forminterfaces";
 import ColorPicker from "./preview/components/colorpicker";
 import LayoutPicker from "./preview/components/layoutpicker";
+import FontPicker from './preview/components/fontpicker';
 
 type Proptype = {
   isOpen: boolean;
@@ -62,40 +63,40 @@ function Configurator(props: Proptype) {
   );
 }
 
-function FontPicker({ setSelectedFont }: any) {
-  const fonts = ["opensans", "roboto", "inter", "quicksand", "koh"];
-  const [fontIndex, setFontIndex] = useState(0);
-  function updateFont(font: string, index: number) {
-    setSelectedFont(font);
-    setFontIndex(index);
-  }
-  return (
-    <Accordion defaultIndex={[0]} allowMultiple>
-      <AccordionItem>
-        <h2>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Choose font
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-        </h2>
-        <AccordionPanel pb={4}>
-          {fonts.map((font, index) => {
-            return (
-              <Button
-                key={index}
-                onClick={() => updateFont(font, index)}
-                colorScheme={fontIndex === index ? "blue" : "gray"}
-              >
-                {font}
-              </Button>
-            );
-          })}
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
-  );
-}
+// function FontPicker({ setSelectedFont }: any) {
+//   const fonts = ["opensans", "roboto", "inter", "quicksand", "koh"];
+//   const [fontIndex, setFontIndex] = useState(0);
+//   function updateFont(font: string, index: number) {
+//     setSelectedFont(font);
+//     setFontIndex(index);
+//   }
+//   return (
+//     <Accordion defaultIndex={[0]} allowMultiple>
+//       <AccordionItem>
+//         <h2>
+//           <AccordionButton>
+//             <Box flex="1" textAlign="left">
+//               Choose font
+//             </Box>
+//             <AccordionIcon />
+//           </AccordionButton>
+//         </h2>
+//         <AccordionPanel pb={4}>
+//           {fonts.map((font, index) => {
+//             return (
+//               <Button
+//                 key={index}
+//                 onClick={() => updateFont(font, index)}
+//                 colorScheme={fontIndex === index ? "blue" : "gray"}
+//               >
+//                 {font}
+//               </Button>
+//             );
+//           })}
+//         </AccordionPanel>
+//       </AccordionItem>
+//     </Accordion>
+//   );
+// }
 
 export default Configurator;
