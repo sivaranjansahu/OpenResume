@@ -1,10 +1,13 @@
 import { IWorkHistory } from "../../interfaces/forminterfaces";
 import { View, Text } from "@react-pdf/renderer";
-import { LI, UL } from "../preview/components";
+import { LI, UL } from "../../preview/components/list";
+
 
 type propsType = {
-  history: IWorkHistory[];
-  active?: boolean;
+  state:{
+    list:IWorkHistory[];
+    active?: boolean;
+  } ,
   styles?: any;
 };
 
@@ -18,8 +21,8 @@ export type stylesType = {
 };
 
 function ResumeView(props: propsType) {
-  const { history, styles = {}, active } = props;
-  if (!active) {
+  const { state, styles = {} } = props;
+  if (!state.active) {
     return null;
   }
 
@@ -29,7 +32,7 @@ function ResumeView(props: propsType) {
         Relevant Experience
       </Text>
       <View style={styles.sectionContainer}>
-        {history.map((exp, index) => {
+        {state.list.map((exp, index) => {
           const { jobDescription } = exp;
           const lines = jobDescription.split("|");
           return (
