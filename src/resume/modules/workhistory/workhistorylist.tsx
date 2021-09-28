@@ -22,27 +22,43 @@ const WorkHistoryUnit = ({ exp }: { exp: IWorkHistory }) => {
         <h2>
           <AccordionButton px={0}>
             <Box flex="1" textAlign="left">
-              {exp.jobTitle}
+            {exp.jobTitle}, {exp.employedIn}
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4} px={0}>
-          <h2>{exp.employedIn}</h2>
-          <span>
+          <Flex justifyContent="space-between" alignItems="center">
+          <Heading as="h6" fontWeight="bold" size="sm">{exp.employedIn}</Heading>
+          <Text fontSize="sm">
             From {exp.fromMonth + " " + exp.fromYear} to{" "}
             {exp.toMonth + " " + exp.toYear}
-          </span>
+          </Text>
+          </Flex>
+         <Box p={4}  >
+         <ul>
+            {
+              exp.jobDescription.split("|").map((line,index)=>{
+                return <li key={index}>{line}</li>
+              })
+            }
+          </ul>
+         </Box>
+          
         </AccordionPanel>
       </AccordionItem>
-      <Grid placeItems="center" height="40px" width="40px">
+      
         <DeleteIcon
-          color="red.500"
+          color="red.400"
           cursor="pointer"
-          m={1}
+          
+          boxSize={4}
+          mr={1}
+          mt={3}
+          ml={3}
           onClick={() => dispatch(removeWorkHistory(exp.id))}
         />
-      </Grid>
+      
     </Flex>
 
     // <Box as="article" borderBottomWidth={1} pb={4}>

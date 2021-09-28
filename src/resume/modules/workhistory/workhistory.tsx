@@ -24,7 +24,7 @@ export default function WorkHistory() {
         />
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Work Experience">
+        <AccordionUnit title="Work history">
           <Box>
             <Box mb={4}>
               <WorkHistoryList />

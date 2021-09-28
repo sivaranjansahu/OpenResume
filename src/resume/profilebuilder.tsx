@@ -8,9 +8,11 @@ import {
   Grid,
   Heading,
   Input,
-  Textarea
+  Textarea,
+  Text
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { setInitialSkills } from "../resume/modules/skills/reducers";
 import { channels } from "../shared/constants";
@@ -23,6 +25,8 @@ import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
 import Education from "./modules/education/education";
 import { setInitialEducation } from "./modules/education/reducers";
+import Links from "./modules/links/links";
+import { setInitialLinks } from "./modules/links/reducers";
 import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
 import Skills from "./modules/skills/skills";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
@@ -66,7 +70,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
   let { profileId } = useParams<ProfileParams>();
   const allState = useAppSelector<any>((state) => state);
-  const [showPreview, setShowPreview] = useState<boolean>(true);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
   console.log("allstate", allState);
   const handleClick = () => {
     setProfileData(allState, profileId);
@@ -79,6 +83,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setInitialEducation(allProfiles[profileId].education));
     dispatch(setInitialMeta(allProfiles[profileId].meta));
     dispatch(setBasicInfo(allProfiles[profileId].basicInfo));
+    dispatch(setInitialLinks(allProfiles[profileId].links));
   };
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
@@ -104,6 +109,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     >
       <Flex py={6} gridGap={24} minW="1600px">
         <Box width="1000px" mx="auto">
+          <Flex justifyContent="space-between" alignItems="center">
           <Heading
             size="sm"
             mb="4"
@@ -113,6 +119,9 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           >
             Profile editor
           </Heading>
+          <Button position="absolute" right={5} top={5} leftIcon={!showPreview ? <RiEyeLine/> : <RiEyeOffLine/>} onClick={()=>setShowPreview(!showPreview)}>{showPreview ? 'Hide ':'Show '} resume</Button>
+          </Flex>
+          
           <Flex as="header" justifyContent="space-between">
             <Input
               variant="flushed"
@@ -155,10 +164,15 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
           <Accordion allowToggle>
             <Box width="100%">
+              <Flex fontSize="sm">
+                <Text textAlign="right">Active?</Text>
+                <Text ml={8}>Sections</Text>
+              </Flex>
               <BasicInfo />
               <WorkHistory />
               <Skills />
               <Education />
+              <Links/>
             </Box>
           </Accordion>
         </Box>

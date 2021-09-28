@@ -59,6 +59,12 @@ export interface IResumeMeta {
   lastUpdated: string;
 }
 
+export interface ILink{
+  id:string;
+  title:string;
+  url:string;
+}
+
 export interface IProfile {
   meta: IResumeMeta;
   skills: {
@@ -75,6 +81,10 @@ export interface IProfile {
   };
   basicInfo: {
     info: IBasicInfo;
+    active: boolean;
+  };
+  links: {
+    list: ILink[];
     active: boolean;
   };
 }

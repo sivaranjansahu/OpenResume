@@ -58,8 +58,13 @@ function Dashboard() {
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  type createProfileProps={
+    proppath:string;
+    stateValue:IProfile
+  }
+
   const createProfile = (name: string) => {
-    const newProfile = {
+    const newProfile= {
       proppath: uuidv4(),
       statevalue: {
         basicInfo: {
@@ -83,6 +88,10 @@ function Dashboard() {
         meta: {
           profileName: name,
           profileNotes: "",
+        },
+        links: {
+          active: true,
+          list: [],
         },
       },
     };

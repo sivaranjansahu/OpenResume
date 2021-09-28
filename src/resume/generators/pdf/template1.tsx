@@ -8,6 +8,7 @@ import { IProfile } from "../../interfaces/forminterfaces";
 import BasicInfoView from "../../modules/basicinfo/resumeview";
 import SkillsView from "../../modules/skills/resumeview";
 import WorkHistoryView from "../../modules/workhistory/resumeview";
+import LinkView from "../../modules/links/resumeview"
 import styleGen from './basestyles';
 
 type propType={
@@ -30,7 +31,7 @@ export default function Template1(props:propType){
         <View style={styles.section}>
           <View style={styles.main}>
             <BasicInfoView info={state.basicInfo.info} styles={styles} />
-
+            
             {/* Skills */}
             <SkillsView 
             state={state.skills}
@@ -88,11 +89,13 @@ export default function Template1(props:propType){
         </View>
         {/* Right column */}
         <View style={styles.aside}>
-          <View style={styles.contentblock}>
+        <LinkView state={state.links}
+              styles={styles}/>
+          {/* <View style={styles.contentblock}>
             <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
             <Text style={styles.sm}>https://siva.studio</Text>
             <Text style={styles.sm}>https://cryptomash.io</Text>
-          </View>
+          </View> */}
           <View style={styles.contentblock}>
             <Text style={{ ...styles.h4, ...styles.blockHeader }}>
               Publications
