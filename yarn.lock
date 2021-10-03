@@ -1563,6 +1563,10 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
+"@electron/remote@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@electron/remote/-/remote-2.0.1.tgz#810cbc595a21f0f94641eb2d7e8264063a3f84de"
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.3.0"
   resolved "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.3.0.tgz"
@@ -1903,7 +1907,6 @@
 "@juggle/resize-observer@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
-  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -3788,7 +3791,6 @@ camelize@^1.0.0:
 can-use-dom@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
-  integrity sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=
 
 caniuse-api@^3.0.0:
   version "3.0.0"
@@ -4225,7 +4227,6 @@ core-js@^2.4.0:
 core-js@^3.0.1:
   version "3.18.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.18.0.tgz#9af3f4a6df9ba3428a3fb1b171f1503b3f40cc49"
-  integrity sha512-WJeQqq6jOYgVgg4NrXKL0KLQhi0CT4ZOCvFL+3CQ5o7I6J8HkT5wd53EadMfqTDp1so/MT1J+w2ujhWcCJtN7w==
 
 core-js@^3.6.5:
   version "3.9.0"
@@ -6430,6 +6431,10 @@ immer@^9.0.1:
   version "9.0.6"
   resolved "https://registry.npmjs.org/immer/-/immer-9.0.6.tgz"
 
+immutability-helper@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.1.1.tgz#2b86b2286ed3b1241c9e23b7b21e0444f52f77b7"
+
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/import-cwd/-/import-cwd-2.1.0.tgz"
@@ -7631,7 +7636,6 @@ lodash._reinterpolate@^3.0.0:
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -7661,7 +7665,6 @@ lodash.templatesettings@^4.0.0:
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -10569,7 +10572,6 @@ simple-swizzle@^0.2.2:
 simplebar-react@^2.3.5:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/simplebar-react/-/simplebar-react-2.3.5.tgz#9d85803d01585f8a4899d45e7e681aef744568c6"
-  integrity sha512-tzlU4C96awc6yRtxRF3hm91daQyEOHVpVpAaaGaWL6jL0uSqqTrXyYdTerjUqYxf6X4ev9tPKXecEBOaFWSC4Q==
   dependencies:
     prop-types "^15.6.1"
     simplebar "^5.3.5"
@@ -10577,7 +10579,6 @@ simplebar-react@^2.3.5:
 simplebar@^5.3.5:
   version "5.3.5"
   resolved "https://registry.yarnpkg.com/simplebar/-/simplebar-5.3.5.tgz#799d14cdc8bb8ed245789745b9f3741d05403944"
-  integrity sha512-mcTlXEiva8pSMdNEzeV3C1KyBHk7Sn2Pe46U1Uwo53dCuQqdJIK0bEJrIPs8W4/RqJquKIsC8Y1h7+aqOl8ccA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     can-use-dom "^0.1.0"

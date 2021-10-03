@@ -8,17 +8,16 @@ import {
   Grid,
   Heading,
   Input,
-  Textarea,
-  Text
+
+  Text, Textarea
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { setInitialSkills } from "../resume/modules/skills/reducers";
 import { channels } from "../shared/constants";
 import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
 import {
-  IBasicInfo,
   IProfile
 } from "./interfaces/forminterfaces";
 import BasicInfo from "./modules/basicinfo/basicinfo";
@@ -27,6 +26,8 @@ import Education from "./modules/education/education";
 import { setInitialEducation } from "./modules/education/reducers";
 import Links from "./modules/links/links";
 import { setInitialLinks } from "./modules/links/reducers";
+import Projects from "./modules/projects/projects";
+import { setInitialProjects } from "./modules/projects/reducers";
 import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
 import Skills from "./modules/skills/skills";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
@@ -34,25 +35,25 @@ import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
 const electron = window.require("electron");
 
-export const WorkExContext = React.createContext<
-  Partial<{
-    workExpList: any[];
-    updateWorkExp: Function;
-  }>
->({});
-export const SkillsContext = React.createContext<
-  Partial<{
-    skillsList: any[];
-    updateSkillsExp: Function;
-    removeSkill: Function;
-  }>
->({});
-export const BasicInfoContext = React.createContext<
-  Partial<{
-    basicInfo: IBasicInfo;
-    updateBasicInfo: Function;
-  }>
->({});
+// export const WorkExContext = React.createContext<
+//   Partial<{
+//     workExpList: any[];
+//     updateWorkExp: Function;
+//   }>
+// >({});
+// export const SkillsContext = React.createContext<
+//   Partial<{
+//     skillsList: any[];
+//     updateSkillsExp: Function;
+//     removeSkill: Function;
+//   }>
+// >({});
+// export const BasicInfoContext = React.createContext<
+//   Partial<{
+//     basicInfo: IBasicInfo;
+//     updateBasicInfo: Function;
+//   }>
+// >({});
 
 type ProfileParams = {
   profileId: string;
@@ -78,26 +79,29 @@ const ProfileBuilder = ({ allProfiles }: any) => {
 
   const updateStateWithProfile = (allProfiles: IProfile[], profileId: any) => {
     //console.log("profilebuilder", allProfiles, profileId);
-    dispatch(setInitialSkills(allProfiles[profileId].skills));
-    dispatch(setInitialWorkHistory(allProfiles[profileId].workHistory));
-    dispatch(setInitialEducation(allProfiles[profileId].education));
-    dispatch(setInitialMeta(allProfiles[profileId].meta));
-    dispatch(setBasicInfo(allProfiles[profileId].basicInfo));
-    dispatch(setInitialLinks(allProfiles[profileId].links));
+    const currentProfile = allProfiles[profileId];
+    if(!currentProfile){return;}
+    dispatch(setInitialSkills(currentProfile.skills));
+    dispatch(setInitialWorkHistory(currentProfile.workHistory));
+    dispatch(setInitialEducation(currentProfile.education));
+    dispatch(setInitialMeta(currentProfile.meta));
+    dispatch(setBasicInfo(currentProfile.basicInfo));
+    dispatch(setInitialLinks(currentProfile.links));
+    dispatch(setInitialProjects(currentProfile.projects));
   };
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
   //else create new profile
   useEffect(() => {
-    console.log("testing useeffect", profileId);
-    updateStateWithProfile(allProfiles, profileId);
+    console.log("testing useeffect", allProfiles);
+    allProfiles && profileId && updateStateWithProfile(allProfiles, profileId);
     // electron.ipcRenderer.on(channels.GET_ALL_PROFILES, (event, arg) => {
     //   // console.log("data", arg);
     //   // console.log(arg[profileId]);
     //   console.log("data", arg);
     //   updateStateWithProfile(arg[profileId]);
     // });
-  }, [profileId]);
+  }, [allProfiles,profileId]);
 
   return (
     <Grid
@@ -105,7 +109,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
       justifyContent="center"
       width="100%"
       // gridTemplateColumns="1fr 1fr"
-      h="100vh"
+      // h="100vh"
     >
       <Flex py={6} gridGap={24} minW="1600px">
         <Box width="1000px" mx="auto">
@@ -173,6 +177,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
               <Skills />
               <Education />
               <Links/>
+              <Projects/>
             </Box>
           </Accordion>
         </Box>

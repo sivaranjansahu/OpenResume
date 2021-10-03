@@ -11,6 +11,7 @@ const {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS,
 } = require("electron-devtools-installer");
+require('@electron/remote/main').initialize()
 
 const { channels } = require("./shared/constants");
 const Store = require("electron-store");
@@ -23,20 +24,21 @@ const path = require("path");
 app.whenReady().then(() => {
   installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
 });
+let win;
 function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1800,
     height: 900,
     frame: true,
     aspectRaio: 1.56,
     fullscreen: false,
     title: "ResPrep",
-    //titleBarStyle: "hidden",
+    titleBarStyle: "hidden",
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      // enableRemoteModule: true,
+      enableRemoteModule: true,
       // preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -163,3 +165,18 @@ ipcMain.on(channels.DELETE_PROFILE, (event, arg) => {
 // const fs = require('fs');
 // try { fs.writeFileSync('myfile.txt', 'the text to write in the file', 'utf-8'); }
 // catch(e) { alert('Failed to save the file !'); }
+
+
+ipcMain.on(channels.CLOSE_WINDOW,()=>{
+  win.close();
+})
+ipcMain.on(channels.MAXIMIZE_WINDOW,()=>{
+  win.maximize();
+})
+ipcMain.on(channels.MINIMIZE_WINDOW,()=>{
+  win.minimize();
+})
+
+ipcMain.on(channels.TOGGLE_MAXIMIZE,()=>{
+  win.isMaximized() ? win.unmaximize() : win.maximize();
+})

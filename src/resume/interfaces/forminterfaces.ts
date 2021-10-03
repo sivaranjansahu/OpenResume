@@ -65,6 +65,13 @@ export interface ILink{
   url:string;
 }
 
+export interface IProject{
+  id:string;
+  title:string;
+  about:string;
+  year:string;
+}
+
 export interface IProfile {
   meta: IResumeMeta;
   skills: {
@@ -87,4 +94,8 @@ export interface IProfile {
     list: ILink[];
     active: boolean;
   };
+  projects:{
+    list:IProject[];
+    active:boolean;
+  }
 }

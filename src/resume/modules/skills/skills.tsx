@@ -1,12 +1,10 @@
-import SkillsList from "./skillslist";
-import AddSkillsForm from "./addskillform";
-import { SkillsContext } from "../../profilebuilder";
-import { useContext } from "react";
-import { Box, VStack } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { Flex, Switch } from "@chakra-ui/react";
-import AccordionUnit from "../../components/accordionunit";
-import { setActive } from "./reducers";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import AccordionUnit from "../../components/accordionunit";
+import AddSkillsForm from "./addskillform";
+import { setActive } from "./reducers";
+import SkillsList from "./skillslist";
 
 export default function SkillsSection() {
   const dispatch = useAppDispatch();

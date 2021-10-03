@@ -1,5 +1,6 @@
 import {
   Box,
+  calc,
   Flex,
   Grid,
   Heading,
@@ -7,8 +8,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import SimpleBar from "simplebar-react";
+import { memo, useEffect, useState } from "react";
+
 
 import "simplebar/dist/simplebar.css";
 import {
@@ -93,6 +94,10 @@ function Dashboard() {
           active: true,
           list: [],
         },
+        projects: {
+          active: true,
+          list: [],
+        },
       },
     };
     electron.ipcRenderer.send(channels.CREATE_PROFILE, newProfile);
@@ -158,8 +163,8 @@ function Dashboard() {
     };
   }, [location]);
   return (
-    <Box width="100%" h="100vh">
-      <SimpleBar style={{ height: window.innerHeight }}>
+    <Box width="100%" >
+      
         {/* <button onClick={() => setProfileData(allState, profileId)}>
         Set data
       </button> */}
@@ -219,9 +224,9 @@ function Dashboard() {
             </Switch>
           </CSSTransition>
         </TransitionGroup>
-      </SimpleBar>
+      
     </Box>
   );
 }
 
-export default Dashboard;
+export default memo(Dashboard);

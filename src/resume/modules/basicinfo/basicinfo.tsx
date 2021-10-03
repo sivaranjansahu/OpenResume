@@ -1,6 +1,5 @@
-import { Flex, Box, Switch } from "@chakra-ui/react";
+import { Box, Flex, Switch } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
-import BasicInfoBlock from "./basicinfoblock";
 import BasicInfoForm from "./basicinfoform";
 
 export default function BasicInfo() {

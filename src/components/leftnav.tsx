@@ -39,7 +39,7 @@ function LeftNav() {
       as="nav"
       // position="absolute"
       // left="0"
-      height="100vh"
+      height="100%"
       width="80px"
       backgroundColor="white"
       className="leftnav"

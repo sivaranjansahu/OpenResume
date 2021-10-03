@@ -1,12 +1,9 @@
-import { VStack, Button, Box, Grid } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
-import { useContext, useEffect } from "react";
-import FormikControl from "../../../components/customprimitives";
-import { BasicInfoContext, SkillsContext } from "../../profilebuilder";
-import { v4 as uuidv4 } from "uuid";
+import { Box, Button, Grid, VStack } from "@chakra-ui/react";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { setBasicInfo } from "./reducers";
+import FormikControl from "../../../components/customprimitives";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setBasicInfo } from "./reducers";
 
 const validationSchema = Yup.object({
   fullName: Yup.string()

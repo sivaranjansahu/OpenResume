@@ -20,6 +20,9 @@ export const workHistorySlice = createSlice({
       state.list = action.payload.list;
       state.active = action.payload.active;
     },
+    setAllWorkHistory: (state, action) => {
+      state.list=action.payload;
+    },
     setActive: (state, action) => {
       state.active = action.payload;
     },
@@ -41,6 +44,7 @@ export const {
   removeWorkHistory,
   setActive,
   setInitialWorkHistory,
+  setAllWorkHistory
 } = workHistorySlice.actions;
 
 export default workHistorySlice.reducer;
