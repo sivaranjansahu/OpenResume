@@ -10,7 +10,7 @@ export default function Links(){
     //const skills = useAppSelector((state) => state.skills);
     const active = useAppSelector((state) => state.links.active);
     return(
-            <Flex>
+            <Flex   bg="white" px={4} mb={2}>
               <Box mr="4" mt={6}>
                 <Switch
                   colorScheme="blue"
@@ -22,7 +22,7 @@ export default function Links(){
                 />
               </Box>
               <Box flex={1}>
-                <AccordionUnit title="Links">
+                <AccordionUnit title="Links" subTitle="Relevant links like portfolio website, LinkedIn, work hosted online.">
                   <Box>
                     <Box mb={4}>
                       <LinksList />

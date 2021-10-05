@@ -35,7 +35,7 @@ function CreateProfile({ createProfile }: any) {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="blue" leftIcon={<BiPlus />}>
+      <Button onClick={onOpen} size="md" colorScheme="blue" leftIcon={<BiPlus />}>
         New profile
       </Button>
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>

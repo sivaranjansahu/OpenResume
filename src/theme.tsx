@@ -23,6 +23,15 @@ const theme = extendTheme({
       // ...
       900: "#1a202c",
     },
+    primary:{
+      100:"#6B5EAE"
+    },
+    secondary:{
+      100:"#4CC2FA"
+    },
+    accent:{
+      100:"#DE78BF"
+    }
   },
   components: {
     DrawerBody: {
@@ -45,21 +54,32 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        //color: "red", -> this works
+        // color: "red",
+        fontWeight:"semibold"
       },
     },
-    Form: {
-      baseStyle: {
-        control: {
-          marginBottom: "2rem",
-        },
-        label: {
-          marginBottom: "10rem",
-        },
-      },
+    Text:{
+      variants:{
+        note:{
+          fontSize:"sm",
+          color:"gray.500"
+        }
+      }
     },
+    // Form: {
+    //   baseStyle: {
+    //     control: {
+    //       marginBottom: "2rem",
+    //     },
+    //     label: {
+    //       marginBottom: "10rem",
+          
+    //     },
+    //   },
+    // },
     FormLabel: {
       fontWeight: "bold",
+      color:"red"
     },
     AccordionIcon: {
       baseStyle: {
@@ -69,7 +89,7 @@ const theme = extendTheme({
 
     FormControl: {
       baseStyle: {
-        mb: "5rem",
+        mb: "25rem",
       },
     },
   },

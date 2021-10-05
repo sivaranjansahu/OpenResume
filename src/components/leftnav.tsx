@@ -1,12 +1,7 @@
 import { Icon } from "@chakra-ui/icons";
-import { Box, VStack, Grid, Text } from "@chakra-ui/react";
+import { Box, Grid, Text, VStack } from "@chakra-ui/react";
 import React from "react";
-import { BiBriefcase, BiFoodMenu, BiColumns, BiHome } from "react-icons/bi";
-import {
-  RiBriefcaseLine,
-  RiBriefcaseFill,
-  RiBookReadLine,
-} from "react-icons/ri";
+import { VscBriefcase, VscProject } from "react-icons/vsc";
 import { NavLink } from "react-router-dom";
 
 function NavUnit({ to, label, icon }: any) {
@@ -17,10 +12,10 @@ function NavUnit({ to, label, icon }: any) {
         height="80px"
         mb={4}
         placeItems="center"
-        borderRightWidth={4}
-        borderRightColor="transparent"
+        borderLeftWidth={4}
+        borderLeftColor="transparent"
         _hover={{
-          borderRightColor: "blue.400",
+          borderLeftColor: "blue.400",
           color: "blue.600",
         }}
       >
@@ -41,6 +36,7 @@ function LeftNav() {
       // left="0"
       height="100%"
       width="80px"
+      pt={4}
       backgroundColor="white"
       className="leftnav"
     >
@@ -53,12 +49,12 @@ function LeftNav() {
             <Grid
               as="li"
               placeItems="center"
-              borderRightColor="transparent"
+              borderLeftColor="transparent"
               // borderRightColor="blue.600"
-              _hover={{ borderRightColor: "blue.400", color: "blue.600" }}
+              _hover={{ borderLeftColor: "blue.400", color: "blue.600" }}
             >
               <Grid placeItems="center">
-                <Icon as={RiBriefcaseLine} boxSize={6} />
+                <Icon as={VscBriefcase} boxSize={6} color="gray.400" />
                 <Text fontSize="12px">Profiles</Text>
               </Grid>
             </Grid>
@@ -68,12 +64,12 @@ function LeftNav() {
             <Grid
               as="li"
               placeItems="center"
-              borderRightColor="transparent"
+              borderLeftColor="transparent"
               // borderRightColor="blue.600"
-              _hover={{ borderRightColor: "blue.400", color: "blue.600" }}
+              _hover={{ borderLeftColor: "blue.400", color: "blue.600" }}
             >
               <Grid placeItems="center">
-                <Icon as={RiBookReadLine} boxSize={6} />
+                <Icon as={VscProject} boxSize={6} color="gray.400" />
                 <Text fontSize="12px">Track</Text>
               </Grid>
             </Grid>

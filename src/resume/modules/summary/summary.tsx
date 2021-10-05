@@ -1,6 +1,6 @@
 import { Box, Flex, Switch } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
-import BasicInfoForm from "./basicinfoform";
+import SummaryForm from "./summaryform";
 
 export default function BasicInfo() {
   return (
@@ -9,9 +9,8 @@ export default function BasicInfo() {
         <Box mr="4" mt={6}>
           <Switch
             colorScheme="blue"
-            name="basicInfoIsActive"
-            isChecked={true}
-            isDisabled={true}
+            name="summaryIsActive"
+            defaultChecked={true}
             onChange={(e) => {
               //dispatch(setActive(e.target.checked));
             }}
@@ -19,9 +18,9 @@ export default function BasicInfo() {
         </Box>
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Basic Info" subTitle="Required information like name, address, contact info">
+        <AccordionUnit title="Summary" subTitle="Brief summary of your career/skills and objectives">
           {/* <BasicInfoBlock /> */}
-          <BasicInfoForm />
+          <SummaryForm />
         </AccordionUnit>
       </Box>
     </Flex>

@@ -146,10 +146,10 @@ function Input(props: any) {
       {({ field, form }: any) => {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-            <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+            <FormLabel htmlFor={name} fontSize="sm" color="gray.600" >
               {label}
             </FormLabel>
-            <ChakraInput id={name} {...rest} {...field} size="sm" bg="white" />
+            <ChakraInput id={name} {...rest} {...field} size="sm" bg="white"  />
             <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
           </FormControl>
         );
@@ -185,7 +185,7 @@ function Textarea(props: any) {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
             <Flex alignItems="baseline">
-              <FormLabel fontSize="sm" htmlFor={name} fontWeight="semibold">
+              <FormLabel fontSize="sm" htmlFor={name}  color="gray.600">
                 {label}
               </FormLabel>
               {help && <Text fontSize="10px">{help}</Text>}
@@ -213,7 +213,7 @@ function RadioButtons(props: any) {
       {({ field, form }: FieldProps) => (
         <FormControl isInvalid={!!form.errors[name] && !!form.touched[name]}>
           <Flex alignItems="center">
-            <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+            <FormLabel htmlFor={name} fontSize="sm"  color="gray.600">
               {label}
             </FormLabel>
             {help && help.length > 0 && (
@@ -247,7 +247,7 @@ function Select(props: any) {
     <Field name={name}>
       {({ field, form }: FieldProps) => (
         <FormControl isInvalid={!!form.errors[name] && !!form.touched[name]}>
-          <FormLabel htmlFor={name} fontSize="sm" fontWeight="semibold">
+          <FormLabel htmlFor={name} fontSize="sm" color="gray.600">
             {label}
           </FormLabel>
           <ChakraSelect {...field} id={name} {...props} size="sm" bg="white">

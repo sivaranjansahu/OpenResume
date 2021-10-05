@@ -28,7 +28,7 @@ import registerFonts from "../fonts/index";
 interface temp {
   resumeData: IProfile;
 }
-export default function Preview({ resumeData }: temp) {
+function Preview({ resumeData }: temp) {
   const [templateId, setTemplateId] = useState<string>("temp1");
   const [accentColor, setAccentColor] = useState("#333");
   const [layout, setLayout] = useState("template1");
@@ -46,9 +46,9 @@ export default function Preview({ resumeData }: temp) {
     <Box>
       <Flex width="full" justifyContent="space-between">
         <Button mb={4} size="sm" onClick={onOpen} leftIcon={<RiPaletteLine />}>
-          Customize
+        Customize & Download
         </Button>
-        <Flex gridGap={2}>
+        {/* <Flex gridGap={2}>
           <PDFDownloadLink
             document={<MyDocument state={state} accentColor={accentColor} />}
             fileName="somename.pdf"
@@ -62,7 +62,7 @@ export default function Preview({ resumeData }: temp) {
           <Button size="sm" leftIcon={<RiDownloadLine />}>
             DOCX
           </Button>
-        </Flex>
+        </Flex> */}
       </Flex>
 
       <Configurator
@@ -72,6 +72,8 @@ export default function Preview({ resumeData }: temp) {
         setLayout={setLayout}
         updateAccentColor={updateAccentColor}
         setSelectedFont={setSelectedFont}
+        state={state}
+        accentColor={accentColor}
       />
 
       <PDFViewer
@@ -85,3 +87,4 @@ export default function Preview({ resumeData }: temp) {
     </Box>
   );
 }
+export default React.memo(Preview)

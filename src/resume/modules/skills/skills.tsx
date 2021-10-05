@@ -11,7 +11,7 @@ export default function SkillsSection() {
   //const skills = useAppSelector((state) => state.skills);
   const active = useAppSelector((state) => state.skills.active);
   return (
-    <Flex>
+    <Flex  bg="white" px={4} mb={2}>
       <Box mr="4" mt={6}>
         <Switch
           colorScheme="blue"
@@ -23,7 +23,7 @@ export default function SkillsSection() {
         />
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Skills">
+        <AccordionUnit title="Skills" subTitle="list of skills/competencies and the proficiency in each">
           <Box>
             <Box mb={4}>
               <SkillsList />

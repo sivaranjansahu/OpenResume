@@ -8,8 +8,8 @@ export interface IBasicInfo {
   website: string;
 }
 
-export interface IObjective {
-  objective: string;
+export interface ISummary {
+  summary: string;
 }
 
 export interface workExp {
@@ -27,6 +27,13 @@ export interface ISkill {
   skillName: string;
   skillLevel: number;
   skillYearsExperience: number;
+}
+
+export interface ICourse {
+  id: string;
+  title: string;
+  institute: string;
+  year: number;
 }
 
 export interface IWorkHistory {
@@ -57,6 +64,7 @@ export interface IResumeMeta {
   id: string;
   profileName: string;
   lastUpdated: string;
+  profileNotes:string;
 }
 
 export interface ILink{
@@ -74,6 +82,14 @@ export interface IProject{
 
 export interface IProfile {
   meta: IResumeMeta;
+  basicInfo: {
+    info: IBasicInfo;
+    active: boolean;
+  };
+  summary: {
+    info: ISummary;
+    active: boolean;
+  };
   skills: {
     active: boolean;
     list: ISkill[];
@@ -86,9 +102,9 @@ export interface IProfile {
     active: boolean;
     list: IEducation[];
   };
-  basicInfo: {
-    info: IBasicInfo;
-    active: boolean;
+  courses:{
+    active:boolean;
+    list:ICourse[];
   };
   links: {
     list: ILink[];

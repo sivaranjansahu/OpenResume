@@ -58,17 +58,22 @@ code {
 }
 
 .leftnav li {
-  border-right-color: transparent;
-  border-right-width: 2px;
+  border-left-color: transparent;
+  border-left-width: 3px;
   height: 70px;
+  
 }
 .leftnav li:hover {
   background-color: #f0f0f0;
 }
 .selected li {
-  border-right-color: #4299e1;
-  border-right-width: 2px;
-  color: #4299e1;
+  border-left-color: #6B5EAE;
+  border-left-width: 3px;
+  
+  background-color: #f0f0f0;
+}
+.selected li .chakra-icon{
+  color: #6B5EAE;
 }
 
 .frame::-webkit-scrollbar {

@@ -7,6 +7,8 @@ import {
   Text,
   useDisclosure,
   useToast,
+  Tooltip,
+  Icon
 } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 
@@ -28,6 +30,7 @@ import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
 import CreateProfile from "./createprofilemodal";
 import ProfileCard from "./profilecard";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { VscQuestion } from "react-icons/vsc";
 //import ProfileForm from "./profileform";
 const electron = window.require("electron");
 
@@ -64,14 +67,25 @@ function Dashboard() {
     stateValue:IProfile
   }
 
+  type createProfileInputType={
+    proppath:string,
+    statevalue:IProfile
+  }
+
   const createProfile = (name: string) => {
-    const newProfile= {
+    const newProfile:createProfileInputType= {
       proppath: uuidv4(),
       statevalue: {
         basicInfo: {
           active: true,
           info: {
             fullName: "",
+            about:"",
+            address:"",
+            email:"",
+            linkedIn:"",
+            phoneno:"",
+            website:""
           },
         },
         skills: {
@@ -89,6 +103,8 @@ function Dashboard() {
         meta: {
           profileName: name,
           profileNotes: "",
+          id:uuidv4(),
+          lastUpdated:""
         },
         links: {
           active: true,
@@ -98,6 +114,16 @@ function Dashboard() {
           active: true,
           list: [],
         },
+        summary:{
+          active:true,
+          info: {
+            summary: "",
+          },
+        },
+        courses:{
+          active:true,
+          list:[]
+        }
       },
     };
     electron.ipcRenderer.send(channels.CREATE_PROFILE, newProfile);
@@ -131,6 +157,12 @@ function Dashboard() {
   const confirmDelete = () => {
     onOpen();
   };
+
+  const message = `Profiles are like database for your resumes. You should
+  create different profiles if you apply to different
+  kinds of jobs. For example if you are a Senior Developer
+  who is applying to SWE roles as well as PM roles, you
+  might want to have 2 different profiles.`;
 
   const deleteProfile = (id: any) => {
     electron.ipcRenderer.send(channels.DELETE_PROFILE, { proppath: id });
@@ -177,19 +209,24 @@ function Dashboard() {
           >
             <Switch location={location}>
               <Route exact path={path} key={document.location.href}>
-                <Box as="section" pt={6} maxW="1600px" mx="auto">
+                <Box as="section" pt={6} maxW="1600px" mx="auto" py={10}>
                   <Flex mb={16} justifyContent="space-between">
                     <Box>
-                      <Heading size="lg" mb="4">
+                      <Heading as="h1" size="lg" mb="4" mr={2} display="flex" alignItems="baseline">
                         Profiles
+                        <Tooltip hasArrow label={message} bg="gray.300" color="black" placement="top">
+  <Box w={4}><Icon as={VscQuestion} boxSize={4}  ml={2}/></Box>
+</Tooltip>
                       </Heading>
-                      <Text fontSize="xs" maxW="container.sm">
-                        Profiles are like database for your resumes. You should
-                        create different profiles if you apply to different
-                        kinds of jobs. For example if you are a Senior Developer
-                        who is applying to SWE roles as well as PM roles, you
-                        might want to have 2 different profiles.
+                      
+                      <Box position="relative">
+                      <Text variant="note" maxW="container.sm">
+                        Resume data can be organized in profiles for quick generation of resumes in different job types.
+  
                       </Text>
+                      
+  
+                      </Box>
                     </Box>
                     <CreateProfile createProfile={createProfile} />
                   </Flex>

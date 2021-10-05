@@ -58,7 +58,8 @@ function App() {
       className="App"
       gridTemplateColumns="80px 1fr"
       // backgroundColor="#dadada"
-      bgGradient="linear(to-r, #F2F2F2, #DBDBDB,#EAEAEA)"
+      // bgGradient="linear(to-r, #F2F2F2, #DBDBDB,#EAEAEA)"
+      bg="#F6F8FA"
     >
       
       <Router>

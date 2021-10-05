@@ -40,12 +40,11 @@ export default function TitleBar(){
     }
 
     return(
-        <Flex as="header" justifyContent="space-between" px={4} bg="blue.800" onDoubleClick={toggleMax}
-        className="titlebar"
+        <Flex as="header" justifyContent="space-between" px={4}  onDoubleClick={toggleMax}
+        className="titlebar" color="primary.100"
         >
             <Flex alignItems="center">
-                <Text>Menu</Text>
-                <h5 >Titlename</h5>
+                <Text fontSize="lg" fontWeight="bold">SympleCV</Text>
             </Flex>
             <Flex alignItems="center" gridGap={4}>
                 <Icon as={VscChromeMinimize} boxSize={6} onClick={minimize}/>
