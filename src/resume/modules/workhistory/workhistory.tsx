@@ -12,7 +12,7 @@ export default function WorkHistory() {
   const active = useAppSelector((state) => state.workHistory.active);
   console.log("active", active);
   return (
-    <Flex>
+    <Flex  bg="white" px={4} mb={2}>
       <Box mr="4" mt={6}>
         <Switch
           colorScheme="blue"
@@ -24,7 +24,7 @@ export default function WorkHistory() {
         />
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Work Experience">
+        <AccordionUnit title="Work history" subTitle="Organizations, roles and responsibilities">
           <Box>
             <Box mb={4}>
               <WorkHistoryList />

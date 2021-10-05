@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Flex, HStack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Text ,AccordionItem,AccordionIcon,AccordionPanel,AccordionButton,Box} from "@chakra-ui/react";
 
 const colors = [
   "F56565",
@@ -18,12 +18,21 @@ type propType = {
 };
 export default function ColorPicker({ setAccentColor }: propType) {
   return (
-    <Flex alignItems="center" my={4} gridGap={2}>
-      <Text>Accent color</Text>
-      <HStack>
+    <AccordionItem>
+        <h2>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              Accent color
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+      <Flex wrap="wrap" gridGap={2}>
         {colors.map((color, index) => {
           return (
             <Button
+            ml={0}
               onClick={() => setAccentColor("#" + color)}
               key={index}
               backgroundColor={"#" + color}
@@ -32,7 +41,7 @@ export default function ColorPicker({ setAccentColor }: propType) {
             ></Button>
           );
         })}
-      </HStack>
-    </Flex>
+      </Flex>
+      </AccordionPanel></AccordionItem>
   );
 }

@@ -10,7 +10,7 @@ export default function Education() {
   const dispatch = useAppDispatch();
   const active = useAppSelector((state) => state.education.active);
   return (
-    <Flex>
+    <Flex   bg="white" px={4} mb={2}>
       <Box mr="4" mt={6}>
         <Switch
           colorScheme="blue"
@@ -22,7 +22,7 @@ export default function Education() {
         />
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Education">
+        <AccordionUnit title="Education" subTitle="Degrees obtained and the related information">
           <Box>
             <Box mb={4}>
               <EducationList />

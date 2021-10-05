@@ -1,11 +1,10 @@
-import { Flex, Box, Switch } from "@chakra-ui/react";
+import { Box, Flex, Switch } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
-import BasicInfoBlock from "./basicinfoblock";
 import BasicInfoForm from "./basicinfoform";
 
 export default function BasicInfo() {
   return (
-    <Flex>
+    <Flex  bg="white" px={4} mb={2}>
       <Box display="flex" alignItems="flex-start">
         <Box mr="4" mt={6}>
           <Switch
@@ -20,7 +19,7 @@ export default function BasicInfo() {
         </Box>
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Basic Info">
+        <AccordionUnit title="Basic Info" subTitle="Required information like name, address, contact info">
           {/* <BasicInfoBlock /> */}
           <BasicInfoForm />
         </AccordionUnit>

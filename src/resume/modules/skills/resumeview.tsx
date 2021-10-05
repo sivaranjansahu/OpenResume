@@ -1,10 +1,13 @@
 import { View, Text } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
-import { ISkill } from "../../interfaces/forminterfaces";
+import { useAppSelector } from "../../../store/reduxhooks";
+import { IProfile, ISkill } from "../../interfaces/forminterfaces";
 type propsType = {
-  skills: ISkill[];
-  active?: boolean;
-  styles?: any;
+  state:{
+    list:ISkill[];
+    active?: boolean;
+  } ,
+   styles?: any;
 };
 type maptype = {
   Intermediate: ISkill[];
@@ -13,7 +16,8 @@ type maptype = {
 };
 
 function SkillsView(props: propsType) {
-  const { styles, active } = props;
+  //const state = useAppSelector((state) => state);
+  const { styles, state } = props;
   const [skillsMap, setSkillsMap] = useState<maptype>({
     Intermediate: [],
     Expert: [],
@@ -25,7 +29,7 @@ function SkillsView(props: propsType) {
       Expert: [],
       Beginner: [],
     };
-    props.skills.forEach((skill: ISkill) => {
+    state.list.forEach((skill: ISkill) => {
       if (skill.skillLevel == 1) {
         map.Beginner.push(skill);
       }
@@ -37,9 +41,9 @@ function SkillsView(props: propsType) {
       }
     });
     setSkillsMap(map);
-  }, [props.skills]);
+  }, [state.list]);
 
-  if (!active) {
+  if (!state.active) {
     return null;
   }
 

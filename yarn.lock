@@ -1563,6 +1563,10 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
+"@electron/remote@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@electron/remote/-/remote-2.0.1.tgz#810cbc595a21f0f94641eb2d7e8264063a3f84de"
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.3.0"
   resolved "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.3.0.tgz"
@@ -1903,7 +1907,6 @@
 "@juggle/resize-observer@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
-  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -2404,6 +2407,12 @@
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
 
+"@types/jszip@^3.1.4":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@types/jszip/-/jszip-3.4.1.tgz#e7a4059486e494c949ef750933d009684227846f"
+  dependencies:
+    jszip "*"
+
 "@types/lodash.mergewith@4.6.6":
   version "4.6.6"
   resolved "https://registry.npmjs.org/@types/lodash.mergewith/-/lodash.mergewith-4.6.6.tgz"
@@ -2421,6 +2430,10 @@
 "@types/node@*", "@types/node@^16.7.6":
   version "16.7.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-16.7.6.tgz"
+
+"@types/node@^14.0.5":
+  version "14.17.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.18.tgz#0198489a751005f71217744aa966cd1f29447c81"
 
 "@types/node@^14.6.2":
   version "14.17.15"
@@ -3778,7 +3791,6 @@ camelize@^1.0.0:
 can-use-dom@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
-  integrity sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=
 
 caniuse-api@^3.0.0:
   version "3.0.0"
@@ -4215,7 +4227,6 @@ core-js@^2.4.0:
 core-js@^3.0.1:
   version "3.18.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.18.0.tgz#9af3f4a6df9ba3428a3fb1b171f1503b3f40cc49"
-  integrity sha512-WJeQqq6jOYgVgg4NrXKL0KLQhi0CT4ZOCvFL+3CQ5o7I6J8HkT5wd53EadMfqTDp1so/MT1J+w2ujhWcCJtN7w==
 
 core-js@^3.6.5:
   version "3.9.0"
@@ -4796,6 +4807,17 @@ doctrine@^3.0.0:
   resolved "https://registry.npmjs.org/doctrine/-/doctrine-3.0.0.tgz"
   dependencies:
     esutils "^2.0.2"
+
+docx@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/docx/-/docx-6.0.3.tgz#53ccc6bcd0d41adb3e19fbd8c59282c0e2efd9a5"
+  dependencies:
+    "@types/jszip" "^3.1.4"
+    "@types/node" "^14.0.5"
+    jszip "^3.1.5"
+    nanoid "^3.1.20"
+    xml "^1.0.1"
+    xml-js "^1.6.8"
 
 dom-accessibility-api@^0.5.6:
   version "0.5.7"
@@ -6409,6 +6431,10 @@ immer@^9.0.1:
   version "9.0.6"
   resolved "https://registry.npmjs.org/immer/-/immer-9.0.6.tgz"
 
+immutability-helper@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.1.1.tgz#2b86b2286ed3b1241c9e23b7b21e0444f52f77b7"
+
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/import-cwd/-/import-cwd-2.1.0.tgz"
@@ -7450,7 +7476,7 @@ jsprim@^1.2.2:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
-jszip@^3.1.0:
+jszip@*, jszip@^3.1.0, jszip@^3.1.5:
   version "3.7.1"
   resolved "https://registry.npmjs.org/jszip/-/jszip-3.7.1.tgz"
   dependencies:
@@ -7610,7 +7636,6 @@ lodash._reinterpolate@^3.0.0:
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -7640,7 +7665,6 @@ lodash.templatesettings@^4.0.0:
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -9620,9 +9644,9 @@ react-focus-lock@2.5.0:
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
 
-react-icons@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.2.0.tgz"
+react-icons@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.3.1.tgz#2fa92aebbbc71f43d2db2ed1aed07361124e91ca"
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
@@ -10311,7 +10335,7 @@ sass-loader@^10.0.5:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sax@~1.2.4:
+sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz"
 
@@ -10548,7 +10572,6 @@ simple-swizzle@^0.2.2:
 simplebar-react@^2.3.5:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/simplebar-react/-/simplebar-react-2.3.5.tgz#9d85803d01585f8a4899d45e7e681aef744568c6"
-  integrity sha512-tzlU4C96awc6yRtxRF3hm91daQyEOHVpVpAaaGaWL6jL0uSqqTrXyYdTerjUqYxf6X4ev9tPKXecEBOaFWSC4Q==
   dependencies:
     prop-types "^15.6.1"
     simplebar "^5.3.5"
@@ -10556,7 +10579,6 @@ simplebar-react@^2.3.5:
 simplebar@^5.3.5:
   version "5.3.5"
   resolved "https://registry.yarnpkg.com/simplebar/-/simplebar-5.3.5.tgz#799d14cdc8bb8ed245789745b9f3741d05403944"
-  integrity sha512-mcTlXEiva8pSMdNEzeV3C1KyBHk7Sn2Pe46U1Uwo53dCuQqdJIK0bEJrIPs8W4/RqJquKIsC8Y1h7+aqOl8ccA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     can-use-dom "^0.1.0"
@@ -12091,9 +12113,19 @@ ws@^7.2.3:
   version "7.4.3"
   resolved "https://registry.npmjs.org/ws/-/ws-7.4.3.tgz"
 
+xml-js@^1.6.8:
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
+  dependencies:
+    sax "^1.2.4"
+
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz"
+
+xml@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
 
 xmlchars@^2.2.0:
   version "2.2.0"

@@ -4,6 +4,10 @@ import skillsReducer from "../resume/modules/skills/reducers";
 import workHistoryReducer from "../resume/modules/workhistory/reducers";
 import educationReducer from "../resume/modules/education/reducers";
 import basicInfoReducer from "../resume/modules/basicinfo/reducers";
+import linksReducer from "../resume/modules/links/reducers";
+import projectsReducer from "../resume/modules/projects/reducers";
+import summaryReducer from "../resume/modules/summary/reducers";
+import coursesReducer from "../resume/modules/courses/reducers";
 // ...
 
 const store = configureStore({
@@ -13,6 +17,10 @@ const store = configureStore({
     education: educationReducer,
     basicInfo: basicInfoReducer,
     meta: resumereducers,
+    links:linksReducer,
+    projects:projectsReducer,
+    summary:summaryReducer,
+    courses:coursesReducer
   },
 });
 

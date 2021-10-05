@@ -14,7 +14,7 @@ type Props = {
 };
 const AccordionUnit: React.FC<Props> = ({ title, children }) => {
   return (
-    <AccordionItem border="none" flex="1">
+    <AccordionItem border="none" flex="1" bg="white">
       <AccordionButton _expanded={{ bg: "gray.200" }}>
         <Box flex="1" textAlign="left">
           <Heading fontWeight="light" as="h2" size="md" isTruncated>

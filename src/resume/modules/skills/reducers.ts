@@ -26,6 +26,9 @@ export const skillsSlice = createSlice({
     addSkill: (state, action) => {
       state.list.push(action.payload);
     },
+    setAllSkills: (state, action) => {
+      state.list=action.payload;
+    },
     removeSkill: (state, action) => {
       var index = state.list.findIndex((skill) => {
         return skill.id === action.payload;
@@ -36,7 +39,7 @@ export const skillsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addSkill, removeSkill, setActive, setInitialSkills } =
+export const { addSkill, removeSkill, setActive, setInitialSkills,setAllSkills } =
   skillsSlice.actions;
 
 export default skillsSlice.reducer;

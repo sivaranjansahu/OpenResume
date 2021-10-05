@@ -13,7 +13,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
         px={8}
         py={4}
         minHeight={16}
-        backgroundColor="#FAFAFA"
+        // backgroundColor="#FAFAFA"
         position="relative"
       >
         {isExpanded && <Heading size="sm">{title}</Heading>}
@@ -30,17 +30,17 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
               <Button
                 leftIcon={<CloseIcon w={3} h={3} />}
                 colorScheme="blue"
-                variant="ghost"
+                // variant="ghost"
                 size="sm"
               >
-                Close
+                Cancel
               </Button>
             )}
             {!isExpanded && (
               <Button
                 leftIcon={<AddIcon w={3} h={3} />}
                 colorScheme="blue"
-                variant="ghost"
+                // variant="ghost"
                 size="sm"
               >
                 New

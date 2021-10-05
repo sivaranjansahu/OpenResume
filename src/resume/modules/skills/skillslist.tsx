@@ -1,44 +1,56 @@
-import { Button } from "@chakra-ui/button";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Box, Flex, Heading, VStack } from "@chakra-ui/layout";
-import { Fade, ScaleFade, Slide, SlideFade } from "@chakra-ui/react";
-
+import { Box } from "@chakra-ui/layout";
 import {
   Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
   Tbody,
   Td,
-  Tfoot,
+  Th,
+  Thead,
+  Tr,
+  Grid,
+  Icon,
+  Flex,
 } from "@chakra-ui/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { useContext, useEffect } from "react";
-import { ISkill } from "../../interfaces/forminterfaces";
-import { SkillsContext } from "../../profilebuilder";
-import { addSkill, removeSkill } from "./reducers";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { ISkill } from "../../interfaces/forminterfaces";
+import { removeSkill, setAllSkills } from "./reducers";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { Fragment } from "react";
+import { Ri24HoursFill } from "react-icons/ri";
+import { VscGrabber } from "react-icons/vsc";
 
-const SkillUnit = ({ skill, index }: { skill: ISkill; index: number }) => {
+const levels: any = {
+  "1": "Beginner",
+  "2": "Intermediate",
+  "3": "Expert",
+};
+
+const SkillUnit = ({
+  skill,
+  index,
+  ...props
+}: {
+  skill: ISkill;
+  index: number;
+}) => {
   //const { removeSkill } = useContext(SkillsContext);
   const dispatch = useAppDispatch();
   return (
-    <Tr>
+    <>
       <Td px={0}>{skill.skillName}</Td>
       <Td px={0}>{skill.skillYearsExperience}</Td>
-      <Td px={0}>{skill.skillLevel}</Td>
-      <Td px={0}>
+      <Td px={0}>{levels[skill.skillLevel.toString()]}</Td>
+      <Td px={0} textAlign="right">
         <DeleteIcon
           onClick={() => dispatch(removeSkill(skill.id))}
           cursor="pointer"
           color="red.400"
+          boxSize={4}
+          mr={1}
         />
-        {/* <Button onClick={() => removeSkill && removeSkill(skill.id)}>
-          Delete
-        </Button> */}
       </Td>
-    </Tr>
+    </>
   );
 };
 
@@ -50,36 +62,76 @@ export default function SkillsList() {
     <Box as="article" px={8}>
       {(!skills || skills.length === 0) && `No skills found.`}
       {skills && skills.length > 0 && (
-        <Table variant="simple" size="sm" mb={16}>
-          <Thead>
-            <Tr>
-              <Th p={0} pb={4}>
-                Skill
-              </Th>
-              <Th p={0} pb={4}>
-                Years
-              </Th>
-              <Th p={0} pb={4}>
-                Proficiency
-              </Th>
-              <Th p={0} pb={4}>
-                Delete
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <TransitionGroup component={null}>
-              {skills &&
-                skills?.map((s: ISkill, i) => {
-                  return (
-                    <CSSTransition key={i} timeout={500} classNames="listitem">
-                      <SkillUnit skill={s} key={i} index={i} />
-                    </CSSTransition>
-                  );
-                })}
-            </TransitionGroup>
-          </Tbody>
-        </Table>
+        <DragDropContext
+          onDragEnd={(params) => {
+            console.log(params);
+            const srcI = params.source.index;
+            const destI = params.destination?.index || 0;
+            let newList = [...skills];
+            newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
+            //setList(newList);
+            dispatch(setAllSkills(newList));
+          }}
+        >
+          <Table variant="simple" size="sm" mb={8}>
+            <Thead>
+              <Tr>
+                <Th px={0} pb={4} pr={2} width={6}></Th>
+                <Th px={0} pb={4}>
+                  Skill
+                </Th>
+                <Th px={0} pb={4}>
+                  Years
+                </Th>
+                <Th px={0} pb={4}>
+                  Proficiency
+                </Th>
+                <Th px={0} pb={4}></Th>
+              </Tr>
+            </Thead>
+            <Droppable droppableId="skillsdroppable">
+              {(provided, snapshot) => (
+                <Tbody ref={provided.innerRef} {...provided.droppableProps}>
+                    {skills &&
+                      skills?.map((skill: ISkill, i) => {
+                        return (
+                          <Draggable key={i} draggableId={`drag${i}`} index={i}>
+                            {(provided, snapshot) => (
+                              <Tr
+                              width="100%"
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                              >
+                                
+                                <Td px={0} {...provided.dragHandleProps} width="5%">
+                                  <Icon as={VscGrabber} boxSize={4} />
+                                </Td>
+                                <Td px={0} width="50%">{skill.skillName}</Td>
+                                <Td px={0} width="10%">{skill.skillYearsExperience}</Td>
+                                <Td px={0} width="30%">
+                                  {levels[skill.skillLevel.toString()]}
+                                </Td>
+                                <Td px={0} textAlign="right" >
+                                  <DeleteIcon
+                                    onClick={() =>
+                                      dispatch(removeSkill(skill.id))
+                                    }
+                                    cursor="pointer"
+                                    color="red.400"
+                                    boxSize={4}
+                                    mr={1}
+                                  />
+                                </Td>
+                              </Tr>
+                            )}
+                          </Draggable>
+                        );
+                      })}
+                </Tbody>
+              )}
+            </Droppable>
+          </Table>
+        </DragDropContext>
       )}
     </Box>
   );
