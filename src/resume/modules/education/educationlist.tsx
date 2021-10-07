@@ -13,6 +13,7 @@ import { IEducation } from "../../interfaces/forminterfaces";
 import { removeWorkHistory } from "../workhistory/reducers";
 import { Accordion, Text } from "@chakra-ui/react";
 import { removeEducation } from "./reducers";
+import { setDirty } from "../../../store/store";
 
 const EducationUnit = ({ ed }: { ed: IEducation }) => {
   const dispatch = useAppDispatch();
@@ -41,17 +42,20 @@ const EducationUnit = ({ ed }: { ed: IEducation }) => {
           color="red.500"
           cursor="pointer"
           m={1}
-          onClick={() => dispatch(removeEducation(ed.id))}
+          onClick={() => {
+            dispatch(removeEducation(ed.id));
+            dispatch(setDirty({ isDirty: true }));
+          }}
         />
       </Grid>
     </Flex>
   );
 };
 
-export default function EducationList() {
+export default function EducationList({ ...props }: any) {
   const educationList = useAppSelector((state) => state.education.list);
   return (
-    <Box as="article" px={8}>
+    <Box as="article" {...props}>
       {(!educationList || educationList.length === 0) && (
         <Text fontSize="sm" colorScheme="blackAlpha">
           No education information found. Add one by clicking the button on the

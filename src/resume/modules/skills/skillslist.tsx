@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setDirty } from "../../../store/store";
 import { ISkill } from "../../interfaces/forminterfaces";
 import { removeSkill, setAllSkills } from "./reducers";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -43,7 +44,10 @@ const SkillUnit = ({
       <Td px={0}>{levels[skill.skillLevel.toString()]}</Td>
       <Td px={0} textAlign="right">
         <DeleteIcon
-          onClick={() => dispatch(removeSkill(skill.id))}
+          onClick={() => {
+            dispatch(setDirty({ isDirty: true }));
+            //dispatch(removeSkill(skill.id));
+          }}
           cursor="pointer"
           color="red.400"
           boxSize={4}
@@ -54,12 +58,12 @@ const SkillUnit = ({
   );
 };
 
-export default function SkillsList() {
+export default function SkillsList({ ...props }: any) {
   const skills = useAppSelector((state) => state.skills.list || []);
   const dispatch = useAppDispatch();
 
   return (
-    <Box as="article" px={8}>
+    <Box as="article" {...props}>
       {(!skills || skills.length === 0) && `No skills found.`}
       {skills && skills.length > 0 && (
         <DragDropContext
@@ -71,6 +75,9 @@ export default function SkillsList() {
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             //setList(newList);
             dispatch(setAllSkills(newList));
+            if (srcI !== destI) {
+              dispatch(setDirty({ isDirty: true }));
+            }
           }}
         >
           <Table variant="simple" size="sm" mb={8}>
@@ -92,41 +99,49 @@ export default function SkillsList() {
             <Droppable droppableId="skillsdroppable">
               {(provided, snapshot) => (
                 <Tbody ref={provided.innerRef} {...provided.droppableProps}>
-                    {skills &&
-                      skills?.map((skill: ISkill, i) => {
-                        return (
-                          <Draggable key={i} draggableId={`drag${i}`} index={i}>
-                            {(provided, snapshot) => (
-                              <Tr
+                  {skills &&
+                    skills?.map((skill: ISkill, i) => {
+                      return (
+                        <Draggable key={i} draggableId={`drag${i}`} index={i}>
+                          {(provided, snapshot) => (
+                            <Tr
                               width="100%"
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                            >
+                              <Td
+                                px={0}
+                                {...provided.dragHandleProps}
+                                width="5%"
                               >
-                                
-                                <Td px={0} {...provided.dragHandleProps} width="5%">
-                                  <Icon as={VscGrabber} boxSize={4} />
-                                </Td>
-                                <Td px={0} width="50%">{skill.skillName}</Td>
-                                <Td px={0} width="10%">{skill.skillYearsExperience}</Td>
-                                <Td px={0} width="30%">
-                                  {levels[skill.skillLevel.toString()]}
-                                </Td>
-                                <Td px={0} textAlign="right" >
-                                  <DeleteIcon
-                                    onClick={() =>
-                                      dispatch(removeSkill(skill.id))
-                                    }
-                                    cursor="pointer"
-                                    color="red.400"
-                                    boxSize={4}
-                                    mr={1}
-                                  />
-                                </Td>
-                              </Tr>
-                            )}
-                          </Draggable>
-                        );
-                      })}
+                                <Icon as={VscGrabber} boxSize={4} />
+                              </Td>
+                              <Td px={0} width="50%">
+                                {skill.skillName}
+                              </Td>
+                              <Td px={0} width="10%">
+                                {skill.skillYearsExperience}
+                              </Td>
+                              <Td px={0} width="30%">
+                                {levels[skill.skillLevel.toString()]}
+                              </Td>
+                              <Td px={0} textAlign="right">
+                                <DeleteIcon
+                                  onClick={() => {
+                                    dispatch(removeSkill(skill.id));
+                                    dispatch(setDirty({ isDirty: true }));
+                                  }}
+                                  cursor="pointer"
+                                  color="red.400"
+                                  boxSize={4}
+                                  mr={1}
+                                />
+                              </Td>
+                            </Tr>
+                          )}
+                        </Draggable>
+                      );
+                    })}
                 </Tbody>
               )}
             </Droppable>

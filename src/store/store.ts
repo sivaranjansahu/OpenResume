@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import resumereducers from "../resume/modules/resumereducers";
 import skillsReducer from "../resume/modules/skills/reducers";
 import workHistoryReducer from "../resume/modules/workhistory/reducers";
@@ -10,6 +10,17 @@ import summaryReducer from "../resume/modules/summary/reducers";
 import coursesReducer from "../resume/modules/courses/reducers";
 // ...
 
+const dirtySlice = createSlice({
+  name: "dirty",
+  initialState: { isDirty: false },
+  reducers: {
+    setDirty: (state, action) => {
+      state.isDirty = action.payload.isDirty;
+    },
+  },
+});
+export const { setDirty } = dirtySlice.actions;
+
 const store = configureStore({
   reducer: {
     skills: skillsReducer,
@@ -17,10 +28,11 @@ const store = configureStore({
     education: educationReducer,
     basicInfo: basicInfoReducer,
     meta: resumereducers,
-    links:linksReducer,
-    projects:projectsReducer,
-    summary:summaryReducer,
-    courses:coursesReducer
+    links: linksReducer,
+    projects: projectsReducer,
+    summary: summaryReducer,
+    courses: coursesReducer,
+    dirty: dirtySlice.reducer,
   },
 });
 

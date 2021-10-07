@@ -10,6 +10,7 @@ import {
   Text,
   Flex,
   Icon,
+  Grid,
 } from "@chakra-ui/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
@@ -17,6 +18,7 @@ import { ILink, IProject } from "../../interfaces/forminterfaces";
 import { deleteProject, setAllProjects } from "./reducers";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { VscGrabber } from "react-icons/vsc";
+import { setDirty } from "../../../store/store";
 
 const ProjectsUnit = (
   { project, index }: { project: IProject; index: number },
@@ -39,16 +41,27 @@ const ProjectsUnit = (
           {project.about}
         </AccordionPanel>
       </AccordionItem>
+      <Grid placeItems="center" height="40px" width="40px">
+        <DeleteIcon
+          color="red.500"
+          cursor="pointer"
+          m={1}
+          onClick={() => {
+            dispatch(deleteProject(project.id));
+            dispatch(setDirty({ isDirty: true }));
+          }}
+        />
+      </Grid>
     </Flex>
   );
 };
 
-export default function ProjectsList() {
+export default function ProjectsList({ ...props }: any) {
   const projects = useAppSelector((state) => state.projects.list || []);
   const dispatch = useAppDispatch();
 
   return (
-    <Box as="article" px={8}>
+    <Box as="article" {...props}>
       {(!projects || projects.length === 0) && `No projects found.`}
       {projects && projects.length > 0 && (
         <DragDropContext
@@ -58,6 +71,9 @@ export default function ProjectsList() {
             let newList = [...projects];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllProjects(newList));
+            if (srcI !== destI) {
+              dispatch(setDirty({ isDirty: true }));
+            }
           }}
         >
           <Droppable droppableId="workexdroppable">

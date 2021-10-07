@@ -1,16 +1,14 @@
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 import {
-  IconButton, Menu,
-  MenuButton, MenuItem,
-  MenuList, Text,
-  useDisclosure
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import {
-  VscCopy,
-  VscKebabVertical,
-
-  VscTrash
-} from "react-icons/vsc";
+import { VscCopy, VscKebabVertical, VscTrash } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "../components/modals/confirmdelete";
 
@@ -34,7 +32,11 @@ const ProfileCard = ({
         height="150px"
         bg="white"
         sx={{ transition: "0.2s transform ease-in" }}
-        _hover={{ bg: "primary.100", transition: "0.1s all ease-in",color:"#fff" }}
+        _hover={{
+          bg: "primary.400",
+          transition: "0.1s all ease-in",
+          color: "#fff",
+        }}
         borderRadius="lg"
       >
         <Box
@@ -46,9 +48,11 @@ const ProfileCard = ({
         >
           {profileKey !== "newprofile" && (
             <Link to={`${url}/${profileKey}`}>
-              <Heading as="h3" size="sm" mb={2}>{profileName}</Heading>
+              <Heading as="h3" size="sm" mb={2}>
+                {profileName}
+              </Heading>
               {/* <Text fontWeight="semibold">{profileName}</Text> */}
-              <Text >{profileNotes}</Text>
+              <Text>{profileNotes}</Text>
             </Link>
           )}
           <Box position="absolute" right={2} top={5}>

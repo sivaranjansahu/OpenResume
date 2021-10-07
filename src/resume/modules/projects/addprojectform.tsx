@@ -20,7 +20,6 @@ const validationSchema = Yup.object({
     .min(3, "Too short!")
     .max(30, "Too long!"),
   about: Yup.string().required("Required").min(3, "Too short!"),
-
 });
 
 const AddProjectsForm = () => {
@@ -29,79 +28,76 @@ const AddProjectsForm = () => {
   const projects = useAppSelector((state) => state.projects.list);
   const dispatch = useAppDispatch();
   return (
-    <Box>
-      <Accordion allowToggle>
-        <AccordionItem border="none">
-          {({ isExpanded }) => (
-            <>
-              <ToggleButton isExpanded={isExpanded} title="New project form" />
-              <AccordionPanel
-                px={8}
-                backgroundColor="#FAFAFA"
-                // boxShadow="inner"
+    <Accordion allowToggle>
+      <AccordionItem border="none">
+        {({ isExpanded }) => (
+          <>
+            <ToggleButton isExpanded={isExpanded} title="New project form" />
+            <AccordionPanel
+              px={0}
+              // boxShadow="inner"
+            >
+              <Formik
+                initialValues={{
+                  title: "",
+                  about: "",
+                  year: "",
+                }}
+                onSubmit={(values: any) => {
+                  console.log(values);
+                  dispatch(addProject({ ...values, id: uuidv4() }));
+                }}
+                validationSchema={validationSchema}
               >
-                <Formik
-                  initialValues={{
-                    title: "",
-                    about: "",
-                    year:""
-                  }}
-                  onSubmit={(values: any) => {
-                    console.log(values);
-                    dispatch(addProject({ ...values, id: uuidv4() }));
-                  }}
-                  validationSchema={validationSchema}
-                >
-                  {(formik: any) => (
-                    <Form>
-                      <VStack gridGap={4} alignItems="flex-start">
-                        <Grid
-                          gridGap={4}
-                          width="100%"
-                          gridTemplateColumns="1fr 1fr"
-                        >
-                          <FormikControl
-                            control="input"
-                            type="text"
-                            label="Title"
-                            name="title"
-                            required
-                          />
-                          <FormikControl
-                            control="input"
-                            type="text"
-                            label="Year"
-                            name="year"
-                            required
-                          />
-                        </Grid>
+                {(formik: any) => (
+                  <Form>
+                    <VStack gridGap={4} alignItems="flex-start">
+                      <Grid
+                        gridGap={4}
+                        width="100%"
+                        gridTemplateColumns="1fr 1fr"
+                      >
                         <FormikControl
-                          control="textarea"
+                          control="input"
                           type="text"
-                          label="About"
-                          name="about"
-                          help="You can separate sentences with '|' character to create bullet points. "
+                          label="Title"
+                          name="title"
                           required
                         />
+                        <FormikControl
+                          control="input"
+                          type="text"
+                          label="Year"
+                          name="year"
+                          required
+                        />
+                      </Grid>
+                      <FormikControl
+                        control="textarea"
+                        type="text"
+                        label="About"
+                        name="about"
+                        help="You can separate sentences with '|' character to create bullet points. "
+                        required
+                      />
 
-                        <Button
-                          type="submit"
-                          size="sm"
-                          colorScheme="blue"
-                          disabled={!formik.isValid}
-                        >
-                          Add project
-                        </Button>
-                      </VStack>
-                    </Form>
-                  )}
-                </Formik>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
-      </Accordion>
-    </Box>
+                      <Button
+                        type="submit"
+                        size="sm"
+                        colorScheme="blue"
+                        disabled={!formik.isValid}
+                      >
+                        Add project
+                      </Button>
+                    </VStack>
+                  </Form>
+                )}
+              </Formik>
+            </AccordionPanel>
+          </>
+        )}
+      </AccordionItem>
+    </Accordion>
   );
 };
 
