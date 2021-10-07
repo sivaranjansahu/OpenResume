@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setDirty } from "../../../store/store";
 import { setBasicInfo } from "./reducers";
 
 const validationSchema = Yup.object({
@@ -22,14 +23,11 @@ const validationSchema = Yup.object({
 });
 
 export default function BasicInfoBlock() {
-  //const { basicInfo, updateBasicInfo } = useContext(BasicInfoContext);
   const basicInfo = useAppSelector((state) => state.basicInfo || {});
-  //const [currentInfo,setCurrentInfo]=setState();
 
-  console.log("basic info now", basicInfo);
   const dispatch = useAppDispatch();
   return (
-    <Box px={8} pb={8}>
+    <Box px={0} pb={8}>
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -44,11 +42,16 @@ export default function BasicInfoBlock() {
         onSubmit={(values: any) => {
           //updateBasicInfo && updateBasicInfo({ ...values, id: uuidv4() });
           dispatch(setBasicInfo({ info: values }));
+          dispatch(setDirty({ isDirty: true }));
         }}
         validationSchema={validationSchema}
       >
         {(formik: any) => (
-          <Form>
+          <Form
+            onChange={(values: any, ...rest) => {
+              console.log(values, rest);
+            }}
+          >
             <VStack gridGap={4} alignItems="flex-start">
               <FormikControl
                 control="input"

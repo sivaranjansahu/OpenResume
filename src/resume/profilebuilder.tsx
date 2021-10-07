@@ -9,8 +9,11 @@ import {
   Grid,
   Heading,
   Input,
-
-  Text, Textarea
+  Slide,
+  Fade,
+  Text,
+  Textarea,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
@@ -18,9 +21,7 @@ import { useParams } from "react-router-dom";
 import { setInitialSkills } from "../resume/modules/skills/reducers";
 import { channels } from "../shared/constants";
 import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
-import {
-  IProfile
-} from "./interfaces/forminterfaces";
+import { IProfile } from "./interfaces/forminterfaces";
 import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
 import Education from "./modules/education/education";
@@ -34,11 +35,12 @@ import Skills from "./modules/skills/skills";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
-import Summary from "./modules/summary/summary"
+import Summary from "./modules/summary/summary";
 import { setSummary } from "./modules/summary/reducers";
 import { setInitialCourses } from "./modules/courses/reducers";
 import Courses from "./modules/courses/courses";
 import { capitalize } from "../utils/common";
+import { setDirty } from "../store/store";
 const electron = window.require("electron");
 
 // export const WorkExContext = React.createContext<
@@ -77,16 +79,24 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
   let { profileId } = useParams<ProfileParams>();
   const allState = useAppSelector<any>((state) => state);
+
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  console.log("allstate", allState);
-  const handleClick = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const saveChanges = () => {
     setProfileData(allState, profileId);
+    onClose();
+    dispatch(setDirty({ isDirty: false }));
   };
 
   const updateStateWithProfile = (allProfiles: IProfile[], profileId: any) => {
     //console.log("profilebuilder", allProfiles, profileId);
     const currentProfile = allProfiles[profileId];
-    if(!currentProfile){return;}
+    if (!currentProfile) {
+      return;
+    }
+
+    console.log("currentProfile", currentProfile);
     dispatch(setInitialSkills(currentProfile.skills));
     dispatch(setInitialWorkHistory(currentProfile.workHistory));
     dispatch(setInitialEducation(currentProfile.education));
@@ -101,15 +111,13 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   //If profileId has been passed, pull the profile from appstore json and push it to the state
   //else create new profile
   useEffect(() => {
-    console.log("testing useeffect", allProfiles);
     allProfiles && profileId && updateStateWithProfile(allProfiles, profileId);
-    // electron.ipcRenderer.on(channels.GET_ALL_PROFILES, (event, arg) => {
-    //   // console.log("data", arg);
-    //   // console.log(arg[profileId]);
-    //   console.log("data", arg);
-    //   updateStateWithProfile(arg[profileId]);
-    // });
-  }, [allProfiles,profileId]);
+  }, [allProfiles, profileId]);
+  const { isDirty } = allState.dirty;
+
+  useEffect(() => {
+    isDirty && onOpen();
+  }, [isDirty]);
 
   return (
     <Grid
@@ -119,86 +127,130 @@ const ProfileBuilder = ({ allProfiles }: any) => {
       // gridTemplateColumns="1fr 1fr"
       // h="100vh"
     >
-      <Flex py={6} gridGap={24} minW="1600px">
+      <Flex py={6} gridGap={{ lg: 18, md: 12 }} minW="1400px">
         <Box width="1000px" mx="auto">
+          <Box position="fixed" right={10} bottom={0} p={4} width={32}>
+            <Slide direction="bottom" in={isOpen} style={{ zIndex: 10 }}>
+              {/* <Text fontSize="sm">Remember to save your changes</Text> */}
+              <Flex
+                justifyContent="flex-end"
+                p={4}
+                pointerEvents="none"
+                sx={{ bg: "rgba(200,200,100,0.2)" }}
+              >
+                <Button
+                  colorScheme="secondary"
+                  onClick={saveChanges}
+                  pointerEvents="auto"
+                >
+                  Save changes
+                </Button>
+              </Flex>
+            </Slide>
+          </Box>
+
           <Flex justifyContent="space-between" alignItems="center" mb="4">
-          <Heading
-            size="lg"
-            
-          >
-            {allState.meta.profileName}
-          </Heading>
-          <Button
-              onClick={handleClick}
+            <Heading size="lg">{allState.meta.profileName}</Heading>
+            {isDirty && <p>Remember to save your changes</p>}
+            <Button
+              onClick={saveChanges}
               type="submit"
-              bg="secondary.100"
+              colorScheme="secondary"
+              //bg="secondary.100"
               leftIcon={<CheckIcon />}
               disabled={
                 !allState.meta.profileName ||
+                !isDirty ||
                 allState.meta.profileName.length === 0
               }
             >
               Save
             </Button>
-          <Button position="absolute" right={5} top={5} leftIcon={!showPreview ? <RiEyeLine/> : <RiEyeOffLine/>} onClick={()=>setShowPreview(!showPreview)}>{showPreview ? 'Hide ':'Show '} resume</Button>
+            <Button
+              position="absolute"
+              right={5}
+              top={5}
+              leftIcon={!showPreview ? <RiEyeLine /> : <RiEyeOffLine />}
+              onClick={() => setShowPreview(!showPreview)}
+            >
+              {showPreview ? "Hide " : "Show "} resume
+            </Button>
           </Flex>
 
-          <Grid gridTemplateColumns="1fr 2fr" gridGap={4} p={4} bg="gray.700"  py={4} color="whiteAlpha.800">
-          <Box as="header" alignItems="baseline" mb={2}>
-            <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">Title</FormLabel>
-            <Input
-              variant="outline"
-              placeholder="Profile"
-              fontSize="md"
+          <Grid
+            gridTemplateColumns="1fr 2fr"
+            gridGap={4}
+            p={4}
+            bg="gray.700"
+            py={4}
+            color="whiteAlpha.800"
+          >
+            <Box as="header" alignItems="baseline" mb={2}>
+              <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
+                Title
+              </FormLabel>
+              <Input
+                variant="outline"
+                placeholder="Profile"
+                fontSize="md"
                 width="100%"
-              defaultValue="Profile name"
-              name="profilename"
-              value={capitalize(allState.meta.profileName)}
-              onChange={(e) => {
-                console.log(e.target.value);
-                dispatch(setName(e.target.value));
-              }}
-            />
-            
-          </Box>
-          <Box  alignItems="baseline" mb={4}> 
-          <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">Notes</FormLabel>
-            <Input
-            fontSize="md"
-              variant="outline"
-              placeholder="Notes about this portfolio."
-              name="profilenotes"
-              width="100%"
-              rows={1}
-              value={allState.meta.profileNotes}
-              onChange={(e) => {
-                console.log(e.target.value);
-                dispatch(setNotes(e.target.value));
-              }}
-            />
+                defaultValue="Profile name"
+                name="profilename"
+                value={capitalize(allState.meta.profileName)}
+                onChange={(e) => {
+                  dispatch(setName(e.target.value));
+                  dispatch(setDirty({ isDirty: true }));
+                }}
+              />
+            </Box>
+            <Box alignItems="baseline" mb={4}>
+              <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
+                Notes
+              </FormLabel>
+              <Input
+                fontSize="md"
+                variant="outline"
+                placeholder="Notes about this portfolio."
+                name="profilenotes"
+                width="100%"
+                rows={1}
+                value={allState.meta.profileNotes}
+                onChange={(e) => {
+                  dispatch(setNotes(e.target.value));
+                  dispatch(setDirty({ isDirty: true }));
+                }}
+              />
             </Box>
             {/* <Box gridColumn="1/3" width="100%" textAlign="right" as="sub" color="whiteAlpha.500">Contents of this section wont appear on the resume.</Box> */}
-
           </Grid>
           <Accordion allowToggle>
             <Box width="100%">
-              <Flex fontSize="sm" bg="primary.100" p={4} color="white" mb={2} pt={8}>
-                <Text textAlign="right">Active?</Text>
-                <Text ml={8}>Sections</Text>
+              <Flex
+                fontSize="sm"
+                bg="primary.400"
+                p={4}
+                color="white"
+                mb={2}
+                pt={8}
+              >
+                {/* <Text ml={8}>Profile info</Text> */}
               </Flex>
               <BasicInfo />
-              <Summary/>
+              <Summary />
               <WorkHistory />
               <Skills />
               <Education />
-              <Courses/>
-              <Links/>
-              <Projects/>
+              <Courses />
+              <Links />
+              <Projects />
             </Box>
           </Accordion>
         </Box>
         {showPreview && (
-          <Container maxW="container.xl" height="100%">
+          <Container
+            maxW={{ lg: "container.lg", md: "container.lg" }}
+            height="100%"
+          >
             {/* <Heading
               size="sm"
               mb="4"

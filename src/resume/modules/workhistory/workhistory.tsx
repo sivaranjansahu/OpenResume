@@ -1,36 +1,32 @@
-import { Box, Flex, Switch } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { Box, Flex } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
-import AddSkillsForm from "../skills/addskillform";
-import SkillsList from "../skills/skillslist";
+import IncludeSwitch from "../../components/includeSwitch";
 import WorkHistoryForm from "./addworkhistoryform";
 import { setActive } from "./reducers";
 import WorkHistoryList from "./workhistorylist";
 
 export default function WorkHistory() {
-  const dispatch = useAppDispatch();
-  const active = useAppSelector((state) => state.workHistory.active);
-  console.log("active", active);
   return (
-    <Flex  bg="white" px={4} mb={2}>
+    <Flex bg="white" px={4} mb={2}>
       <Box mr="4" mt={6}>
-        <Switch
-          colorScheme="blue"
+        {/* <Switch
+          colorScheme="secondary"
           name="workHistoryIsActive"
           isChecked={active}
           onChange={(e) => {
             dispatch(setActive(e.target.checked));
+            dispatch(setDirty({ isDirty: true }));
           }}
-        />
+        /> */}
+        <IncludeSwitch setActive={setActive} sectionName="workHistory" />
       </Box>
       <Box flex={1}>
-        <AccordionUnit title="Work history" subTitle="Organizations, roles and responsibilities">
-          <Box>
-            <Box mb={4}>
-              <WorkHistoryList />
-            </Box>
-            <WorkHistoryForm />
-          </Box>
+        <AccordionUnit
+          title="Work history"
+          subTitle="Organizations, roles and responsibilities"
+        >
+          <WorkHistoryList mb={4} />
+          <WorkHistoryForm />
         </AccordionUnit>
       </Box>
     </Flex>

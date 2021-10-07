@@ -41,27 +41,39 @@ const radioOptions = [
 function DownloadButtons({ state, accentColor, format = "pdf" }: any) {
   return (
     <Flex gridGap={2} p={4}>
-      {format==="pdf" && <PDFDownloadLink 
-        document={<MyDocument state={state} accentColor={accentColor} />}
-        fileName="somename.pdf"
-      >
-        {({ blob, url, loading, error }) => (
-          <Button width="290px" leftIcon={<RiDownloadLine />} bgColor="primary.100" color="white">
-            {loading ? "Loading" : "Download PDF"}
-          </Button>
-        )}
-      </PDFDownloadLink>}
-      {format==="docx" && 
-      <Button width="100%" leftIcon={<RiDownloadLine />}  bgColor="primary.100" color="white">
-        Download Docx
-      </Button>
-      }
+      {format === "pdf" && (
+        <PDFDownloadLink
+          document={<MyDocument state={state} accentColor={accentColor} />}
+          fileName="somename.pdf"
+        >
+          {({ blob, url, loading, error }) => (
+            <Button
+              width="290px"
+              leftIcon={<RiDownloadLine />}
+              bgColor="primary.400"
+              color="white"
+            >
+              {loading ? "Loading" : "Download PDF"}
+            </Button>
+          )}
+        </PDFDownloadLink>
+      )}
+      {format === "docx" && (
+        <Button
+          width="100%"
+          leftIcon={<RiDownloadLine />}
+          bgColor="primary.400"
+          color="white"
+        >
+          Download Docx
+        </Button>
+      )}
     </Flex>
   );
 }
 
 function Configurator(props: Proptype) {
-  const [format,setFormat] = useState('pdf');
+  const [format, setFormat] = useState("pdf");
   const {
     isOpen,
     onOpen,
@@ -87,9 +99,7 @@ function Configurator(props: Proptype) {
               <Heading as="h4" size="xs" mb={2}>
                 Format
               </Heading>
-              <RadioGroup
-              onChange={setFormat} value={format}
-              >
+              <RadioGroup onChange={setFormat} value={format}>
                 <Stack direction="row">
                   {radioOptions.map((r, i) => {
                     return <Radio value={r.value}>{r.label}</Radio>;
@@ -111,7 +121,11 @@ function Configurator(props: Proptype) {
             <FontPicker setSelectedFont={setSelectedFont} />
           </Accordion>
 
-          <DownloadButtons state={state} format={format} accentColor={accentColor} />
+          <DownloadButtons
+            state={state}
+            format={format}
+            accentColor={accentColor}
+          />
         </DrawerBody>
       </DrawerContent>
     </Drawer>

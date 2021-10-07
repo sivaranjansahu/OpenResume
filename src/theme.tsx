@@ -18,25 +18,50 @@ const theme = extendTheme({
     black: 900,
   },
   colors: {
+    primary: {
+      50: "#efedff",
+      100: "#d0cbea",
+      200: "#b1aad6",
+      300: "#9288c4",
+      400: "#7366b2",
+      500: "#594d99",
+      600: "#453c78",
+      700: "#322b57",
+      800: "#1e1936",
+      900: "#0a0819",
+    },
     brand: {
       100: "#f7fafc",
-      // ...
       900: "#1a202c",
     },
-    primary:{
-      100:"#6B5EAE"
+
+    secondary: {
+      50: "#f1fce2",
+      100: "#dcf3bc",
+      200: "#c6ea93",
+      300: "#afe26a",
+      400: "#99d941",
+      500: "#80c028",
+      600: "#63951d",
+      700: "#456b13",
+      800: "#284009",
+      900: "#0b1600",
     },
-    secondary:{
-      100:"#4CC2FA"
+    accent: {
+      100: "#DE78BF",
     },
-    accent:{
-      100:"#DE78BF"
-    }
   },
   components: {
     DrawerBody: {
       baseStyle: {
         left: "100px",
+      },
+    },
+    Button: {
+      variants: {
+        secondary: {
+          borderColor: "red",
+        },
       },
     },
 
@@ -55,16 +80,16 @@ const theme = extendTheme({
     Heading: {
       baseStyle: {
         // color: "red",
-        fontWeight:"semibold"
+        fontWeight: "semibold",
       },
     },
-    Text:{
-      variants:{
-        note:{
-          fontSize:"sm",
-          color:"gray.500"
-        }
-      }
+    Text: {
+      variants: {
+        note: {
+          fontSize: "sm",
+          color: "gray.500",
+        },
+      },
     },
     // Form: {
     //   baseStyle: {
@@ -73,13 +98,13 @@ const theme = extendTheme({
     //     },
     //     label: {
     //       marginBottom: "10rem",
-          
+
     //     },
     //   },
     // },
     FormLabel: {
       fontWeight: "bold",
-      color:"red"
+      color: "red",
     },
     AccordionIcon: {
       baseStyle: {

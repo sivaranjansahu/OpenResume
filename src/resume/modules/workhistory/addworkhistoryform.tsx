@@ -1,13 +1,11 @@
 import {
   Accordion,
-
   AccordionItem,
   AccordionPanel,
-
   Button,
   Flex,
   Grid,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
@@ -17,7 +15,6 @@ import { months } from "../../../shared/constants";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import ToggleButton from "../../components/togglebutton";
 import { addWorkHistory } from "./reducers";
-
 
 const radioOptions = [
   { key: "Relevant", value: "true" },
@@ -40,9 +37,9 @@ const validationSchema = Yup.object({
   toYear: Yup.number()
     .required("Required")
     .min(Yup.ref("fromYear"), "Must be a valid year")
-    .max(2030, "Must be a valid year")
-    
-    //.moreThanOr(Yup.ref("fromYear")),
+    .max(2030, "Must be a valid year"),
+
+  //.moreThanOr(Yup.ref("fromYear")),
 });
 
 export default function WorkHistoryForm() {
@@ -59,7 +56,7 @@ export default function WorkHistoryForm() {
                 title="New work history form"
               />
 
-              <AccordionPanel px={8} backgroundColor="#FAFAFA">
+              <AccordionPanel px={0}>
                 <Formik
                   initialValues={{}}
                   onSubmit={(values: any) => {

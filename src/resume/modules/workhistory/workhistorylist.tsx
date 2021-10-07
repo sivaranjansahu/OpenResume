@@ -16,6 +16,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { IWorkHistory } from "../../interfaces/forminterfaces";
 import { removeWorkHistory, setAllWorkHistory } from "./reducers";
+import { setDirty } from "../../../store/store";
 
 interface props {}
 //{ exp }: { exp: IWorkHistory,ref:HTMLElement | null | undefined },ref
@@ -62,7 +63,10 @@ const WorkHistoryUnit = forwardRef(
           mr={1}
           mt={3}
           ml={3}
-          onClick={() => dispatch(removeWorkHistory(exp.id))}
+          onClick={() => {
+            dispatch(removeWorkHistory(exp.id));
+            dispatch(setDirty({ isDirty: true }));
+          }}
         />
       </Flex>
 
@@ -79,12 +83,12 @@ const WorkHistoryUnit = forwardRef(
   }
 );
 
-const WorkHistoryList = () => {
+const WorkHistoryList = ({ ...props }: any) => {
   const workHistory = useAppSelector((state) => state.workHistory.list);
   const dispatch = useAppDispatch();
 
   return (
-    <Box as="article" px={8}>
+    <Box as="article" {...props}>
       {(!workHistory || workHistory.length === 0) && (
         <Text fontSize="sm" colorScheme="blackAlpha">
           No work history found. Add one by clicking the button on the right.
@@ -98,6 +102,9 @@ const WorkHistoryList = () => {
             let newList = [...workHistory];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllWorkHistory(newList));
+            if (srcI !== destI) {
+              dispatch(setDirty({ isDirty: true }));
+            }
           }}
         >
           <Droppable droppableId="workexdroppable">
@@ -117,17 +124,15 @@ const WorkHistoryList = () => {
                     >
                       {(provided, snapshot) => (
                         <Flex
-                        alignItems="flex-start"
-                        
+                          alignItems="flex-start"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                         >
                           <Box {...provided.dragHandleProps} pt={2} pr={2}>
-                          
                             <Icon as={VscGrabber} boxSize={4} />
                           </Box>
                           <Box flex={1}>
-                          <WorkHistoryUnit key={index} exp={exp} />
+                            <WorkHistoryUnit key={index} exp={exp} />
                           </Box>
                         </Flex>
                       )}
