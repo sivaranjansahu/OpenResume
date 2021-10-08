@@ -7,23 +7,20 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
   title,
 }) => {
   return (
-    <Heading as="h4" mt={8}>
+    <Heading as="h4" mt={2}>
       <Box
         flex="1"
-        // px={8}
-        borderTopWidth={1}
-        borderTopColor={isExpanded ? "gray.200" : "transparent"}
         py={2}
         minHeight={16}
         // backgroundColor="#FAFAFA"
         position="relative"
       >
-        {isExpanded && <Heading size="sm">{title}</Heading>}
+        {/* {isExpanded && <Heading size="sm">{title}</Heading>} */}
         <AccordionButton
           position="absolute"
           padding={0}
           right={2}
-          top={2}
+          top={4}
           width="auto"
           ml="auto"
         >
@@ -31,7 +28,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
             {isExpanded && (
               <Button
                 leftIcon={<CloseIcon w={3} h={3} />}
-                colorScheme="secondary"
+                colorScheme="primary"
                 size="sm"
               >
                 Cancel
@@ -40,7 +37,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
             {!isExpanded && (
               <Button
                 leftIcon={<AddIcon w={3} h={3} />}
-                colorScheme="secondary"
+                colorScheme="primary"
                 size="sm"
               >
                 New

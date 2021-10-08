@@ -5,6 +5,7 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Heading,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
@@ -39,19 +40,28 @@ const AddSkillsForm = () => {
           <>
             <ToggleButton isExpanded={isExpanded} title="New skill form" />
             <AccordionPanel
-              px={0}
+              px={4}
+              borderWidth={1}
+              mb={4}
+              borderColor="primary.200"
               // boxShadow="inner"
             >
+              <Heading size="sm" mb={4}>
+                New skill form
+              </Heading>
               <Formik
+                validateOnMount={true}
                 initialValues={{
                   skillName: "",
                   skillYearsExperience: "",
                   skillLevel: 1,
                 }}
-                onSubmit={(values: any) => {
+                onSubmit={(values: any, { resetForm, validateForm }) => {
                   console.log(values);
                   dispatch(addSkill({ ...values, id: uuidv4() }));
                   dispatch(setDirty({ isDirty: true }));
+                  resetForm({});
+                  validateForm();
                 }}
                 validationSchema={validationSchema}
               >
@@ -91,7 +101,7 @@ const AddSkillsForm = () => {
                       <Button
                         type="submit"
                         size="sm"
-                        colorScheme="blue"
+                        colorScheme="primary"
                         disabled={!formik.isValid}
                       >
                         Add skill

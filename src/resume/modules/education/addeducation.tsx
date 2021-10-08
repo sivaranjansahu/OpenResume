@@ -12,6 +12,24 @@ import * as Yup from "yup";
 import { useAppDispatch } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 
+const validationSchema = Yup.object({
+  school: Yup.string()
+    .required("Required")
+    .min(3, "Too short!")
+    .max(50, "Too long!"),
+  degree: Yup.string().required("Required"),
+  major: Yup.string().required("Required"),
+  about: Yup.string().required("Required"),
+  fromYear: Yup.number()
+    .required("Required")
+    .min(1900, "Must be a valid year")
+    .max(2030, "Must be a valid year"),
+  toYear: Yup.number()
+    .required("Required")
+    .min(Yup.ref("fromYear"), "Must be a valid year")
+    .max(2030, "Must be a valid year"),
+});
+
 export default function EducationForm() {
   //const skills = useAppSelector((state) => state.skills.list);
   const dispatch = useAppDispatch();
@@ -22,23 +40,33 @@ export default function EducationForm() {
           <>
             <ToggleButton isExpanded={isExpanded} title="Education form" />
             <AccordionPanel
-              px={0}
-              // boxShadow="inner"
+              px={4}
+              borderWidth={1}
+              mb={4}
+              borderColor="primary.200"
             >
+              <Heading size="sm" mb={4}>
+                New education form
+              </Heading>
               <Formik
-                initialValues={
-                  {
-                    // skillName: "",
-                    // skillYearsExperience: "",
-                    // skillLevel: 1,
-                  }
-                }
-                onSubmit={(values: any) => {
-                  console.log(values);
+                validateOnMount={true}
+                initialValues={{
+                  school: "",
+                  degree: "",
+                  major: "",
+                  fromMonth: "jan",
+                  toMonth: "jan",
+                  fromYear: "",
+                  toYear: "",
+                  about: "",
+                }}
+                onSubmit={(values: any, { resetForm, validateForm }) => {
                   dispatch(addEducation({ ...values, id: uuidv4() }));
                   dispatch(setDirty({ isDirty: true }));
+                  resetForm({});
+                  validateForm();
                 }}
-                //validationSchema={validationSchema}
+                validationSchema={validationSchema}
               >
                 {(formik: any) => (
                   <Form>
@@ -114,7 +142,7 @@ export default function EducationForm() {
                       <Button
                         type="submit"
                         size="sm"
-                        colorScheme="blue"
+                        colorScheme="primary"
                         disabled={!formik.isValid}
                       >
                         Add education

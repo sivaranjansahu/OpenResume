@@ -8,10 +8,9 @@ import {
   useDisclosure,
   useToast,
   Tooltip,
-  Icon
+  Icon,
 } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
-
 
 import "simplebar/dist/simplebar.css";
 import {
@@ -62,30 +61,29 @@ function Dashboard() {
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  type createProfileProps={
-    proppath:string;
-    stateValue:IProfile
-  }
+  type createProfileProps = {
+    proppath: string;
+    stateValue: IProfile;
+  };
 
-  type createProfileInputType={
-    proppath:string,
-    statevalue:IProfile
-  }
+  type createProfileInputType = {
+    proppath: string;
+    statevalue: IProfile;
+  };
 
   const createProfile = (name: string) => {
-    const newProfile:createProfileInputType= {
+    const newProfile: createProfileInputType = {
       proppath: uuidv4(),
       statevalue: {
         basicInfo: {
           active: true,
           info: {
             fullName: "",
-            about:"",
-            address:"",
-            email:"",
-            linkedIn:"",
-            phoneno:"",
-            website:""
+            address: "",
+            email: "",
+            linkedIn: "",
+            phoneno: "",
+            website: "",
           },
         },
         skills: {
@@ -103,8 +101,8 @@ function Dashboard() {
         meta: {
           profileName: name,
           profileNotes: "",
-          id:uuidv4(),
-          lastUpdated:""
+          id: uuidv4(),
+          lastUpdated: "",
         },
         links: {
           active: true,
@@ -114,16 +112,16 @@ function Dashboard() {
           active: true,
           list: [],
         },
-        summary:{
-          active:true,
+        summary: {
+          active: true,
           info: {
             summary: "",
           },
         },
-        courses:{
-          active:true,
-          list:[]
-        }
+        courses: {
+          active: true,
+          list: [],
+        },
       },
     };
     electron.ipcRenderer.send(channels.CREATE_PROFILE, newProfile);
@@ -195,73 +193,82 @@ function Dashboard() {
     };
   }, [location]);
   return (
-    <Box width="100%" >
-      
-        {/* <button onClick={() => setProfileData(allState, profileId)}>
+    <Box width="100%">
+      {/* <button onClick={() => setProfileData(allState, profileId)}>
         Set data
       </button> */}
-        <TransitionGroup>
-          <CSSTransition
-            key={location.key}
-            classNames="page"
-            timeout={300}
-            unmountOnExit
-          >
-            <Switch location={location}>
-              <Route exact path={path} key={document.location.href}>
-                <Box as="section" pt={6} maxW="1600px" mx="auto" py={10}>
-                  <Flex mb={16} justifyContent="space-between">
-                    <Box>
-                      <Heading as="h1" size="lg" mb="4" mr={2} display="flex" alignItems="baseline">
-                        Profiles
-                        <Tooltip hasArrow label={message} bg="gray.300" color="black" placement="top">
-  <Box w={4}><Icon as={VscQuestion} boxSize={4}  ml={2}/></Box>
-</Tooltip>
-                      </Heading>
-                      
-                      <Box position="relative">
-                      <Text variant="note" maxW="container.sm">
-                        Resume data can be organized in profiles for quick generation of resumes in different job types.
-  
-                      </Text>
-                      
-  
-                      </Box>
-                    </Box>
-                    <CreateProfile createProfile={createProfile} />
-                  </Flex>
-                  <nav>
-                    <Grid
-                      gridTemplateColumns="repeat(4,minmax(300px,1fr))"
-                      gridGap={8}
+      <TransitionGroup>
+        <CSSTransition
+          key={location.key}
+          classNames="page"
+          timeout={300}
+          unmountOnExit
+        >
+          <Switch location={location}>
+            <Route exact path={path} key={document.location.href}>
+              <Box as="section" pt={6} maxW="1600px" mx="auto" py={10}>
+                <Flex mb={16} justifyContent="space-between">
+                  <Box>
+                    <Heading
+                      as="h1"
+                      size="lg"
+                      mb="4"
+                      mr={2}
+                      display="flex"
+                      alignItems="baseline"
                     >
-                      {allProfiles &&
-                        Object.keys(allProfiles).map(
-                          (p: any, index: number) => {
-                            return (
-                              <ProfileCard
-                                key={index}
-                                url={url}
-                                profileKey={p}
-                                //profileName={allProfiles[p].meta.profileName}
-                                deleteProfile={deleteProfile}
-                                copyProfile={copyProfile}
-                                allProfiles={allProfiles}
-                              />
-                            );
-                          }
-                        )}
-                    </Grid>
-                  </nav>
-                </Box>
-              </Route>
-              <Route path={`${path}/:profileId`} key={document.location.href}>
-                <ProfileBuilder allProfiles={allProfiles} />
-              </Route>
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
-      
+                      Profiles
+                      <Tooltip
+                        hasArrow
+                        label={message}
+                        bg="gray.300"
+                        color="black"
+                        placement="top"
+                      >
+                        <Box w={4}>
+                          <Icon as={VscQuestion} boxSize={4} ml={2} />
+                        </Box>
+                      </Tooltip>
+                    </Heading>
+
+                    <Box position="relative">
+                      <Text variant="note" maxW="container.sm">
+                        Resume data can be organized in profiles for quick
+                        generation of resumes in different job types.
+                      </Text>
+                    </Box>
+                  </Box>
+                  <CreateProfile createProfile={createProfile} />
+                </Flex>
+                <nav>
+                  <Grid
+                    gridTemplateColumns="repeat(4,minmax(300px,1fr))"
+                    gridGap={8}
+                  >
+                    {allProfiles &&
+                      Object.keys(allProfiles).map((p: any, index: number) => {
+                        return (
+                          <ProfileCard
+                            key={index}
+                            url={url}
+                            profileKey={p}
+                            //profileName={allProfiles[p].meta.profileName}
+                            deleteProfile={deleteProfile}
+                            copyProfile={copyProfile}
+                            allProfiles={allProfiles}
+                          />
+                        );
+                      })}
+                  </Grid>
+                </nav>
+              </Box>
+            </Route>
+            <Route path={`${path}/:profileId`} key={document.location.href}>
+              <ProfileBuilder allProfiles={allProfiles} />
+            </Route>
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
     </Box>
   );
 }

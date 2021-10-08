@@ -1,6 +1,6 @@
 export interface IBasicInfo {
   fullName: string;
-  about: string;
+  //about: string;
   email: string;
   address: string;
   phoneno: string;
@@ -64,20 +64,20 @@ export interface IResumeMeta {
   id: string;
   profileName: string;
   lastUpdated: string;
-  profileNotes:string;
+  profileNotes: string;
 }
 
-export interface ILink{
-  id:string;
-  title:string;
-  url:string;
+export interface ILink {
+  id: string;
+  title: string;
+  url: string;
 }
 
-export interface IProject{
-  id:string;
-  title:string;
-  about:string;
-  year:string;
+export interface IProject {
+  id: string;
+  title: string;
+  about: string;
+  year: string;
 }
 
 export interface IProfile {
@@ -102,16 +102,16 @@ export interface IProfile {
     active: boolean;
     list: IEducation[];
   };
-  courses:{
-    active:boolean;
-    list:ICourse[];
+  courses: {
+    active: boolean;
+    list: ICourse[];
   };
   links: {
     list: ILink[];
     active: boolean;
   };
-  projects:{
-    list:IProject[];
-    active:boolean;
-  }
+  projects: {
+    list: IProject[];
+    active: boolean;
+  };
 }

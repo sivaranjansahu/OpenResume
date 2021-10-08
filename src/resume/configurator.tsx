@@ -6,6 +6,7 @@ import {
   Drawer,
   DrawerBody,
   DrawerContent,
+  DrawerOverlay,
   DrawerHeader,
   Flex,
   Heading,
@@ -13,10 +14,13 @@ import {
   RadioGroup,
   SlideDirection,
   Stack,
+  Text,
+  Icon,
 } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useState } from "react";
 import { RiDownloadLine } from "react-icons/ri";
+import { VscClose, VscCloudDownload } from "react-icons/vsc";
 import MyDocument from "./generators/pdf/pdfgen";
 import ColorPicker from "./preview/components/colorpicker";
 import FontPicker from "./preview/components/fontpicker";
@@ -49,7 +53,7 @@ function DownloadButtons({ state, accentColor, format = "pdf" }: any) {
           {({ blob, url, loading, error }) => (
             <Button
               width="290px"
-              leftIcon={<RiDownloadLine />}
+              leftIcon={<VscCloudDownload />}
               bgColor="primary.400"
               color="white"
             >
@@ -61,7 +65,7 @@ function DownloadButtons({ state, accentColor, format = "pdf" }: any) {
       {format === "docx" && (
         <Button
           width="100%"
-          leftIcon={<RiDownloadLine />}
+          leftIcon={<VscCloudDownload />}
           bgColor="primary.400"
           color="white"
         >
@@ -87,10 +91,15 @@ function Configurator(props: Proptype) {
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
     <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-      {/* <DrawerOverlay /> */}
+      <DrawerOverlay />
       <DrawerContent>
         <DrawerHeader borderBottomWidth="1px" px={4}>
-          Customize & Download
+          <Flex justifyContent="space-between" alignItems="center">
+            <Text>Style & Download</Text>
+            <Box onClick={onClose} _hover={{ cursor: "pointer", color: "red" }}>
+              <Icon as={VscClose} />
+            </Box>
+          </Flex>
         </DrawerHeader>
         <DrawerBody pt={8} padding={0}>
           <Box p={4} mb={4}>

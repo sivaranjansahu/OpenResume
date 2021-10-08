@@ -15,7 +15,6 @@ const BasicInfoView: React.FC<propsType> = ({ info, styles }) => {
   return (
     <View style={styles?.contentblock}>
       <Text style={styles?.h2}>{info.fullName}</Text>
-      <Text style={styles?.h4}>{info.about}</Text>
     </View>
   );
 };

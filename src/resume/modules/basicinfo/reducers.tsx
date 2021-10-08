@@ -13,7 +13,6 @@ const initialState: BasicInfoState = {
   info: {
     fullName: "",
     email: "",
-    about: "",
     address: "",
     linkedIn: "",
     phoneno: "",

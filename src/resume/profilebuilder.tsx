@@ -41,6 +41,7 @@ import { setInitialCourses } from "./modules/courses/reducers";
 import Courses from "./modules/courses/courses";
 import { capitalize } from "../utils/common";
 import { setDirty } from "../store/store";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 const electron = window.require("electron");
 
 // export const WorkExContext = React.createContext<
@@ -134,10 +135,13 @@ const ProfileBuilder = ({ allProfiles }: any) => {
               {/* <Text fontSize="sm">Remember to save your changes</Text> */}
               <Flex
                 justifyContent="flex-end"
+                alignItems="center"
+                gridGap={4}
                 p={4}
                 pointerEvents="none"
                 sx={{ bg: "rgba(200,200,100,0.2)" }}
               >
+                Remember to
                 <Button
                   colorScheme="secondary"
                   onClick={saveChanges}
@@ -150,28 +154,29 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
 
           <Flex justifyContent="space-between" alignItems="center" mb="4">
-            <Heading size="lg">{allState.meta.profileName}</Heading>
-            {isDirty && <p>Remember to save your changes</p>}
+            <Flex>
+              <Heading size="lg">{allState.meta.profileName}</Heading>
+              <Button
+                onClick={saveChanges}
+                type="submit"
+                colorScheme="secondary"
+                //bg="secondary.100"
+                ml={8}
+                leftIcon={<CheckIcon />}
+                disabled={
+                  !allState.meta.profileName ||
+                  !isDirty ||
+                  allState.meta.profileName.length === 0
+                }
+              >
+                Save
+              </Button>
+            </Flex>
             <Button
-              onClick={saveChanges}
-              type="submit"
-              colorScheme="secondary"
-              //bg="secondary.100"
-              leftIcon={<CheckIcon />}
-              disabled={
-                !allState.meta.profileName ||
-                !isDirty ||
-                allState.meta.profileName.length === 0
-              }
-            >
-              Save
-            </Button>
-            <Button
-              position="absolute"
-              right={5}
-              top={5}
-              leftIcon={!showPreview ? <RiEyeLine /> : <RiEyeOffLine />}
+              leftIcon={!showPreview ? <VscEye /> : <VscEyeClosed />}
               onClick={() => setShowPreview(!showPreview)}
+              colorScheme="primary"
+              variant="ghost"
             >
               {showPreview ? "Hide " : "Show "} resume
             </Button>
@@ -233,7 +238,9 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                 mb={2}
                 pt={8}
               >
-                {/* <Text ml={8}>Profile info</Text> */}
+                <Heading as="h3" size="sm">
+                  Resume sections
+                </Heading>
               </Flex>
               <BasicInfo />
               <Summary />

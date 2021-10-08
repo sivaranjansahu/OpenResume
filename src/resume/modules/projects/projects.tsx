@@ -16,7 +16,7 @@ export default function Projects() {
           title="Projects"
           subTitle="Highlight relevant recent work"
         >
-          <ProjectsList mb={4} />
+          <ProjectsList />
           <AddProjectForm />
         </AccordionUnit>
       </Box>

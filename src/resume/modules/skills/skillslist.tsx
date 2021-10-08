@@ -1,25 +1,13 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/layout";
-import {
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Grid,
-  Icon,
-  Flex,
-} from "@chakra-ui/react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Icon, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { IoReorderThree } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
+import Grabber from "../../components/grabber";
 import { ISkill } from "../../interfaces/forminterfaces";
 import { removeSkill, setAllSkills } from "./reducers";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Fragment } from "react";
-import { Ri24HoursFill } from "react-icons/ri";
-import { VscGrabber } from "react-icons/vsc";
 
 const levels: any = {
   "1": "Beginner",
@@ -80,7 +68,7 @@ export default function SkillsList({ ...props }: any) {
             }
           }}
         >
-          <Table variant="simple" size="sm" mb={8}>
+          <Table variant="simple" size="sm">
             <Thead>
               <Tr>
                 <Th px={0} pb={4} pr={2} width={6}></Th>
@@ -114,7 +102,12 @@ export default function SkillsList({ ...props }: any) {
                                 {...provided.dragHandleProps}
                                 width="5%"
                               >
-                                <Icon as={VscGrabber} boxSize={4} />
+                                <Grabber />
+                                {/* <Icon
+                                  as={IoReorderThree}
+                                  boxSize={6}
+                                  color="gray.500"
+                                /> */}
                               </Td>
                               <Td px={0} width="50%">
                                 {skill.skillName}

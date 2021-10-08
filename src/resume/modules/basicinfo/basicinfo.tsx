@@ -11,7 +11,7 @@ export default function BasicInfo() {
       <Box display="flex" alignItems="flex-start">
         <Box mr="4" mt={6}>
           <Switch
-            colorScheme="blue"
+            colorScheme="secondary"
             name="basicInfoIsActive"
             isChecked={true}
             isDisabled={true}

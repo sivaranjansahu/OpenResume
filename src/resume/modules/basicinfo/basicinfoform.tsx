@@ -11,10 +11,7 @@ const validationSchema = Yup.object({
     .required("Required")
     .min(3, "Too short!")
     .max(50, "Too long!"),
-  about: Yup.string()
-    .min(20, "Too short!")
-    .max(300, "Too long!")
-    .required("Required"),
+
   email: Yup.string().email().required("Email is required!"),
   address: Yup.string().required("Address is required!"),
   phoneno: Yup.string().required("Phone number is required!"),
@@ -32,7 +29,6 @@ export default function BasicInfoBlock() {
         enableReinitialize={true}
         initialValues={{
           fullName: basicInfo.info.fullName,
-          about: basicInfo.info.about,
           address: basicInfo.info.address || "",
           email: basicInfo.info.email || "",
           linkedIn: basicInfo.info.linkedIn || "",
@@ -58,13 +54,6 @@ export default function BasicInfoBlock() {
                 type="text"
                 label="Full name"
                 name="fullName"
-                required
-              />
-              <FormikControl
-                control="textarea"
-                type="text"
-                label="Short intro"
-                name="about"
                 required
               />
               <Grid gridGap={4} width="100%" gridTemplateColumns="1fr 1fr">
@@ -108,7 +97,7 @@ export default function BasicInfoBlock() {
               <Button
                 type="submit"
                 size="sm"
-                colorScheme="blue"
+                colorScheme="primary"
                 disabled={!formik.isValid}
               >
                 Update

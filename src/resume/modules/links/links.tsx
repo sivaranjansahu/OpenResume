@@ -16,7 +16,7 @@ export default function Links() {
           title="Links"
           subTitle="Relevant links like portfolio website, LinkedIn, work hosted online."
         >
-          <LinksList mb={4} />
+          <LinksList />
           <AddLinkForm />
         </AccordionUnit>
       </Box>

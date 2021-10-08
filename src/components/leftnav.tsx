@@ -54,7 +54,7 @@ function LeftNav() {
               _hover={{ borderLeftColor: "blue.400", color: "blue.600" }}
             >
               <Grid placeItems="center">
-                <Icon as={VscBriefcase} boxSize={6} color="gray.400" />
+                <Icon as={VscBriefcase} boxSize={8} color="gray.400" />
                 <Text fontSize="12px">Profiles</Text>
               </Grid>
             </Grid>
@@ -69,7 +69,7 @@ function LeftNav() {
               _hover={{ borderLeftColor: "blue.400", color: "blue.600" }}
             >
               <Grid placeItems="center">
-                <Icon as={VscProject} boxSize={6} color="gray.400" />
+                <Icon as={VscProject} boxSize={8} color="gray.400" />
                 <Text fontSize="12px">Track</Text>
               </Grid>
             </Grid>

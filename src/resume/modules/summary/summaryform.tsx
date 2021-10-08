@@ -18,7 +18,7 @@ export default function BasicInfoBlock() {
 
   const dispatch = useAppDispatch();
   return (
-    <Box px={2} pb={8}>
+    <Box pb={8}>
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -45,7 +45,7 @@ export default function BasicInfoBlock() {
               <Button
                 type="submit"
                 size="sm"
-                colorScheme="blue"
+                colorScheme="primary"
                 disabled={!formik.isValid}
               >
                 Update

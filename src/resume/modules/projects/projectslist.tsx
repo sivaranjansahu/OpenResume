@@ -19,6 +19,7 @@ import { deleteProject, setAllProjects } from "./reducers";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { VscGrabber } from "react-icons/vsc";
 import { setDirty } from "../../../store/store";
+import Grabber from "../../components/grabber";
 
 const ProjectsUnit = (
   { project, index }: { project: IProject; index: number },
@@ -38,7 +39,11 @@ const ProjectsUnit = (
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4} px={0}>
-          {project.about}
+          <ul>
+            {project.about.split("|").map((line: any, index: number) => {
+              return <li key={index}>{line}</li>;
+            })}
+          </ul>
         </AccordionPanel>
       </AccordionItem>
       <Grid placeItems="center" height="40px" width="40px">
@@ -99,7 +104,7 @@ export default function ProjectsList({ ...props }: any) {
                             {...provided.draggableProps}
                           >
                             <Box {...provided.dragHandleProps} pt={2} pr={2}>
-                              <Icon as={VscGrabber} boxSize={4} />
+                              <Grabber />
                             </Box>
                             <Box flex={1}>
                               <ProjectsUnit

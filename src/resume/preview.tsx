@@ -24,6 +24,7 @@ import ColorPicker from "./preview/components/colorpicker";
 import MyDocument from "./generators/pdf/pdfgen";
 import Configurator from "./configurator";
 import registerFonts from "../fonts/index";
+import { VscSymbolColor } from "react-icons/vsc";
 
 interface temp {
   resumeData: IProfile;
@@ -44,9 +45,14 @@ function Preview({ resumeData }: temp) {
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
     <Box>
-      <Flex width="full" justifyContent="space-between">
-        <Button mb={4} size="sm" onClick={onOpen} leftIcon={<RiPaletteLine />}>
-        Customize & Download
+      <Flex width="full" justifyContent="flex-end" mb={4}>
+        <Button
+          variant="ghost"
+          colorScheme="primary"
+          onClick={onOpen}
+          leftIcon={<VscSymbolColor />}
+        >
+          Style & Download
         </Button>
         {/* <Flex gridGap={2}>
           <PDFDownloadLink
@@ -82,9 +88,14 @@ function Preview({ resumeData }: temp) {
         showToolbar={false}
         className="frame"
       >
-        <MyDocument state={state} accentColor={accentColor} layout={layout} selectedFont={selectedFont} />
+        <MyDocument
+          state={state}
+          accentColor={accentColor}
+          layout={layout}
+          selectedFont={selectedFont}
+        />
       </PDFViewer>
     </Box>
   );
 }
-export default React.memo(Preview)
+export default React.memo(Preview);

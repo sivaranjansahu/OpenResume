@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { VscGrabber } from "react-icons/vsc";
+import { IoReorderThree } from "react-icons/io5";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { IWorkHistory } from "../../interfaces/forminterfaces";
@@ -27,14 +28,14 @@ const WorkHistoryUnit = forwardRef(
       <Flex alignItems="flex-start" ref={ref}>
         <AccordionItem flex={1}>
           <h2>
-            <AccordionButton px={0}>
+            <AccordionButton px={0} border="none">
               <Box flex="1" textAlign="left">
                 {exp.jobTitle}, {exp.employedIn}
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} px={0}>
+          <AccordionPanel py={4} px={0}>
             <Flex justifyContent="space-between" alignItems="center">
               <Heading as="h6" fontWeight="bold" size="sm">
                 {exp.employedIn}
@@ -69,16 +70,6 @@ const WorkHistoryUnit = forwardRef(
           }}
         />
       </Flex>
-
-      // <Box as="article" borderBottomWidth={1} pb={4}>
-      //   <Heading size="lg">{exp.jobTitle}</Heading>
-      //   <h2>{exp.employedIn}</h2>
-      //   <span>
-      //     From {exp.fromMonth + " " + exp.fromYear} to{" "}
-      //     {exp.toMonth + " " + exp.toYear}
-      //   </span>
-      //   <DeleteIcon onClick={() => dispatch(removeWorkHistory(exp.id))} />
-      // </Box>
     );
   }
 );
@@ -128,8 +119,12 @@ const WorkHistoryList = ({ ...props }: any) => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                         >
-                          <Box {...provided.dragHandleProps} pt={2} pr={2}>
-                            <Icon as={VscGrabber} boxSize={4} />
+                          <Box {...provided.dragHandleProps} pt={2} pr={6}>
+                            <Icon
+                              as={IoReorderThree}
+                              boxSize={6}
+                              color="gray.500"
+                            />
                           </Box>
                           <Box flex={1}>
                             <WorkHistoryUnit key={index} exp={exp} />

@@ -5,14 +5,16 @@ import {
   Button,
   Flex,
   Grid,
+  Heading,
   VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, validate } from "uuid";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
 import { months } from "../../../shared/constants";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setDirty } from "../../../store/store";
 import ToggleButton from "../../components/togglebutton";
 import { addWorkHistory } from "./reducers";
 
@@ -42,6 +44,16 @@ const validationSchema = Yup.object({
   //.moreThanOr(Yup.ref("fromYear")),
 });
 
+const initVals = {
+  employedIn: "",
+  jobTitle: "",
+  jobDescription: "",
+  fromMonth: "jan",
+  toMonth: "jan",
+  fromYear: "",
+  toYear: "",
+};
+
 export default function WorkHistoryForm() {
   const workHistory = useAppSelector((state) => state.workHistory.list);
   const dispatch = useAppDispatch();
@@ -56,25 +68,29 @@ export default function WorkHistoryForm() {
                 title="New work history form"
               />
 
-              <AccordionPanel px={0}>
+              <AccordionPanel
+                px={4}
+                borderWidth={1}
+                mb={4}
+                borderColor="primary.200"
+              >
+                <Heading size="sm" mb={4}>
+                  New work history
+                </Heading>
                 <Formik
-                  initialValues={{}}
-                  onSubmit={(values: any) => {
+                  initialValues={initVals}
+                  validateOnMount={true}
+                  onSubmit={(values: any, { resetForm, validateForm }) => {
                     dispatch(addWorkHistory({ ...values, id: uuidv4() }));
+                    dispatch(setDirty({ isDirty: true }));
+                    resetForm({});
+                    validateForm();
                   }}
                   validationSchema={validationSchema}
                 >
                   {(formik: any) => (
                     <Form>
                       <VStack gridGap={4} alignItems="flex-start">
-                        <FormikControl
-                          control="radio"
-                          label="Relevancy"
-                          help="Mark it as relevant to display it in 'Relevant Experiences' section of the resume. You could use this to highlight experiences that are relevant to the job you are applying to."
-                          name="category"
-                          options={radioOptions}
-                          defaultValue="true"
-                        />
                         <Grid
                           gridGap={4}
                           width="100%"
@@ -143,7 +159,7 @@ export default function WorkHistoryForm() {
                         <Button
                           type="submit"
                           size="sm"
-                          colorScheme="blue"
+                          colorScheme="primary"
                           disabled={!formik.isValid}
                         >
                           Add work history
