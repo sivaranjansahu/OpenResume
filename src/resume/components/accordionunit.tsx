@@ -22,7 +22,6 @@ const AccordionUnit: React.FC<Props> = ({
       {({ isExpanded }: any) => (
         <>
           <AccordionButton
-            _expanded={{ bg: "white" }}
             _hover={{ bg: "white" }}
             px={0}
             pr={0}
@@ -32,7 +31,7 @@ const AccordionUnit: React.FC<Props> = ({
           >
             <Box flex="1" textAlign="left">
               <Heading
-                color={isExpanded ? "blue.600" : "gray.700"}
+                color={isExpanded ? "primary.400" : "gray.700"}
                 fontWeight="semibold"
                 as="h2"
                 pt={2}

@@ -14,6 +14,8 @@ import {
   Text,
   Textarea,
   useDisclosure,
+  useToast,
+  Icon,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
@@ -41,6 +43,7 @@ import { setInitialCourses } from "./modules/courses/reducers";
 import Courses from "./modules/courses/courses";
 import { capitalize } from "../utils/common";
 import { setDirty } from "../store/store";
+import { VscClose, VscEye, VscEyeClosed } from "react-icons/vsc";
 const electron = window.require("electron");
 
 // export const WorkExContext = React.createContext<
@@ -116,8 +119,31 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   const { isDirty } = allState.dirty;
 
   useEffect(() => {
-    isDirty && onOpen();
+    //isDirty && onOpen();
+    isDirty &&
+      toast({
+        // title: "Save your changes",
+        // description:
+        //   "Your changes dont get saved until you click on the Save button.",
+        // status: "success",
+        // duration: 5000,
+        // isClosable: true,
+        position: "bottom-right",
+        render: ({ onClose }) => (
+          <Box width="250px" color="white" p={3} bg="gray.600">
+            <Flex onClick={onClose}>
+              <Text fontWeight="bold">Save your changes</Text>
+              {/* <Icon as={VscClose} boxSize={4} /> */}
+            </Flex>
+            <Text fontSize="sm">
+              Your changes dont get saved until you click on the Save button.
+            </Text>
+          </Box>
+        ),
+      });
   }, [isDirty]);
+
+  const toast = useToast();
 
   return (
     <Grid
@@ -129,122 +155,113 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     >
       <Flex py={6} gridGap={{ lg: 18, md: 12 }} minW="1400px">
         <Box width="1000px" mx="auto">
-          <Box position="fixed" right={10} bottom={0} p={4} width={32}>
-            <Slide direction="bottom" in={isOpen} style={{ zIndex: 10 }}>
-              {/* <Text fontSize="sm">Remember to save your changes</Text> */}
-              <Flex
-                justifyContent="flex-end"
-                p={4}
-                pointerEvents="none"
-                sx={{ bg: "rgba(200,200,100,0.2)" }}
-              >
+          <Box position="fixed" right={10} bottom={0} p={4} width={32}></Box>
+          <Box
+            boxShadow={isDirty ? "purple" : "transparent"}
+            transition="ease-in"
+            padding={4}
+          >
+            <Flex justifyContent="space-between" alignItems="center" mb="4">
+              <Flex>
+                <Heading size="lg">{allState.meta.profileName}</Heading>
                 <Button
-                  colorScheme="secondary"
                   onClick={saveChanges}
-                  pointerEvents="auto"
+                  type="submit"
+                  colorScheme="secondary"
+                  //bg="secondary.100"
+                  ml={8}
+                  leftIcon={<CheckIcon />}
+                  disabled={
+                    !allState.meta.profileName ||
+                    !isDirty ||
+                    allState.meta.profileName.length === 0
+                  }
                 >
-                  Save changes
+                  Save
                 </Button>
               </Flex>
-            </Slide>
-          </Box>
-
-          <Flex justifyContent="space-between" alignItems="center" mb="4">
-            <Heading size="lg">{allState.meta.profileName}</Heading>
-            {isDirty && <p>Remember to save your changes</p>}
-            <Button
-              onClick={saveChanges}
-              type="submit"
-              colorScheme="secondary"
-              //bg="secondary.100"
-              leftIcon={<CheckIcon />}
-              disabled={
-                !allState.meta.profileName ||
-                !isDirty ||
-                allState.meta.profileName.length === 0
-              }
-            >
-              Save
-            </Button>
-            <Button
-              position="absolute"
-              right={5}
-              top={5}
-              leftIcon={!showPreview ? <RiEyeLine /> : <RiEyeOffLine />}
-              onClick={() => setShowPreview(!showPreview)}
-            >
-              {showPreview ? "Hide " : "Show "} resume
-            </Button>
-          </Flex>
-
-          <Grid
-            gridTemplateColumns="1fr 2fr"
-            gridGap={4}
-            p={4}
-            bg="gray.700"
-            py={4}
-            color="whiteAlpha.800"
-          >
-            <Box as="header" alignItems="baseline" mb={2}>
-              <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
-                Title
-              </FormLabel>
-              <Input
-                variant="outline"
-                placeholder="Profile"
-                fontSize="md"
-                width="100%"
-                defaultValue="Profile name"
-                name="profilename"
-                value={capitalize(allState.meta.profileName)}
-                onChange={(e) => {
-                  dispatch(setName(e.target.value));
-                  dispatch(setDirty({ isDirty: true }));
-                }}
-              />
-            </Box>
-            <Box alignItems="baseline" mb={4}>
-              <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
-                Notes
-              </FormLabel>
-              <Input
-                fontSize="md"
-                variant="outline"
-                placeholder="Notes about this portfolio."
-                name="profilenotes"
-                width="100%"
-                rows={1}
-                value={allState.meta.profileNotes}
-                onChange={(e) => {
-                  dispatch(setNotes(e.target.value));
-                  dispatch(setDirty({ isDirty: true }));
-                }}
-              />
-            </Box>
-            {/* <Box gridColumn="1/3" width="100%" textAlign="right" as="sub" color="whiteAlpha.500">Contents of this section wont appear on the resume.</Box> */}
-          </Grid>
-          <Accordion allowToggle>
-            <Box width="100%">
-              <Flex
-                fontSize="sm"
-                bg="primary.400"
-                p={4}
-                color="white"
-                mb={2}
-                pt={8}
+              <Button
+                leftIcon={!showPreview ? <VscEye /> : <VscEyeClosed />}
+                onClick={() => setShowPreview(!showPreview)}
+                colorScheme="primary"
+                variant="ghost"
               >
-                {/* <Text ml={8}>Profile info</Text> */}
-              </Flex>
-              <BasicInfo />
-              <Summary />
-              <WorkHistory />
-              <Skills />
-              <Education />
-              <Courses />
-              <Links />
-              <Projects />
-            </Box>
-          </Accordion>
+                {showPreview ? "Hide " : "Show "} resume
+              </Button>
+            </Flex>
+
+            <Grid
+              gridTemplateColumns="1fr 2fr"
+              gridGap={4}
+              p={4}
+              bg="gray.700"
+              py={4}
+              color="whiteAlpha.800"
+            >
+              <Box as="header" alignItems="baseline" mb={2}>
+                <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
+                  Title
+                </FormLabel>
+                <Input
+                  variant="outline"
+                  placeholder="Profile"
+                  fontSize="md"
+                  width="100%"
+                  defaultValue="Profile name"
+                  name="profilename"
+                  value={capitalize(allState.meta.profileName)}
+                  maxLength={25}
+                  onChange={(e) => {
+                    dispatch(setName(e.target.value));
+                    dispatch(setDirty({ isDirty: true }));
+                  }}
+                />
+              </Box>
+              <Box alignItems="baseline" mb={4}>
+                <FormLabel width="80px" fontSize="sm" color="whiteAlpha.500">
+                  Notes
+                </FormLabel>
+                <Input
+                  fontSize="md"
+                  variant="outline"
+                  placeholder="Notes about this portfolio."
+                  name="profilenotes"
+                  width="100%"
+                  rows={1}
+                  value={allState.meta.profileNotes}
+                  onChange={(e) => {
+                    dispatch(setNotes(e.target.value));
+                    dispatch(setDirty({ isDirty: true }));
+                  }}
+                />
+              </Box>
+              {/* <Box gridColumn="1/3" width="100%" textAlign="right" as="sub" color="whiteAlpha.500">Contents of this section wont appear on the resume.</Box> */}
+            </Grid>
+            <Accordion allowToggle>
+              <Box width="100%">
+                <Flex
+                  fontSize="sm"
+                  bg="primary.400"
+                  p={4}
+                  color="white"
+                  mb={2}
+                  pt={8}
+                >
+                  <Heading as="h3" size="sm">
+                    Resume sections
+                  </Heading>
+                </Flex>
+                <BasicInfo />
+                <Summary />
+                <WorkHistory />
+                <Skills />
+                <Education />
+                <Courses />
+                <Links />
+                <Projects />
+              </Box>
+            </Accordion>
+          </Box>
         </Box>
         {showPreview && (
           <Container

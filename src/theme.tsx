@@ -17,6 +17,10 @@ const theme = extendTheme({
     extrabold: 800,
     black: 900,
   },
+  shadows: {
+    purple: "0px 0px 7px 0px #c337c5",
+    transparent: "0px 0px 7px 0px transparent",
+  },
   colors: {
     primary: {
       50: "#efedff",

@@ -140,16 +140,20 @@ export const CRadio = (props: OtherProps & FieldHookConfig<string>) => {
 // };
 
 function Input(props: any) {
-  const { label, name, ...rest } = props;
+  const { label, name, help, ...rest } = props;
   return (
     <Field name={name}>
       {({ field, form }: any) => {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-            <FormLabel htmlFor={name} fontSize="sm" color="gray.600" >
-              {label}
-            </FormLabel>
-            <ChakraInput id={name} {...rest} {...field} size="sm" bg="white"  />
+            <Flex alignItems="baseline">
+              <FormLabel htmlFor={name} fontSize="sm" color="gray.600">
+                {label}
+              </FormLabel>
+              {help && <Text fontSize="10px">{help}</Text>}
+            </Flex>
+
+            <ChakraInput id={name} {...rest} {...field} size="sm" bg="white" />
             <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
           </FormControl>
         );
@@ -185,7 +189,7 @@ function Textarea(props: any) {
         return (
           <FormControl isInvalid={form.errors[name] && form.touched[name]}>
             <Flex alignItems="baseline">
-              <FormLabel fontSize="sm" htmlFor={name}  color="gray.600">
+              <FormLabel fontSize="sm" htmlFor={name} color="gray.600">
                 {label}
               </FormLabel>
               {help && <Text fontSize="10px">{help}</Text>}
@@ -213,7 +217,7 @@ function RadioButtons(props: any) {
       {({ field, form }: FieldProps) => (
         <FormControl isInvalid={!!form.errors[name] && !!form.touched[name]}>
           <Flex alignItems="center">
-            <FormLabel htmlFor={name} fontSize="sm"  color="gray.600">
+            <FormLabel htmlFor={name} fontSize="sm" color="gray.600">
               {label}
             </FormLabel>
             {help && help.length > 0 && (
@@ -278,6 +282,26 @@ function Switch(props: any) {
   );
 }
 
+function Checkbox(props: any) {
+  const { label, name, ...rest } = props;
+  return (
+    <Field name={name}>
+      {({ field, form }: any) => {
+        return (
+          <FormControl alignItems="center">
+            <FormLabel htmlFor={name} fontSize="sm" color="gray.600">
+              &nbsp;
+            </FormLabel>
+            <ChakraCheckbox id={name} {...rest} {...field}>
+              {label}
+            </ChakraCheckbox>
+          </FormControl>
+        );
+      }}
+    </Field>
+  );
+}
+
 export default function FormikControl(props: any) {
   const { control, ...rest } = props;
 
@@ -292,6 +316,8 @@ export default function FormikControl(props: any) {
       return <Select {...rest} />;
     case "switch":
       return <Switch {...rest} />;
+    case "checkbox":
+      return <Checkbox {...rest} />;
     default:
       return <Input {...rest} />;
   }

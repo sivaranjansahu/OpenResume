@@ -1,6 +1,6 @@
 export interface IBasicInfo {
   fullName: string;
-  about: string;
+  //about: string;
   email: string;
   address: string;
   phoneno: string;
@@ -12,21 +12,21 @@ export interface ISummary {
   summary: string;
 }
 
-export interface workExp {
-  company: string;
-  fromYear: number;
-  toYear: number;
-  role: string;
-  fromMonth: string;
-  toMonth: string;
-  jobdescription: string;
-}
+// export interface workExp {
+//   company: string;
+//   fromYear: number;
+//   toYear: number;
+//   role: string;
+//   fromMonth: string;
+//   toMonth: string;
+//   jobdescription: string;
+// }
 
 export interface ISkill {
   id: string;
   skillName: string;
   skillLevel: number;
-  skillYearsExperience: number;
+  skillYearsExperience?: number;
 }
 
 export interface ICourse {
@@ -46,6 +46,7 @@ export interface IWorkHistory {
   jobTitle: string;
   jobDescription: string;
   isCurrent?: boolean;
+  jobLocation: string;
 }
 
 export interface IEducation {
@@ -64,20 +65,20 @@ export interface IResumeMeta {
   id: string;
   profileName: string;
   lastUpdated: string;
-  profileNotes:string;
+  profileNotes: string;
 }
 
-export interface ILink{
-  id:string;
-  title:string;
-  url:string;
+export interface ILink {
+  id: string;
+  title: string;
+  url: string;
 }
 
-export interface IProject{
-  id:string;
-  title:string;
-  about:string;
-  year:string;
+export interface IProject {
+  id: string;
+  title: string;
+  about: string;
+  year: string;
 }
 
 export interface IProfile {
@@ -102,16 +103,16 @@ export interface IProfile {
     active: boolean;
     list: IEducation[];
   };
-  courses:{
-    active:boolean;
-    list:ICourse[];
+  courses: {
+    active: boolean;
+    list: ICourse[];
   };
   links: {
     list: ILink[];
     active: boolean;
   };
-  projects:{
-    list:IProject[];
-    active:boolean;
-  }
+  projects: {
+    list: IProject[];
+    active: boolean;
+  };
 }

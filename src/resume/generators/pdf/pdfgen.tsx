@@ -1,19 +1,22 @@
 import {
-    Document,
-    Font, Page,
-    PDFViewer, StyleSheet, Text,
-    View
+  Document,
+  Font,
+  Page,
+  PDFViewer,
+  StyleSheet,
+  Text,
+  View,
 } from "@react-pdf/renderer";
-import React from "react";
+import React, { useState } from "react";
 // import InterBold from "../../../fonts/Inter/Inter-Bold.ttf";
 // import InterMedium from "../../../fonts/Inter/Inter-Medium.ttf";
-// import InterRegular from "../../../fonts/Inter/Inter-Regular.ttf"; 
+// import InterRegular from "../../../fonts/Inter/Inter-Regular.ttf";
 import BasicInfoView from "../../modules/basicinfo/resumeview";
 import SkillsView from "../../modules/skills/resumeview";
 import WorkHistoryView from "../../modules/workhistory/resumeview";
-import Template1 from "./template1";
-import Template2 from "./template2";
-import styles from './basestyles'
+import Template1 from "./templates/template1";
+import Template2 from "./templates/template2";
+import styles from "./basestyles";
 // const source ='https://fonts.googleapis.com/css2?family=Pacifico&display=swap';
 // Font.register({
 //   family: "VisbyCF",
@@ -25,15 +28,14 @@ import styles from './basestyles'
 // });
 
 type templateType = {
-  [key: string]: any
-}
-
-const templates:templateType = {
-  "template1": Template1,
-  "template2": Template2,
-  "template3": Template1,
+  [key: string]: any;
 };
 
+const templates: templateType = {
+  template1: Template1,
+  template2: Template2,
+  template3: Template1,
+};
 
 const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
 
@@ -44,24 +46,35 @@ async function getProps() {
   };
 }
 
-
 // Create Document Component
 const PDFDocument = (props: any) => {
-  const { state, accentColor,layout="template1",selectedFont="opensans" } = props;
+  const {
+    state,
+    accentColor,
+    layout = "template1",
+    selectedFont = "opensans",
+    forceUpdate = 1,
+  } = props;
   const { skills, workHistory, education, basicInfo } = state;
   //styles.blockHeader.color = accentColor;
-  const id="template1";
+  const id = "template1";
   const TemplateComponent = templates[layout];
   // useEffect(() => {
   //   styles.blockHeader.color = accentColor;
   //   console.log("selected color", accentColor);
   // }, [accentColor]);
+
   return (
     <Document>
-      <TemplateComponent state={state} accentColor={accentColor} font={selectedFont}/>
+      <TemplateComponent
+        state={state}
+        accentColor={accentColor}
+        font={selectedFont}
+        forceUpdate={forceUpdate}
+      />
     </Document>
   );
 };
 
-
+//export default React.memo(PDFDocument);
 export default PDFDocument;

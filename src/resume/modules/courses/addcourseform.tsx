@@ -5,12 +5,14 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Heading,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setDirty } from "../../../store/store";
 import ToggleButton from "../../components/togglebutton";
 import { addCourse } from "./reducers";
 
@@ -19,7 +21,10 @@ const validationSchema = Yup.object({
     .required("Required")
     .min(3, "Too short!")
     .max(30, "Too long!"),
-  year: Yup.string().required("Required").min(3, "Too short!"),
+  year: Yup.number()
+    .required("Required")
+    .min(1900, "Must be a valid year")
+    .max(2030, "Must be a valid year"),
 });
 
 const AddCoursesForm = () => {
@@ -34,18 +39,26 @@ const AddCoursesForm = () => {
           <>
             <ToggleButton isExpanded={isExpanded} title="New course form" />
             <AccordionPanel
-              px={0}
-              // boxShadow="inner"
+              px={4}
+              borderWidth={1}
+              mb={4}
+              borderColor="primary.200"
             >
+              <Heading size="sm" mb={4}>
+                New course form
+              </Heading>
               <Formik
+                validateOnMount={true}
                 initialValues={{
                   title: "",
                   institute: "",
                   year: "",
                 }}
-                onSubmit={(values: any) => {
-                  console.log(values);
+                onSubmit={(values: any, { resetForm, validateForm }) => {
                   dispatch(addCourse({ ...values, id: uuidv4() }));
+                  dispatch(setDirty({ isDirty: true }));
+                  resetForm({});
+                  validateForm();
                 }}
                 validationSchema={validationSchema}
               >
@@ -73,7 +86,7 @@ const AddCoursesForm = () => {
                         />
                         <FormikControl
                           control="input"
-                          type="text"
+                          type="number"
                           label="Year"
                           name="year"
                           required
@@ -83,7 +96,7 @@ const AddCoursesForm = () => {
                       <Button
                         type="submit"
                         size="sm"
-                        colorScheme="blue"
+                        colorScheme="primary"
                         disabled={!formik.isValid}
                       >
                         Add

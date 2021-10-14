@@ -35,7 +35,12 @@ function CreateProfile({ createProfile }: any) {
 
   return (
     <>
-      <Button onClick={onOpen} size="md" colorScheme="blue" leftIcon={<BiPlus />}>
+      <Button
+        onClick={onOpen}
+        size="md"
+        colorScheme="primary"
+        leftIcon={<BiPlus />}
+      >
         New profile
       </Button>
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -63,7 +68,7 @@ function CreateProfile({ createProfile }: any) {
               Close
             </Button> */}
             <Button
-              colorScheme="blue"
+              colorScheme="primary"
               onClick={() => {
                 createProfile(profileName);
                 onClose();

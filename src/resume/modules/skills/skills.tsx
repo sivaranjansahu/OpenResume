@@ -17,7 +17,7 @@ export default function SkillsSection() {
           title="Skills"
           subTitle="list of skills/competencies and the proficiency in each"
         >
-          <SkillsList mb={4} />
+          <SkillsList />
           <AddSkillsForm />
         </AccordionUnit>
       </Box>

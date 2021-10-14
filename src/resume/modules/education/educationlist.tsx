@@ -23,17 +23,22 @@ const EducationUnit = ({ ed }: { ed: IEducation }) => {
         <h2>
           <AccordionButton px={0}>
             <Box flex="1" textAlign="left">
-              {ed.school}
+              {ed.degree}
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4} px={0}>
-          <h2>{ed.degree}</h2>
-          <span>
-            From {ed.fromMonth + " " + ed.fromYear} to{" "}
-            {ed.toMonth + " " + ed.toYear}
-          </span>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Heading as="h6" fontWeight="bold" size="sm">
+              {ed.school}
+            </Heading>
+            <Text fontSize="sm">
+              From {ed.fromMonth + " " + ed.fromYear} to{" "}
+              {ed.toMonth + " " + ed.toYear}
+            </Text>
+          </Flex>
+
           <Box>{ed.about}</Box>
         </AccordionPanel>
       </AccordionItem>

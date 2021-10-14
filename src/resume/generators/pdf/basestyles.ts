@@ -1,26 +1,46 @@
 import {
-    Document,
-    Font, Page,
-    PDFViewer, StyleSheet, Text,
-    View
+  Document,
+  Font,
+  Page,
+  PDFViewer,
+  StyleSheet,
+  Text,
+  View,
 } from "@react-pdf/renderer";
-
-
-  
+import { Style as PDFStyle } from "@react-pdf/types";
+import {
+  IProfile,
+  ISkill,
+  IWorkHistory,
+} from "../../interfaces/forminterfaces";
 type propTypes = {
-  fontFamily:string,
-  accentColor:string
-}
+  fontFamily: string;
+  accentColor: string;
+};
+
+export type resumeStyleType = {
+  page: PDFStyle;
+  sectionHeader: PDFStyle;
+  subSectionHeader: PDFStyle;
+
+  section: PDFStyle;
+  main: PDFStyle;
+  aside: PDFStyle;
+  sectionContainer: PDFStyle;
+  subSectionContainer: PDFStyle;
+  expHeader: PDFStyle;
+};
+
 // Create styles
-const styleGen = ({fontFamily,accentColor= "#3182CE"}:propTypes)=>{
-console.log("setting style to "+ fontFamily,accentColor)
+const styleGen = ({ fontFamily, accentColor = "#3182CE" }: propTypes) => {
+  console.log("setting style to " + fontFamily, accentColor);
   const colors = {
-    accent:accentColor,
+    accent: accentColor,
     body: "#111",
     heading: accentColor,
   };
 
-  return StyleSheet.create({
+  const customStyles: resumeStyleType = {
     page: {
       flexDirection: "row",
       backgroundColor: "#fff",
@@ -30,14 +50,62 @@ console.log("setting style to "+ fontFamily,accentColor)
       fontFamily: fontFamily,
       color: colors.body,
     },
-  
+    sectionHeader: {
+      borderBottom: "0.2px solid #888",
+      paddingBottom: 2,
+      marginBottom: 8,
+      color: colors.heading,
+      fontSize: 10,
+      fontWeight: 600,
+      width: "100%",
+    },
+    sectionContainer: {},
+    subSectionContainer: {
+      marginBottom: 8,
+    },
+    subSectionHeader: {
+      marginBottom: 4,
+    },
+
     section: {
-      // margin: 10,
+      //padding: 10,
+      width: "100%",
+      marginBottom: 16,
+    },
+    main: {
+      width: "100%",
       padding: 10,
-      // display:"flex",
+      // paddingRight: 10,
+    },
+    aside: {
+      width: "25%",
+      backgroundColor: "#ebebeb",
+      padding: 10,
+    },
+    expHeader: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+  };
+
+  const newStyleObj = StyleSheet.create(customStyles);
+  console.log(newStyleObj);
+
+  const styleObj = StyleSheet.create({
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#fff",
+      alignItems: "stretch",
+      fontSize: 9,
+      lineHeight: 1.5,
+      fontFamily: fontFamily,
+      color: colors.body,
+    },
+
+    section: {
+      padding: 10,
       width: "75%",
-      // flexGrow: 1,
-      // backgroundColor:"red"
     },
     main: {
       width: "100%",
@@ -81,9 +149,13 @@ console.log("setting style to "+ fontFamily,accentColor)
     },
     blockHeader: {
       borderBottom: "0.2px solid #888",
-      paddingBottom: 4,
+      paddingBottom: 2,
       marginBottom: 8,
       color: colors.heading,
+      fontSize: 10,
+      fontWeight: 600,
+      width: "100%",
+
       // width: "100%",
     },
     subBlockHeader: {
@@ -106,11 +178,9 @@ console.log("setting style to "+ fontFamily,accentColor)
       flexDirection: "row",
       justifyContent: "space-between",
     },
-    //   italic:{
-    //       textStyle:"italic"
-    //   }
   });
-}
- 
 
-  export default styleGen;
+  return newStyleObj;
+};
+
+export default styleGen;

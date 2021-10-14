@@ -1,36 +1,39 @@
 import { IWorkHistory } from "../../interfaces/forminterfaces";
 import { View, Text } from "@react-pdf/renderer";
+import { Style as PDFStyle } from "@react-pdf/types";
 import { LI, UL } from "../../preview/components/list";
-
+import { resumeStyleType } from "../../generators/pdf/basestyles";
 
 type propsType = {
-  state:{
-    list:IWorkHistory[];
+  state: {
+    list: IWorkHistory[];
     active?: boolean;
-  } ,
-  styles?: any;
-};
-
-export type stylesType = {
-  subSectionContainer?: any;
-  sectionContainer?: any;
-  subSectionHeader?: any;
-  jobTitle?: any;
-  companyName?: any;
-  duration?: any;
+  };
+  styles: resumeStyleType;
 };
 
 function ResumeView(props: propsType) {
-  const { state, styles = {} } = props;
+  const { state, styles } = props;
   if (!state.active) {
     return null;
   }
 
+  const workHistoryStyles: { [key: string]: PDFStyle } = {
+    jobTitle: {
+      ...styles.subSectionHeader,
+      textTransform: "uppercase",
+    },
+    companyName: {
+      color: "green",
+    },
+    duration: {
+      color: "brown",
+    },
+  };
+
   return (
-    <View style={styles.contentblock}>
-      <Text style={{ ...styles.h3, ...styles.blockHeader }}>
-        Relevant Experience
-      </Text>
+    <View style={styles.section}>
+      <Text style={styles.sectionHeader}>Relevant Experience</Text>
       <View style={styles.sectionContainer}>
         {state.list.map((exp, index) => {
           const { jobDescription } = exp;
@@ -39,20 +42,26 @@ function ResumeView(props: propsType) {
             <View style={styles.subSectionContainer}>
               <View
                 style={[
-                  styles.subSectionHeader,
                   { flexDirection: "row", justifyContent: "space-between" },
                 ]}
               >
                 <View>
-                  <Text style={styles.jobTitle}>
-                    {exp.jobTitle}{" "}
-                    <Text style={styles.companyName}>{exp.employedIn}</Text>
+                  <Text>
+                    <Text style={workHistoryStyles.jobTitle}>
+                      {exp.jobTitle}{" "}
+                    </Text>
+                    <Text style={workHistoryStyles.companyName}>
+                      {exp.employedIn}
+                    </Text>
                   </Text>
                 </View>
                 <View>
-                  <Text
-                    style={styles.duration}
-                  >{`${exp.fromMonth} ${exp.fromYear} to ${exp.toMonth} ${exp.toYear}`}</Text>
+                  <Text style={workHistoryStyles.duration}>
+                    {`${exp.fromMonth} ${exp.fromYear}`}{" "}
+                    {!exp.isCurrent
+                      ? `to ${exp.toMonth} ${exp.toYear}`
+                      : "to present"}
+                  </Text>
                 </View>
               </View>
               <View>

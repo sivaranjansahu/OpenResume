@@ -5,6 +5,7 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Heading,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
@@ -17,7 +18,7 @@ import { setDirty } from "../../../store/store";
 
 const validationSchema = Yup.object({
   skillName: Yup.string().required("Required").max(30, "Too long!"),
-  skillYearsExperience: Yup.number().required("Required"),
+  //skillYearsExperience: Yup.number().required("Required"),
 });
 
 const radioOptions = [
@@ -39,46 +40,41 @@ const AddSkillsForm = () => {
           <>
             <ToggleButton isExpanded={isExpanded} title="New skill form" />
             <AccordionPanel
-              px={0}
+              px={4}
+              borderWidth={1}
+              mb={4}
+              borderColor="primary.200"
               // boxShadow="inner"
             >
+              <Heading size="sm" mb={4}>
+                New skill form
+              </Heading>
               <Formik
+                validateOnMount={true}
                 initialValues={{
                   skillName: "",
-                  skillYearsExperience: "",
+                  //skillYearsExperience: "",
                   skillLevel: 1,
                 }}
-                onSubmit={(values: any) => {
+                onSubmit={(values: any, { resetForm, validateForm }) => {
                   console.log(values);
                   dispatch(addSkill({ ...values, id: uuidv4() }));
                   dispatch(setDirty({ isDirty: true }));
+                  resetForm({});
+                  validateForm();
                 }}
                 validationSchema={validationSchema}
               >
                 {(formik: any) => (
                   <Form>
                     <VStack gridGap={4} alignItems="flex-start">
-                      <Grid
-                        gridGap={4}
-                        width="100%"
-                        gridTemplateColumns="2fr 1fr"
-                      >
-                        <FormikControl
-                          control="input"
-                          type="text"
-                          label="Skill"
-                          name="skillName"
-                          required
-                        />
-
-                        <FormikControl
-                          control="input"
-                          type="number"
-                          label="Number of years"
-                          name="skillYearsExperience"
-                          required
-                        />
-                      </Grid>
+                      <FormikControl
+                        control="input"
+                        type="text"
+                        label="Skill"
+                        name="skillName"
+                        required
+                      />
 
                       <FormikControl
                         control="radio"
@@ -91,7 +87,7 @@ const AddSkillsForm = () => {
                       <Button
                         type="submit"
                         size="sm"
-                        colorScheme="blue"
+                        colorScheme="primary"
                         disabled={!formik.isValid}
                       >
                         Add skill

@@ -5,6 +5,7 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Heading,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
@@ -35,17 +36,25 @@ const AddLinkstForm = () => {
           <>
             <ToggleButton isExpanded={isExpanded} title="New link form" />
             <AccordionPanel
-              px={0}
-              // boxShadow="inner"
+              px={4}
+              borderWidth={1}
+              mb={4}
+              borderColor="primary.200"
             >
+              <Heading size="sm" mb={4}>
+                New link form
+              </Heading>
               <Formik
+                validateOnMount={true}
                 initialValues={{
                   title: "",
                   url: "",
                 }}
-                onSubmit={(values: any) => {
+                onSubmit={(values: any, { resetForm, validateForm }) => {
                   dispatch(addLink({ ...values, id: uuidv4() }));
                   dispatch(setDirty({ isDirty: true }));
+                  resetForm({});
+                  validateForm();
                 }}
                 validationSchema={validationSchema}
               >
@@ -77,7 +86,7 @@ const AddLinkstForm = () => {
                       <Button
                         type="submit"
                         size="sm"
-                        colorScheme="blue"
+                        colorScheme="primary"
                         disabled={!formik.isValid}
                       >
                         Add link
