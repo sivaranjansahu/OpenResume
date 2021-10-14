@@ -21,6 +21,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useState } from "react";
 import { RiDownloadLine } from "react-icons/ri";
 import { VscClose, VscCloudDownload } from "react-icons/vsc";
+import { number } from "yup";
 import MyDocument from "./generators/pdf/pdfgen";
 import ColorPicker from "./preview/components/colorpicker";
 import FontPicker from "./preview/components/fontpicker";
@@ -35,6 +36,8 @@ type Proptype = {
   updateAccentColor: Function;
   setLayout: Function;
   setSelectedFont: Function;
+  layout: string;
+  selectedFont: string;
 };
 
 const radioOptions = [
@@ -42,12 +45,25 @@ const radioOptions = [
   { key: "docx", value: "docx", label: "Word" },
 ];
 
-function DownloadButtons({ state, accentColor, format = "pdf" }: any) {
+function DownloadButtons({
+  state,
+  accentColor,
+  format = "pdf",
+  selectedFont,
+  layout,
+}: any) {
   return (
     <Flex gridGap={2} p={4}>
       {format === "pdf" && (
         <PDFDownloadLink
-          document={<MyDocument state={state} accentColor={accentColor} />}
+          document={
+            <MyDocument
+              state={state}
+              accentColor={accentColor}
+              layout={layout}
+              selectedFont={selectedFont}
+            />
+          }
           fileName="somename.pdf"
         >
           {({ blob, url, loading, error }) => (

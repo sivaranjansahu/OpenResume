@@ -76,9 +76,6 @@ export default function SkillsList({ ...props }: any) {
                   Skill
                 </Th>
                 <Th px={0} pb={4}>
-                  Years
-                </Th>
-                <Th px={0} pb={4}>
                   Proficiency
                 </Th>
                 <Th px={0} pb={4}></Th>
@@ -112,10 +109,8 @@ export default function SkillsList({ ...props }: any) {
                               <Td px={0} width="50%">
                                 {skill.skillName}
                               </Td>
-                              <Td px={0} width="10%">
-                                {skill.skillYearsExperience}
-                              </Td>
-                              <Td px={0} width="30%">
+
+                              <Td px={0} width="40%">
                                 {levels[skill.skillLevel.toString()]}
                               </Td>
                               <Td px={0} textAlign="right">

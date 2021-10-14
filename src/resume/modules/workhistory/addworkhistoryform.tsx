@@ -8,7 +8,7 @@ import {
   Heading,
   VStack,
 } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikBag, FormikState } from "formik";
 import { v4 as uuidv4, validate } from "uuid";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
@@ -18,28 +18,33 @@ import { setDirty } from "../../../store/store";
 import ToggleButton from "../../components/togglebutton";
 import { addWorkHistory } from "./reducers";
 
-const radioOptions = [
-  { key: "Relevant", value: "true" },
-  {
-    key: "Other",
-    value: "false",
-  },
-];
-
 const validationSchema = Yup.object({
   employedIn: Yup.string().required("Required"),
   jobTitle: Yup.string().required("Required"),
   jobDescription: Yup.string().required("Required"),
   fromMonth: Yup.string().required("Required"),
-  toMonth: Yup.string().required("Required"),
+
+  jobLocation: Yup.string().required("Required"),
+  isCurrent: Yup.boolean(),
   fromYear: Yup.number()
-    .required("Required")
+    //.required("Required")
     .min(1900, "Must be a valid year")
     .max(2030, "Must be a valid year"),
+  // toYear: Yup.number()
+  //   //.required("Required")
+  //   .min(Yup.ref("fromYear"), "Must be a valid year")
+  //   .max(2030, "Must be a valid year"),
+  toMonth: Yup.string().when("isCurrent", {
+    is: false,
+    then: Yup.string().required("Must enter To month"),
+  }),
   toYear: Yup.number()
-    .required("Required")
-    .min(Yup.ref("fromYear"), "Must be a valid year")
-    .max(2030, "Must be a valid year"),
+    .min(Yup.ref("fromYear"), "To year must be equal to or more than From year")
+    .max(2030, "Must be a valid year")
+    .when("isCurrent", {
+      is: false,
+      then: Yup.number().required("Must enter toYear"),
+    }),
 
   //.moreThanOr(Yup.ref("fromYear")),
 });
@@ -48,10 +53,11 @@ const initVals = {
   employedIn: "",
   jobTitle: "",
   jobDescription: "",
-  fromMonth: "jan",
-  toMonth: "jan",
+  fromMonth: "Jan",
+  toMonth: "Jan",
   fromYear: "",
   toYear: "",
+  jobLocation: "",
 };
 
 export default function WorkHistoryForm() {
@@ -88,7 +94,7 @@ export default function WorkHistoryForm() {
                   }}
                   validationSchema={validationSchema}
                 >
-                  {(formik: any) => (
+                  {(formik) => (
                     <Form>
                       <VStack gridGap={4} alignItems="flex-start">
                         <Grid
@@ -102,6 +108,14 @@ export default function WorkHistoryForm() {
                             label="Company"
                             name="employedIn"
                             required
+                          />
+                          <FormikControl
+                            control="input"
+                            type="text"
+                            label="Location"
+                            name="jobLocation"
+                            required
+                            help="City/State/Country"
                           />
                           <FormikControl
                             control="input"
@@ -138,13 +152,14 @@ export default function WorkHistoryForm() {
                             />
                           </Flex>
 
-                          <Flex gridGap={4}>
+                          <Flex gridGap={4} alignItems="baseline">
                             <FormikControl
                               control="select"
                               label="To"
                               name="toMonth"
                               options={months}
                               defaultValue="Jan"
+                              disabled={formik.values.isCurrent}
                             />
                             <FormikControl
                               control="input"
@@ -152,6 +167,13 @@ export default function WorkHistoryForm() {
                               label=" &nbsp;"
                               name="toYear"
                               required
+                              disabled={formik.values.isCurrent}
+                            />
+                            <FormikControl
+                              control="checkbox"
+                              type="boolean"
+                              label="Current ?"
+                              name="isCurrent"
                             />
                           </Flex>
                         </Flex>

@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
     .max(50, "Too long!"),
   degree: Yup.string().required("Required"),
   major: Yup.string().required("Required"),
-  about: Yup.string().required("Required"),
+  about: Yup.string(),
   fromYear: Yup.number()
     .required("Required")
     .min(1900, "Must be a valid year")

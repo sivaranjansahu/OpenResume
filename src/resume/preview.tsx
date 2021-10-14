@@ -9,7 +9,7 @@ import {
   SlideDirection,
   useDisclosure,
 } from "@chakra-ui/react";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer, BlobProvider } from "@react-pdf/renderer";
 import React, { useState } from "react";
 import {
   RiDownloadLine,
@@ -29,6 +29,7 @@ import { VscSymbolColor } from "react-icons/vsc";
 interface temp {
   resumeData: IProfile;
 }
+
 function Preview({ resumeData }: temp) {
   const [templateId, setTemplateId] = useState<string>("temp1");
   const [accentColor, setAccentColor] = useState("#333");
@@ -42,7 +43,7 @@ function Preview({ resumeData }: temp) {
     setAccentColor(color);
   }
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [placement, setPlacement] = useState<SlideDirection>("right");
+  const [placement, setPlacement] = useState(0);
   return (
     <Box>
       <Flex width="full" justifyContent="flex-end" mb={4}>
@@ -54,21 +55,6 @@ function Preview({ resumeData }: temp) {
         >
           Style & Download
         </Button>
-        {/* <Flex gridGap={2}>
-          <PDFDownloadLink
-            document={<MyDocument state={state} accentColor={accentColor} />}
-            fileName="somename.pdf"
-          >
-            {({ blob, url, loading, error }) => (
-              <Button size="sm" leftIcon={<RiDownloadLine />}>
-                {loading ? "Loading" : "PDF"}
-              </Button>
-            )}
-          </PDFDownloadLink>
-          <Button size="sm" leftIcon={<RiDownloadLine />}>
-            DOCX
-          </Button>
-        </Flex> */}
       </Flex>
 
       <Configurator
@@ -80,13 +66,23 @@ function Preview({ resumeData }: temp) {
         setSelectedFont={setSelectedFont}
         state={state}
         accentColor={accentColor}
+        layout={layout}
+        selectedFont={selectedFont}
       />
+      <button
+        onClick={() => {
+          setPlacement(placement + 1);
+        }}
+      >
+        refresh
+      </button>
 
       <PDFViewer
         width="100%"
         height="900px"
         showToolbar={false}
         className="frame"
+        key={placement}
       >
         <MyDocument
           state={state}
@@ -98,4 +94,5 @@ function Preview({ resumeData }: temp) {
     </Box>
   );
 }
-export default React.memo(Preview);
+//export default React.memo(Preview);
+export default Preview;

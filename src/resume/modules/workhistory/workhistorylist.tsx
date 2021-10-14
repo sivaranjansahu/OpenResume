@@ -41,8 +41,10 @@ const WorkHistoryUnit = forwardRef(
                 {exp.employedIn}
               </Heading>
               <Text fontSize="sm">
-                From {exp.fromMonth + " " + exp.fromYear} to{" "}
-                {exp.toMonth + " " + exp.toYear}
+                From {exp.fromMonth + " " + exp.fromYear}
+                {!exp.isCurrent
+                  ? ` to ${exp.toMonth} ${exp.toYear}`
+                  : " to present"}
               </Text>
             </Flex>
             <Box p={4}>

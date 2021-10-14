@@ -12,21 +12,21 @@ export interface ISummary {
   summary: string;
 }
 
-export interface workExp {
-  company: string;
-  fromYear: number;
-  toYear: number;
-  role: string;
-  fromMonth: string;
-  toMonth: string;
-  jobdescription: string;
-}
+// export interface workExp {
+//   company: string;
+//   fromYear: number;
+//   toYear: number;
+//   role: string;
+//   fromMonth: string;
+//   toMonth: string;
+//   jobdescription: string;
+// }
 
 export interface ISkill {
   id: string;
   skillName: string;
   skillLevel: number;
-  skillYearsExperience: number;
+  skillYearsExperience?: number;
 }
 
 export interface ICourse {
@@ -46,6 +46,7 @@ export interface IWorkHistory {
   jobTitle: string;
   jobDescription: string;
   isCurrent?: boolean;
+  jobLocation: string;
 }
 
 export interface IEducation {

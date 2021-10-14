@@ -18,7 +18,7 @@ import { setDirty } from "../../../store/store";
 
 const validationSchema = Yup.object({
   skillName: Yup.string().required("Required").max(30, "Too long!"),
-  skillYearsExperience: Yup.number().required("Required"),
+  //skillYearsExperience: Yup.number().required("Required"),
 });
 
 const radioOptions = [
@@ -53,7 +53,7 @@ const AddSkillsForm = () => {
                 validateOnMount={true}
                 initialValues={{
                   skillName: "",
-                  skillYearsExperience: "",
+                  //skillYearsExperience: "",
                   skillLevel: 1,
                 }}
                 onSubmit={(values: any, { resetForm, validateForm }) => {
@@ -68,27 +68,13 @@ const AddSkillsForm = () => {
                 {(formik: any) => (
                   <Form>
                     <VStack gridGap={4} alignItems="flex-start">
-                      <Grid
-                        gridGap={4}
-                        width="100%"
-                        gridTemplateColumns="2fr 1fr"
-                      >
-                        <FormikControl
-                          control="input"
-                          type="text"
-                          label="Skill"
-                          name="skillName"
-                          required
-                        />
-
-                        <FormikControl
-                          control="input"
-                          type="number"
-                          label="Number of years"
-                          name="skillYearsExperience"
-                          required
-                        />
-                      </Grid>
+                      <FormikControl
+                        control="input"
+                        type="text"
+                        label="Skill"
+                        name="skillName"
+                        required
+                      />
 
                       <FormikControl
                         control="radio"

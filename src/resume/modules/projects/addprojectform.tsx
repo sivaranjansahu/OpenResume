@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
   title: Yup.string()
     .required("Required")
     .min(3, "Too short!")
-    .max(30, "Too long!"),
+    .max(60, "Too long!"),
   about: Yup.string().required("Required").min(3, "Too short!"),
   year: Yup.number()
     .required("Required")
