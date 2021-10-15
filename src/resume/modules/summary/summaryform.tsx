@@ -22,10 +22,11 @@ export default function BasicInfoBlock() {
       <Formik
         enableReinitialize={true}
         initialValues={{
-          summary: summary.info.summary,
+          summary: summary.content,
         }}
         onSubmit={(values: any) => {
-          dispatch(setSummary({ info: values }));
+          console.log(values)
+          dispatch(setSummary({content:values.summary} ));
           dispatch(setDirty({ isDirty: true }));
         }}
         validationSchema={validationSchema}

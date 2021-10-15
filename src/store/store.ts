@@ -21,6 +21,18 @@ const dirtySlice = createSlice({
 });
 export const { setDirty } = dirtySlice.actions;
 
+const orderSlice = createSlice({
+  name:"componentOrder",
+  initialState:{order:["summary","workExperience","skills","education","courses","projects","links"]},
+  reducers:{
+    setOrder: (state, action) => {
+      state.order = action.payload.order;
+    },
+  }
+
+})
+export const { setOrder } = orderSlice.actions;
+
 const store = configureStore({
   reducer: {
     skills: skillsReducer,
@@ -33,6 +45,7 @@ const store = configureStore({
     summary: summaryReducer,
     courses: coursesReducer,
     dirty: dirtySlice.reducer,
+    componentOrder:orderSlice.reducer
   },
 });
 

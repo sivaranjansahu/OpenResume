@@ -114,9 +114,10 @@ function Dashboard() {
         },
         summary: {
           active: true,
-          info: {
-            summary: "",
-          },
+          content:""
+          // info: {
+          //   summary: "",
+          // },
         },
         courses: {
           active: true,

@@ -1,4 +1,5 @@
 import { CheckIcon } from "@chakra-ui/icons";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   Accordion,
   Box,
@@ -42,32 +43,23 @@ import { setSummary } from "./modules/summary/reducers";
 import { setInitialCourses } from "./modules/courses/reducers";
 import Courses from "./modules/courses/courses";
 import { capitalize } from "../utils/common";
-import { setDirty } from "../store/store";
+import { setDirty, setOrder } from "../store/store";
 import { VscClose, VscEye, VscEyeClosed } from "react-icons/vsc";
+import Grabber from "./components/grabber";
 const electron = window.require("electron");
-
-// export const WorkExContext = React.createContext<
-//   Partial<{
-//     workExpList: any[];
-//     updateWorkExp: Function;
-//   }>
-// >({});
-// export const SkillsContext = React.createContext<
-//   Partial<{
-//     skillsList: any[];
-//     updateSkillsExp: Function;
-//     removeSkill: Function;
-//   }>
-// >({});
-// export const BasicInfoContext = React.createContext<
-//   Partial<{
-//     basicInfo: IBasicInfo;
-//     updateBasicInfo: Function;
-//   }>
-// >({});
 
 type ProfileParams = {
   profileId: string;
+};
+
+const ComponentsMap: { [key: string]: any } = {
+  summary: Summary,
+  workExperience: WorkHistory,
+  skills: Skills,
+  education: Education,
+  courses: Courses,
+  projects: Projects,
+  links: Links,
 };
 
 const setProfileData = (allState: any, profileId = "second") => {
@@ -109,6 +101,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setInitialProjects(currentProfile.projects));
     dispatch(setSummary(currentProfile.summary || ""));
     dispatch(setInitialCourses(currentProfile.courses));
+    dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
   };
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
@@ -251,14 +244,81 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                     Resume sections
                   </Heading>
                 </Flex>
-                <BasicInfo />
-                <Summary />
+
+                <DragDropContext
+                  onDragEnd={(params) => {
+                    console.log(params);
+                    const srcI = params.source.index;
+                    const destI = params.destination?.index || 0;
+                    let newList = [...allState.componentOrder.order];
+                    newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
+                    console.log(newList);
+                    //setList(newList);
+                    dispatch(setOrder({ order: newList }));
+                    if (srcI !== destI) {
+                      dispatch(setDirty({ isDirty: true }));
+                    }
+                  }}
+                >
+                  <Droppable droppableId="componentsDroppable">
+                    {(provided, snapshot) => (
+                      <Box ref={provided.innerRef} {...provided.droppableProps}>
+                        <Flex w="full" alignItems="stretch">
+                          <Box pl={2} pt={6} mb={2} bg="white">
+                            <Grabber disabled />
+                          </Box>
+                          <Box flex={1}>
+                            <BasicInfo />
+                          </Box>
+                        </Flex>
+
+                        {allState.componentOrder.order.map(
+                          (elname: string, i: number) => {
+                            const Comp = ComponentsMap[elname];
+                            return (
+                              <Draggable
+                                key={i}
+                                draggableId={`dragElem${i}`}
+                                index={i}
+                              >
+                                {(provided, snapshot) => (
+                                  <Box
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                  >
+                                    <Flex w="full" alignItems="stretch">
+                                      <Box
+                                        {...provided.dragHandleProps}
+                                        pl={2}
+                                        pt={6}
+                                        mb={2}
+                                        bg="white"
+                                      >
+                                        <Grabber />
+                                      </Box>
+                                      <Box flex={1}>
+                                        <Comp />
+                                      </Box>
+                                    </Flex>
+                                  </Box>
+                                )}
+                              </Draggable>
+                            );
+                          }
+                        )}
+
+                        {/* <BasicInfo />
+              <Summary />
                 <WorkHistory />
                 <Skills />
                 <Education />
                 <Courses />
                 <Links />
-                <Projects />
+                <Projects /> */}
+                      </Box>
+                    )}
+                  </Droppable>
+                </DragDropContext>
               </Box>
             </Accordion>
           </Box>

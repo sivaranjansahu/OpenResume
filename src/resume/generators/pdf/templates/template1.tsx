@@ -3,6 +3,7 @@ import { IProfile } from "../../../interfaces/forminterfaces";
 import BasicInfoView from "../../../modules/basicinfo/resumeview";
 import LinkView from "../../../modules/links/resumeview";
 import SkillsView from "../../../modules/skills/resumeview";
+import SummaryView from "../../../modules/summary/summaryview";
 import WorkHistoryView from "../../../modules/workhistory/resumeview";
 import styleGen from "../basestyles";
 type propType = {
@@ -28,52 +29,39 @@ export default function Template1(props: propType) {
   //styles.blockHeader = { ...styles.blockHeader, textTransform: "uppercase" };
 
   const { state, accentColor } = props;
-  const { skills, workHistory, education, basicInfo } = state;
-
+  const { skills, workHistory, education, basicInfo,componentOrder } = state;
+  console.log('resumeData',componentOrder)
   return (
     <Page size="A4" style={styles.page}>
       {/* Left column */}
       <View style={styles.section}>
         <View style={styles.main}>
-          <BasicInfoView info={state.basicInfo.info} styles={styles} />
+          {
+            componentOrder?.order.map((compname,index)=>{
+              let Comp;
+              switch(compname){
+                case 'skills':
+                  console.log(compname)
+                  return <SkillsView state={state.skills} styles={styles} />
+                case 'workExperience':
+                  return <WorkHistoryView state={state.workHistory} styles={styles}/>
+                  case 'summary':
+                  return <SummaryView summary={state.summary} styles={styles}/>
+                default:
+                  return <LinkView state={state.links} styles={styles} />
+              }
+            })
+          }
+          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
 
           {/* Skills */}
-          <SkillsView state={state.skills} styles={styles} />
+          {/* <SkillsView state={state.skills} styles={styles} /> */}
 
           {/* Workex */}
-          <WorkHistoryView
-            // history={state.workHistory.list}
-            // active={state.workHistory.active}
-            state={state.workHistory}
-            styles={styles}
-          />
+          {/* <WorkHistoryView state={state.workHistory} styles={styles}/> */}
 
           {/* Education */}
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeader}>Education</Text>
-            <View style={styles.subSectionContainer}>
-              <View style={styles.expHeader}>
-                <View>
-                  <Text style={styles.subSectionHeader}>
-                    Masters <Text>CalTech</Text>
-                  </Text>
-                </View>
-                <View>
-                  <Text>Jun 2004 to Dec 2007</Text>
-                </View>
-              </View>
-
-              {/* <UL style={{}}>
-                  <LI>
-                    <Text>
-                      Designed and developed a multilayered solution to generate
-                      synthetic medical pill images from seed images. ThreeJS,
-                      NodeJS, Blender, React
-                    </Text>
-                  </LI>
-                </UL> */}
-            </View>
-          </View>
+          
         </View>
       </View>
       {/* Right column */}

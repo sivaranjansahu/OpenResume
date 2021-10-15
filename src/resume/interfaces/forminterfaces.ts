@@ -88,7 +88,7 @@ export interface IProfile {
     active: boolean;
   };
   summary: {
-    info: ISummary;
+    content: string;
     active: boolean;
   };
   skills: {
@@ -115,4 +115,7 @@ export interface IProfile {
     list: IProject[];
     active: boolean;
   };
+  componentOrder?:{
+    order:string[]
+  }
 }

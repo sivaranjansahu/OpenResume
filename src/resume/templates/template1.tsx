@@ -2,6 +2,7 @@ import { Box, Heading, List } from "@chakra-ui/layout";
 import { IProfile } from "../interfaces/forminterfaces";
 
 export default function Template1({resumeData}:{resumeData:IProfile}){
+    console.log('resumeData',resumeData)
     return(
         <Box p={4}>
         <Heading size="md">Skills</Heading>

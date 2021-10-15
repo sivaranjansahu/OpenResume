@@ -1,8 +1,11 @@
-import { IBasicInfo } from "../../interfaces/forminterfaces";
+import { IBasicInfo, ISummary } from "../../interfaces/forminterfaces";
 import { View, Text } from "@react-pdf/renderer";
 import { type } from "os";
 type propsType = {
-  info: IBasicInfo;
+  summary:{
+    content:string,
+    active:boolean
+  };
   styles?: any;
 };
 
@@ -11,23 +14,17 @@ export type stylesType = {
   h4?: any;
   contentblock?: any;
 };
-const BasicInfoView: React.FC<propsType> = ({ info, styles }) => {
+const SummaryView: React.FC<propsType> = ({ summary, styles }) => {
+  if(!summary.active){
+    return null
+  }
   return (
-    <View style={styles?.contentblock}>
-      <Text style={styles?.h2}>{info.fullName}</Text>
+    <View style={styles.section}>
+      <Text style={styles.sectionHeader}>Summary</Text>
+      <Text>{summary.content}</Text>
     </View>
   );
 };
 
-export const Contactview: React.FC<propsType> = ({ info, styles }) => {
-  return (
-    <View style={styles?.contentblock}>
-      <Text style={{ ...styles?.h4, ...styles?.blockHeader }}>Contact</Text>
-      <Text style={styles?.sm}>{info?.email}</Text>
-      <Text style={styles?.sm}>{info?.address}</Text>
-      <Text style={styles?.sm}>{info?.phoneno}</Text>
-    </View>
-  );
-};
 
-export default BasicInfoView;
+export default SummaryView;
