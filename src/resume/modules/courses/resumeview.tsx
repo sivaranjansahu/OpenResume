@@ -1,29 +1,46 @@
 import { Text, View } from "@react-pdf/renderer";
-import { ILink } from "../../interfaces/forminterfaces";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
+import { Style as PDFStyle } from "@react-pdf/types";
+import { ICourse, ILink } from "../../interfaces/forminterfaces";
 
 type propsType = {
   state: {
-    list: ILink[];
+    list: ICourse[];
     active?: boolean;
   };
-  styles?: any;
+  styles: resumeStyleType;
 };
 
 
 function ResumeView(props: propsType) {
-  const { state, styles = {} } = props;
+  const { state, styles } = props;
   if (!state.active) {
     return null;
   }
 
+
+  const courseStyles: { [key: string]: PDFStyle } = {
+    title: {
+      ...styles.subSectionHeader,
+      textTransform: "uppercase",
+    },
+    institute: {
+      color: "green",
+    },
+    year: {
+      color: "brown",
+    },
+  };
+
   return (
-    <View style={styles.contentblock}>
-      <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
-      {state.list.map((link: ILink, index: number) => {
+    <View style={styles?.section}>
+      <Text style={styles.sectionHeader}>Courses / Certifications</Text>
+      {state.list.map((course: ICourse, index: number) => {
         return (
-          <View style={{marginBottom: "6px" }}>
-            <Text style={{fontWeight: "bold" }} >{link.title}</Text>
-            <Text style={styles.sm}>{link.url}</Text>
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subSectionHeader} >{course.title}</Text>
+            <Text style={courseStyles.institute}>{course.institute}</Text>
+            <Text style={courseStyles.year}>{course.year}</Text>
           </View>
         );
       })}

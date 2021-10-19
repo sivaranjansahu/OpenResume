@@ -1,29 +1,57 @@
 import { Text, View } from "@react-pdf/renderer";
-import { ILink } from "../../interfaces/forminterfaces";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
+import { Style as PDFStyle } from "@react-pdf/types";
+import { ICourse, ILink, IProject } from "../../interfaces/forminterfaces";
+import { UL,LI } from "../../preview/components/list";
 
 type propsType = {
   state: {
-    list: ILink[];
+    list: IProject[];
     active?: boolean;
   };
-  styles?: any;
+  styles: resumeStyleType;
 };
 
 
 function ResumeView(props: propsType) {
-  const { state, styles = {} } = props;
+  const { state, styles } = props;
   if (!state.active) {
     return null;
   }
 
+
+  const projectStyles: { [key: string]: PDFStyle } = {
+    title: {
+      ...styles.subSectionHeader,
+      textTransform: "uppercase",
+    },
+    year: {
+      color: "brown",
+    },
+  };
+
   return (
-    <View style={styles.contentblock}>
-      <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
-      {state.list.map((link: ILink, index: number) => {
+    <View style={styles?.section}>
+      <Text style={styles.sectionHeader}>Relevant Projects</Text>
+      {state.list.map((project: IProject, index: number) => {
+        const { about } = project;
+        const lines = about.split("|");
         return (
-          <View style={{marginBottom: "6px" }}>
-            <Text style={{fontWeight: "bold" }} >{link.title}</Text>
-            <Text style={styles.sm}>{link.url}</Text>
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subSectionHeader} >{project.title}</Text>
+            <Text style={projectStyles.year}>{project.year}</Text>
+            <View>
+                {/* Job description */}
+                <UL>
+                  {lines.map((line, index) => {
+                    return (
+                      <LI key={index}>
+                        <Text>{line}</Text>
+                      </LI>
+                    );
+                  })}
+                </UL>
+              </View>
           </View>
         );
       })}

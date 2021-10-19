@@ -70,6 +70,8 @@ const setProfileData = (allState: any, profileId = "second") => {
   });
 };
 
+
+
 const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
   let { profileId } = useParams<ProfileParams>();

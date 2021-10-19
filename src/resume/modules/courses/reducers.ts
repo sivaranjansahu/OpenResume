@@ -5,6 +5,7 @@ import { ICourse} from "../../interfaces/forminterfaces";
 interface CoursesState {
   active: boolean;
   list: ICourse[];
+  altName?:string;
 }
 
 // Define the initial state using that type
@@ -19,6 +20,10 @@ export const coursesSlice = createSlice({
     setInitialCourses: (state, action) => {
       state.list = action.payload ? action.payload.list: [];
       state.active = action.payload ?  action.payload.active: true;
+      state.altName= action.payload.altName;
+    },
+    setAltName: (state, action) => {
+      state.altName = action.payload;
     },
     setAllCourses: (state, action) => {
       state.list = action.payload;
@@ -39,7 +44,7 @@ export const coursesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setInitialCourses,addCourse, deleteCourse, setActive,setAllCourses } =
+export const { setInitialCourses,addCourse, deleteCourse, setActive,setAllCourses,setAltName } =
 coursesSlice.actions;
 
 export default coursesSlice.reducer;

@@ -1,9 +1,10 @@
 import { Box, Flex } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
 import IncludeSwitch from "../../components/includeSwitch";
+import RenameSection from "../../components/renameSection";
 import EducationForm from "./addeducation";
 import EducationList from "./educationlist";
-import { setActive } from "./reducers";
+import { setActive, setAltName } from "./reducers";
 
 export default function Education() {
   return (
@@ -16,6 +17,7 @@ export default function Education() {
           title="Education"
           subTitle="Degrees obtained and the related information"
         >
+          <RenameSection sectionName="education" setAltName={setAltName}/>
           <EducationList mb={4} />
           <EducationForm />
         </AccordionUnit>

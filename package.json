@@ -26,6 +26,7 @@
     "docx": "^6.0.3",
     "electron": "^14.0.0",
     "electron-reload": "^2.0.0-alpha.1",
+    "electron-spellchecker": "^2.2.1",
     "electron-store": "^8.0.1",
     "file-saver": "^2.0.5",
     "focus-visible": "^5.2.0",
@@ -90,6 +91,7 @@
     ]
   },
   "devDependencies": {
+    "@types/electron-spellchecker": "^1.1.2",
     "@types/file-saver": "^2.0.3",
     "@types/react": "^17.0.19",
     "@types/react-beautiful-dnd": "^13.1.2",

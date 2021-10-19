@@ -4,7 +4,8 @@ import AccordionUnit from "../../components/accordionunit";
 import IncludeSwitch from "../../components/includeSwitch";
 import AddProjectForm from "./addprojectform";
 import ProjectsList from "./projectslist";
-import { setActive } from "./reducers";
+import { setActive, setAltName } from "./reducers";
+import RenameSection from "../../components/renameSection";
 export default function Projects() {
   return (
     <Flex bg="white" px={4} mb={2}>
@@ -16,6 +17,7 @@ export default function Projects() {
           title="Projects"
           subTitle="Highlight relevant recent work"
         >
+          <RenameSection sectionName="projects" setAltName={setAltName}/>
           <ProjectsList />
           <AddProjectForm />
         </AccordionUnit>

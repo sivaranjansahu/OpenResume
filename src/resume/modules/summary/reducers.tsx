@@ -5,6 +5,7 @@ import { ISummary } from "../../interfaces/forminterfaces";
 interface SummaryState {
   active: boolean;
   content: string;
+  altName?:string;
 }
 
 // Define the initial state using that type
@@ -22,6 +23,7 @@ export const summarySlice = createSlice({
     setSummary: (state, action) => {
       state.content = action.payload.content;
       state.active = action.payload.active;
+      state.altName= action.payload.altName;
     },
     setActive: (state, action) => {
       state.active = action.payload;

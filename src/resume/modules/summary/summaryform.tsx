@@ -40,6 +40,7 @@ export default function BasicInfoBlock() {
                 placeholder="Keep it succint"
                 // label="Summary"
                 name="summary"
+                showBullet={false}
                 required
               />
 

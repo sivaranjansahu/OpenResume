@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Flex,
   FormControl,
@@ -14,6 +14,10 @@ import {
   Textarea as ChakraTextarea,
   Tooltip,
   Text,
+  Button,
+  Box,
+  Icon,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Field,
@@ -26,12 +30,22 @@ import {
 } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
+
 import {
   InfoIcon,
   PhoneIcon,
   QuestionIcon,
   QuestionOutlineIcon,
 } from "@chakra-ui/icons";
+import { VscListUnordered, VscWarning } from "react-icons/vsc";
+import Hints from "../resume/components/hints";
+import { dict } from "../shared/dict";
+//import {ipcRenderer} from 'electron';
+//import remote from '@electron/remote'
+const electron = window.require("electron");
+//const { Menu } = window.require('@electron/remote')
+
+const cacheDir = "";
 
 interface OtherProps {
   label: string;
@@ -162,48 +176,167 @@ function Input(props: any) {
   );
 }
 
-function Textarea(props: any) {
-  const { label, name, help, ...rest } = props;
-  //let previousLength = 0;
-  const [previousLength, setPreviousLength] = useState(0);
+const resumeDict = {
+  happy: ["elated", "joyous", "ecstatic", "stoked"],
+  sad: ["dejected", "gloomy", "upset", "depresed"],
+} as any;
 
-  const handleInput = (event: any) => {
-    const bullet = "\u2022";
-    const newLength = event.target.value.length;
-    const characterCode = event.target.value.substr(-1).charCodeAt(0);
-
-    if (newLength > previousLength) {
-      if (characterCode === 10) {
-        event.target.value = `${event.target.value}${bullet} `;
-      } else if (newLength === 1) {
-        event.target.value = `${bullet} ${event.target.value}`;
-      }
+function listWordsOfInterest(content: string, map: any) {
+  const blacklist = [];
+  const whitelist = [];
+  const contentArr: string[] = content.replaceAll(",", "").split(" ");
+  for (let i = 0; i < contentArr.length; i++) {
+    if ((dict as any).avoid[contentArr[i]]) {
+      blacklist.push(contentArr[i]);
     }
+    if ((dict as any).synonyms[contentArr[i]]) {
+      whitelist.push(contentArr[i]);
+    }
+  }
+  return { blacklist, whitelist };
+}
 
-    setPreviousLength(newLength);
-    console.log(event.target.value);
-  };
+// const markdownContextMenu = Menu.buildFromTemplate([
+//   { type: 'separator' },
+//   { label: 'Cut', role: 'cut' },
+//   { label: 'Copy', role: 'copy' },
+//   { label: 'Paste', role: 'paste' },
+// ]);
+
+function Textarea(props: any) {
+  const { label, name, help, showBullet = true, ...rest } = props;
+  const [listActive, setListActive] = useState(false);
+  let tbRef: any = null;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [blacklist, setBlacklist] = useState<string[]>([]);
+  const [whitelist, setWhitelist] = useState<string[]>([]);
+  // useEffect(()=>{
+  //   tbRef.addEventListener('contextmenu', (event:any) => {
+  //     event.preventDefault();
+  //     console.log(event)
+  //     //markdownContextMenu.popup();
+  //   });
+  // },[tbRef])
+  const bullet = "\u2022";
   return (
     <Field name={name}>
       {({ field, form }: any) => {
         return (
-          <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-            <Flex alignItems="baseline">
-              <FormLabel fontSize="sm" htmlFor={name} color="gray.600">
-                {label}
-              </FormLabel>
-              {help && <Text fontSize="10px">{help}</Text>}
-            </Flex>
-            <ChakraTextarea
-              id={name}
-              {...rest}
-              {...field}
-              // onChange={handleInput}
-              size="sm"
-              bg="white"
-            />
-            <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
-          </FormControl>
+          <Box w="full">
+            <FormControl isInvalid={form.errors[name] && form.touched[name]}>
+              <Flex alignItems="baseline">
+                <FormLabel fontSize="sm" htmlFor={name} color="gray.600">
+                  {label}
+                </FormLabel>
+                {help && <Text fontSize="10px">{help}</Text>}
+              </Flex>
+              <Box
+                bg="white"
+                border={1}
+                borderColor="gray.300"
+                borderStyle="solid"
+              >
+                 <Flex
+              justifyContent="space-between"
+              alignItems="center">
+                {showBullet && (
+                  <Button
+                    variant="ghost"
+                    border="none"
+                    p={0}
+                    onClick={() => {
+                      if (listActive) {
+                        setListActive(false);
+                      } else {
+                        setListActive(true);
+                        form.setFieldValue(
+                          name,
+                          form.values[name] + `\n ${bullet} `
+                        );
+                      }
+                      tbRef.focus();
+                    }}
+                  >
+                    <Icon
+                      as={VscListUnordered}
+                      boxSize={6}
+                      color={listActive ? "secondary.400" : "gray.400"}
+                    />
+                  </Button>
+                )}
+                <Flex>
+                <Button
+                    colorScheme="primary"
+                    leftIcon={blacklist.length > 0 ? <VscWarning /> : undefined}
+                    onClick={() => (isOpen ? onClose() : onOpen())}
+                  >
+                    Tips
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    disabled={blacklist.length===0}
+                    colorScheme={blacklist.length > 0 ? "orange" : "gray"}
+                    leftIcon={blacklist.length > 0 ? <VscWarning /> : undefined}
+                    onClick={() => (isOpen ? onClose() : onOpen())}
+                    size="sm"
+                  >
+                    Buzzwords found
+                  </Button>
+                  <Button
+                  disabled={whitelist.length===0}
+                    variant="ghost"
+                    colorScheme={whitelist.length > 0 ? "green" : "gray"}
+                    leftIcon={whitelist.length > 0 ? <VscWarning /> : undefined}
+                    onClick={() => (isOpen ? onClose() : onOpen())}
+                    size="sm"
+                  >
+                    Alternatives available
+                  </Button>
+                </Flex>
+                </Flex>
+                <Hints
+                  blacklist={blacklist}
+                  whitelist={whitelist}
+                  onOpen={onOpen}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                />
+                <ChakraTextarea
+                  ref={(r) => (tbRef = r)}
+                  id={name}
+                  {...rest}
+                  {...field}
+                  // onChange={handleInput}
+                  size="sm"
+                  bg="white"
+                  // onChange={e=>{
+                  //   console.log(form.values)
+                  // }}
+                  onKeyUp={(e) => {
+                    if (e.key === " ") {
+                      const words = listWordsOfInterest(
+                        form.values[name],
+                        resumeDict
+                      );
+                      setBlacklist(words.blacklist);
+                      setWhitelist(words.whitelist);
+                    }
+
+                    if (e.key === "Enter" && listActive) {
+                      form.setFieldValue(
+                        name,
+                        form.values[name] + ` ${bullet} `
+                      );
+                    }
+                  }}
+                  borderBottom="none"
+                  borderLeft="none"
+                  borderRight="none"
+                />
+              </Box>
+              <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
+            </FormControl>
+          </Box>
         );
       }}
     </Field>

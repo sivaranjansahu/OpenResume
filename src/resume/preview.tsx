@@ -43,7 +43,6 @@ function Preview({ resumeData }: temp) {
     setAccentColor(color);
   }
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [placement, setPlacement] = useState(0);
   return (
     <Box>
       <Flex width="full" justifyContent="flex-end" mb={4}>
@@ -69,20 +68,13 @@ function Preview({ resumeData }: temp) {
         layout={layout}
         selectedFont={selectedFont}
       />
-      <button
-        onClick={() => {
-          setPlacement(placement + 1);
-        }}
-      >
-        refresh
-      </button>
+      
 
       <PDFViewer
         width="100%"
         height="900px"
         showToolbar={false}
         className="frame"
-        key={placement}
       >
         <MyDocument
           state={state}
