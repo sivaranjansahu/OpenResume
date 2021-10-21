@@ -7,13 +7,15 @@ import WorkHistoryView from "../../../modules/workhistory/resumeview";
 import styleGen from "../basestyles";
 type propType = {
   state: IProfile;
-  font: string;
+  headingFont: string;
+  bodyFont:string;
   accentColor: string;
 };
 
 export default function Template1(props: propType) {
   const styles = styleGen({
-    fontFamily: props.font,
+    headingFont: props.headingFont,
+    bodyFont:props.bodyFont,
     accentColor: props.accentColor,
   });
 
@@ -44,7 +46,7 @@ export default function Template1(props: propType) {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeader}>Education</Text>
             <View style={styles.subSectionContainer}>
-              <View style={styles.expHeader}>
+              <View style={styles.subSectionHeader}>
                 <View>
                   <Text style={styles.subSectionHeader}>
                     Masters <Text>CalTech</Text>

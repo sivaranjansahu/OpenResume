@@ -35,9 +35,11 @@ type Proptype = {
   accentColor: string;
   updateAccentColor: Function;
   setLayout: Function;
-  setSelectedFont: Function;
+  setHeadingFont: Function;
+  setBodyFont: Function;
   layout: string;
-  selectedFont: string;
+  headingFont: string;
+  bodyFont:string;
 };
 
 const radioOptions = [
@@ -49,7 +51,8 @@ function DownloadButtons({
   state,
   accentColor,
   format = "pdf",
-  selectedFont,
+  headingFont,
+  bodyFont,
   layout,
 }: any) {
   return (
@@ -61,7 +64,8 @@ function DownloadButtons({
               state={state}
               accentColor={accentColor}
               layout={layout}
-              selectedFont={selectedFont}
+              headingFont={headingFont}
+              bodyFont={bodyFont}
             />
           }
           fileName="somename.pdf"
@@ -100,9 +104,12 @@ function Configurator(props: Proptype) {
     onClose,
     updateAccentColor,
     setLayout,
-    setSelectedFont,
+    setHeadingFont,
+    setBodyFont,
     state,
     accentColor,
+    headingFont,
+    bodyFont
   } = props;
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
@@ -143,13 +150,16 @@ function Configurator(props: Proptype) {
           >
             <ColorPicker setAccentColor={updateAccentColor} />
             <LayoutPicker setLayout={setLayout} />
-            <FontPicker setSelectedFont={setSelectedFont} />
+            <FontPicker type="heading" setSelectedFont={setHeadingFont} />
+            <FontPicker type="body" setSelectedFont={setBodyFont} />
           </Accordion>
 
           <DownloadButtons
             state={state}
             format={format}
             accentColor={accentColor}
+            headingFont={headingFont}
+            bodyFont={bodyFont}
           />
         </DrawerBody>
       </DrawerContent>

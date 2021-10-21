@@ -18,6 +18,8 @@ const colors = {
 
 const styles = StyleSheet.create({
   listBlock: {
+    marginTop:4,
+    marginBottom:6,
     paddingLeft: 10,
     paddingRight: 16,
     // paddinGright:"50px"
@@ -34,10 +36,10 @@ export const Bullet = () => {
       style={{
         width: 4,
         height: 4,
-        backgroundColor: colors.accent,
+        backgroundColor: '#444',
         marginRight: 8,
         borderRadius: "50%",
-        marginTop: 3,
+        marginTop: 6,
       }}
     ></View>
   );
@@ -49,9 +51,9 @@ export const UL = ({ children, ...props }: any) => {
     </View>
   );
 };
-export const LI = ({ children, ...props }: any) => {
+export const LI = ({ children,lastItem, ...props }: any) => {
   return (
-    <View {...props} style={styles.listItem}>
+    <View {...props} style={[styles.listItem,{marginBottom: lastItem ? 0 : 4}]}>
       <Bullet />
       <View>{children}</View>
     </View>

@@ -1,7 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
 import IncludeSwitch from "../../components/includeSwitch";
-import { setActive } from "./reducers";
+import RenameSection from "../../components/renameSection";
+import TipsButton from "../../components/tipsbutton";
+import { setActive, setAltName } from "./reducers";
 import SummaryForm from "./summaryform";
 
 export default function BasicInfo() {
@@ -17,6 +19,10 @@ export default function BasicInfo() {
           title="Summary"
           subTitle="Brief summary of your career/skills and objectives"
         >
+          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <RenameSection sectionName="summary" setAltName={setAltName}/>
+          <TipsButton sectionName="summary" title="Summary"/>
+          </Flex>
           <SummaryForm />
         </AccordionUnit>
       </Box>

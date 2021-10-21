@@ -2,6 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
 import IncludeSwitch from "../../components/includeSwitch";
 import RenameSection from "../../components/renameSection";
+import TipsButton from "../../components/tipsbutton";
 import EducationForm from "./addeducation";
 import EducationList from "./educationlist";
 import { setActive, setAltName } from "./reducers";
@@ -17,7 +18,11 @@ export default function Education() {
           title="Education"
           subTitle="Degrees obtained and the related information"
         >
+          <Flex mb={4} alignItems="center" justifyContent="space-between">
           <RenameSection sectionName="education" setAltName={setAltName}/>
+          <TipsButton sectionName="education" title="Education"/>
+          </Flex>
+          
           <EducationList mb={4} />
           <EducationForm />
         </AccordionUnit>

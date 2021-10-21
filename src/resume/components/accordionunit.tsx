@@ -47,7 +47,7 @@ const AccordionUnit: React.FC<Props> = ({
             </Box>
             <AccordionIcon boxSize={8} />
           </AccordionButton>
-          <AccordionPanel px={0} pb={0} backgroundColor="white">
+          <AccordionPanel px={0} pr={2} pb={0} backgroundColor="white">
             {children}
             {/* <AboutForm formikbag={formikbag} /> */}
           </AccordionPanel>

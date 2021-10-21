@@ -1,39 +1,64 @@
 import {
-  Document,
-  Font,
-  Page,
-  PDFViewer,
-  StyleSheet,
-  Text,
-  View,
+  StyleSheet
 } from "@react-pdf/renderer";
 import { Style as PDFStyle } from "@react-pdf/types";
-import {
-  IProfile,
-  ISkill,
-  IWorkHistory,
-} from "../../interfaces/forminterfaces";
 type propTypes = {
-  fontFamily: string;
+  headingFont: string;
+  bodyFont:string;
   accentColor: string;
 };
+
+
+
+
+const getTokens = (baseSize:number) => ({
+  heading1:{
+    fontSize:baseSize*2,
+    lineHeight:1.3,
+  },
+  heading2:{
+    fontSize:baseSize*1.4,
+    lineHeight:1.3,
+  },
+  heading3:{
+    fontSize:baseSize,
+    lineHeight:1.6,
+  },
+  gap:{
+    marginTop:baseSize*1.3
+  },
+  p:{
+    fontSize:baseSize,
+  },
+  tiny:{
+    fontSize:baseSize*0.8,
+  }
+
+})
+
+// Create styles
+const tokens = getTokens(10);
+
 
 export type resumeStyleType = {
   page: PDFStyle;
   sectionHeader: PDFStyle;
   subSectionHeader: PDFStyle;
-
   section: PDFStyle;
+  subSection:PDFStyle;
   main: PDFStyle;
   aside: PDFStyle;
   sectionContainer: PDFStyle;
   subSectionContainer: PDFStyle;
-  expHeader: PDFStyle;
+  paragraph:PDFStyle;
+  heading1:PDFStyle;
+  heading2:PDFStyle;
+  heading3:PDFStyle;
 };
 
 // Create styles
-const styleGen = ({ fontFamily, accentColor = "#3182CE" }: propTypes) => {
-  console.log("setting style to " + fontFamily, accentColor);
+const styleGen = ({ headingFont,bodyFont="opensans", accentColor = "#3182CE" }: propTypes) => {
+  console.log("setting style to " + headingFont, accentColor);
   const colors = {
     accent: accentColor,
     body: "#111",
@@ -41,37 +66,49 @@ const styleGen = ({ fontFamily, accentColor = "#3182CE" }: propTypes) => {
   };
 
   const customStyles: resumeStyleType = {
-    page: {
-      flexDirection: "row",
-      backgroundColor: "#fff",
-      alignItems: "stretch",
-      fontSize: 9,
-      lineHeight: 1.5,
-      fontFamily: fontFamily,
-      color: colors.body,
-    },
+    //Layout
+  page: {
+    //padding:'10pt',
+    color:'#444',
+    ...tokens.p,
+    lineHeight:1.3,
+    fontFamily:bodyFont
+  },
+  section: {
+     ...tokens.gap,
+  },
+  subSection: {
+    ...tokens.gap,
+ },
+ //Typography
+ heading1:{
+   ...tokens.heading1,
+   fontFamily:headingFont
+
+  },
+  heading2:{...tokens.heading2,fontFamily:headingFont},
+  heading3:{...tokens.heading3,fontFamily:headingFont},
+  paragraph:{
+    ...tokens.p,
+    lineHeight:1.3,
+    fontFamily: bodyFont,
+    // fontWeight:"regular",
+  },
     sectionHeader: {
-      borderBottom: "0.2px solid #888",
-      paddingBottom: 2,
-      marginBottom: 8,
-      color: colors.heading,
-      fontSize: 10,
-      fontWeight: 600,
-      width: "100%",
+      ...tokens.heading2,
+    // marginBottom:10,
+    color:accentColor,
+    fontFamily:headingFont,
+    // fontWeight:500
     },
     sectionContainer: {},
     subSectionContainer: {
-      marginBottom: 8,
+      marginTop: 8,
     },
-    subSectionHeader: {
-      marginBottom: 4,
+    subSectionHeader:{
+      ...tokens.heading3
     },
 
-    section: {
-      //padding: 10,
-      width: "100%",
-      marginBottom: 16,
-    },
     main: {
       width: "100%",
       padding: 10,
@@ -82,103 +119,12 @@ const styleGen = ({ fontFamily, accentColor = "#3182CE" }: propTypes) => {
       backgroundColor: "#ebebeb",
       padding: 10,
     },
-    expHeader: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
+    
   };
 
   const newStyleObj = StyleSheet.create(customStyles);
   console.log(newStyleObj);
 
-  const styleObj = StyleSheet.create({
-    page: {
-      flexDirection: "row",
-      backgroundColor: "#fff",
-      alignItems: "stretch",
-      fontSize: 9,
-      lineHeight: 1.5,
-      fontFamily: fontFamily,
-      color: colors.body,
-    },
-
-    section: {
-      padding: 10,
-      width: "75%",
-    },
-    main: {
-      width: "100%",
-      // paddingRight: 10,
-    },
-    aside: {
-      width: "25%",
-      backgroundColor: "#ebebeb",
-      padding: 10,
-    },
-    h1: {
-      fontSize: 18,
-      fontWeight: 500,
-      // fontFamily: 'Pacifico'
-    },
-    h2: {
-      fontSize: 15,
-      fontWeight: 500,
-      color: "#444",
-    },
-    h3: {
-      fontSize: 12,
-      fontWeight: 500,
-      color: "#444",
-      width: "100%",
-    },
-    h4: {
-      fontSize: 9,
-      fontWeight: 700,
-      color: "#444",
-    },
-    sm: {
-      fontSize: 8,
-      color: colors.body,
-    },
-    contentblock: {
-      marginBottom: 16,
-    },
-    subsection: {
-      marginBottom: 8,
-    },
-    blockHeader: {
-      borderBottom: "0.2px solid #888",
-      paddingBottom: 2,
-      marginBottom: 8,
-      color: colors.heading,
-      fontSize: 10,
-      fontWeight: 600,
-      width: "100%",
-
-      // width: "100%",
-    },
-    subBlockHeader: {
-      fontSize: 9,
-      fontWeight: 700,
-      color: colors.heading,
-      marginBottom: 4,
-    },
-    listBlock: {
-      paddingLeft: 10,
-      paddingRight: 16,
-      // paddinGright:"50px"
-    },
-    listItem: {
-      marginBottom: 4,
-      flexDirection: "row",
-    },
-    expHeader: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-  });
 
   return newStyleObj;
 };

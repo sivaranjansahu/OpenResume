@@ -28,11 +28,10 @@ function SkillsView(props: propsType) {
 
   const skillStyles: { [key: string]: PDFStyle } = {
     skillName: {
-      ...styles.subSectionHeader,
+      
     },
     skillLevel: {
-      color: "green",
-      textTransform: "uppercase",
+      ...styles.subSectionHeader,
     },
   };
 
@@ -66,30 +65,30 @@ function SkillsView(props: propsType) {
       <View style={{ flexDirection: "row" }}>
         {skillsMap?.Expert.length > 0 && (
           <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-            <Text style={styles.subSectionHeader}>Expert</Text>
+            <Text style={skillStyles.skillLevel}>Expert</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Expert.map((skill: ISkill, index: number) => {
-                return <Text>{skill.skillName},</Text>;
+                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>
         )}
         {skillsMap?.Intermediate.length > 0 && (
           <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-            <Text style={styles.subSectionHeader}>Intermediate</Text>
+            <Text style={skillStyles.skillLevel}>Intermediate</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Intermediate.map((skill: ISkill, index: number) => {
-                return <Text>{skill.skillName},</Text>;
+                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>
         )}
         {skillsMap?.Beginner.length > 0 && (
           <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>
-            <Text style={styles.subSectionHeader}>Beginner</Text>
+            <Text style={skillStyles.skillLevel}>Beginner</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Beginner.map((skill: ISkill, index: number) => {
-                return <Text>{skill.skillName},</Text>;
+                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>

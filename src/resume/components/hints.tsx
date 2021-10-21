@@ -10,7 +10,7 @@ type Proptype = {
     whitelist?:string[];
     
   };
-export default function Hints(props: Proptype) {
+export default function WordChoices(props: Proptype) {
     const [format, setFormat] = useState("pdf");
     const {
       isOpen,
@@ -33,23 +33,22 @@ export default function Hints(props: Proptype) {
               </Box>
             </Flex>
           </DrawerHeader>
-          <DrawerBody pt={8} padding={0}>
-            <Box p={4} mb={4}>
-              {/* <DownloadType /> */}
-              
-            </Box>
+          <DrawerBody pt={8} p={0}>
+            
             <Heading as="h4" size="xs" mb={2} px={4}>
               Blacklist
             </Heading>
-            <Box>
-                {JSON.stringify(blacklist)}
+            <Box p={4} mb={4}>
+            {JSON.stringify(blacklist)}              
             </Box>
+            
             <Heading as="h4" size="xs" mb={2} px={4}>
               Whitelist
             </Heading>
-            <Box>
-                {JSON.stringify(whitelist)}
+            <Box p={4} mb={4}>
+            {JSON.stringify(whitelist)}              
             </Box>
+           
             <Accordion
               defaultIndex={[0]}
               allowToggle={true}

@@ -27,9 +27,8 @@ function RenameSection({ setAltName, sectionName }: propType){
     }, [altName])
     
     return(
-        <Flex mb={4} alignItems="center" justifyContent="flex-end">
-            
-          <Input width="250px" mr={2}  placeholder="Section name to appear on resume" id={"newName"+sectionName} size="xs"  defaultValue={altName} onChange={(e)=>{
+        <Flex alignItems="center" justifyContent="space-between">
+          <Input  width="250px" mr={2}  placeholder="Section name to appear on resume" id={"newName"+sectionName} size="xs"  defaultValue={altName} onChange={(e)=>{
               dispatch(setAltName(e.target.value))
               dispatch(setDirty({ isDirty: true }))
           }} />
@@ -39,11 +38,8 @@ function RenameSection({ setAltName, sectionName }: propType){
           <Icon as={VscQuestion} boxSize={4}/>
           </Box>
   </Tooltip>
-          
-          
-     
-          
           </Flex>
+          
     )
 
 }

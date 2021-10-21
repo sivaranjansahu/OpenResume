@@ -9,26 +9,57 @@ import WorkHistoryView from "../../../modules/workhistory/resumeview";
 import CourseView from "../../../modules/courses/resumeview";
 import ProjectView from "../../../modules/projects/resumeview";
 import styleGen from "../basestyles";
+import {
+  StyleSheet
+} from "@react-pdf/renderer";
 type propType = {
   state: IProfile;
-  font: string;
+  headingFont: string;
+  bodyFont:string;
   accentColor: string;
 };
 
 export default function Template1(props: propType) {
   const styles = styleGen({
-    fontFamily: props.font,
+    headingFont: props.headingFont,
+    bodyFont:props.bodyFont,
     accentColor: props.accentColor,
   });
 
+  styles.section = {
+    ...styles.section,
+    marginBottom:6
+  }
   styles.sectionHeader = {
     ...styles.sectionHeader,
-    textTransform: "uppercase",
+    marginBottom:4,
+    //textTransform: "uppercase",
   };
   styles.subSectionHeader = {
     ...styles.subSectionHeader,
-    textTransform: "uppercase",
+    fontWeight:500,
+    textTransform:"uppercase"
   };
+
+  const templateStyles =StyleSheet.create( {
+    container:{
+      flexDirection:"row",
+      padding:"4vw",
+      width:"100vw",
+      backgroundColor:"#F7F7F7"
+    },
+    main:{
+      flex:1,
+      width: "71vw",
+      padding:"2vw"
+    },
+    aside:{
+      width:"21vw",
+      //backgroundColor:"#eaeaea",
+      padding:"2vw"
+    }
+  })
+
   //styles.blockHeader = { ...styles.blockHeader, textTransform: "uppercase" };
 
   const { state, accentColor } = props;
@@ -36,15 +67,18 @@ export default function Template1(props: propType) {
   console.log("resumeData", componentOrder);
   return (
     <Page size="A4" style={styles.page}>
+      <View style={templateStyles.container}>
       {/* Left column */}
       <View style={styles.section}>
-        <View style={styles.main}>
+        <View style={templateStyles.main}>
+          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
+          <Text style={styles.heading1}>{state.basicInfo.info.fullName}</Text>
           {componentOrder?.order.map((compname, index) => {
             let Comp;
             switch (compname) {
               case "skills":
                 console.log(compname);
-                return <SkillsView state={state.skills} styles={styles} />;
+                return <SkillsView state={state.skills} styles={styles}  />;
               case "workExperience":
                 return (
                   <WorkHistoryView state={state.workHistory} styles={styles} />
@@ -65,33 +99,13 @@ export default function Template1(props: propType) {
                 return <LinkView state={state.links} styles={styles} />;
             }
           })}
-          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
 
-          {/* Skills */}
-          {/* <SkillsView state={state.skills} styles={styles} /> */}
-
-          {/* Workex */}
-          {/* <WorkHistoryView state={state.workHistory} styles={styles}/> */}
-
-          {/* Education */}
         </View>
       </View>
       {/* Right column */}
-      <View style={styles.aside}>
+      <View style={templateStyles.aside}>
         <LinkView state={state.links} styles={styles} />
-        {/* <View style={styles.contentblock}>
-            <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
-            <Text style={styles.sm}>https://siva.studio</Text>
-            <Text style={styles.sm}>https://cryptomash.io</Text>
-          </View> */}
-        <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Publications</Text>
-          <Text>https://nature.com/pillid</Text>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Awards</Text>
-          <Text>Best Innovator Award 2016, Microsoft Services</Text>
-        </View>
+      </View>
       </View>
     </Page>
   );

@@ -239,6 +239,7 @@ function Textarea(props: any) {
                  <Flex
               justifyContent="space-between"
               alignItems="center">
+                <Box>
                 {showBullet && (
                   <Button
                     variant="ghost"
@@ -260,19 +261,14 @@ function Textarea(props: any) {
                     <Icon
                       as={VscListUnordered}
                       boxSize={6}
-                      color={listActive ? "secondary.400" : "gray.400"}
+                      color={listActive ? "gray.900" : "gray.400"}
                     />
                   </Button>
-                )}
+                )}</Box>
                 <Flex>
-                <Button
-                    colorScheme="primary"
-                    leftIcon={blacklist.length > 0 ? <VscWarning /> : undefined}
-                    onClick={() => (isOpen ? onClose() : onOpen())}
-                  >
-                    Tips
-                  </Button>
+                
                   <Button
+                  fontWeight="normal"
                     variant="ghost"
                     disabled={blacklist.length===0}
                     colorScheme={blacklist.length > 0 ? "orange" : "gray"}
@@ -283,6 +279,7 @@ function Textarea(props: any) {
                     Buzzwords found
                   </Button>
                   <Button
+                  fontWeight="normal"
                   disabled={whitelist.length===0}
                     variant="ghost"
                     colorScheme={whitelist.length > 0 ? "green" : "gray"}

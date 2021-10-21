@@ -21,25 +21,24 @@ function ResumeView(props: propsType) {
   const workHistoryStyles: { [key: string]: PDFStyle } = {
     jobTitle: {
       ...styles.subSectionHeader,
-      textTransform: "uppercase",
     },
     companyName: {
-      color: "green",
+      ...styles.paragraph
     },
     duration: {
-      color: "brown",
+      ...styles.paragraph
     },
   };
 
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionHeader}>Relevant Experience</Text>
+      <Text style={[styles.sectionHeader]}>Relevant Experience</Text>
       <View style={styles.sectionContainer}>
         {state.list.map((exp, index) => {
           const { jobDescription } = exp;
-          const lines = jobDescription.split("|");
+          const lines = jobDescription.split("•");
           return (
-            <View style={styles.subSectionContainer}>
+            <View    style={[styles.subSectionContainer]}>
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },
@@ -48,7 +47,7 @@ function ResumeView(props: propsType) {
                 <View>
                   <Text>
                     <Text style={workHistoryStyles.jobTitle}>
-                      {exp.jobTitle}{" "}
+                      {exp.jobTitle}{" "}|{" "}
                     </Text>
                     <Text style={workHistoryStyles.companyName}>
                       {exp.employedIn}
@@ -65,12 +64,14 @@ function ResumeView(props: propsType) {
                 </View>
               </View>
               <View>
+                {/* <Text style={styles.paragraph}>{jobDescription}</Text> */}
+              
                 {/* Job description */}
                 <UL>
                   {lines.map((line, index) => {
                     return (
-                      <LI key={index}>
-                        <Text>{line}</Text>
+                      <LI key={index} lastItem = {index===lines.length-1}>
+                        <Text>{line.trim()}</Text>
                       </LI>
                     );
                   })}

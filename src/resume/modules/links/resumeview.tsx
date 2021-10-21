@@ -21,10 +21,9 @@ function ResumeView(props: propsType) {
   const linkStyles: { [key: string]: PDFStyle } = {
     title: {
       ...styles.subSectionHeader,
-      textTransform: "uppercase",
     },
     url: {
-      color: "green",
+      ...styles.paragraph
     },
     
   };
@@ -36,7 +35,7 @@ function ResumeView(props: propsType) {
         return (
           <View style={styles.subSectionContainer}>
             <Text style={linkStyles.title} >{link.title}</Text>
-            <Text style={linkStyles.url}>{link.url}</Text>
+            <Text>{link.url}</Text>
           </View>
         );
       })}

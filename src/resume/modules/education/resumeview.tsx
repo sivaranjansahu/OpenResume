@@ -18,16 +18,16 @@ function ResumeView(props: propsType) {
     return null;
   }
 
-  const workHistoryStyles: { [key: string]: PDFStyle } = {
-    jobTitle: {
+  const educationStyles: { [key: string]: PDFStyle } = {
+    degree: {
       ...styles.subSectionHeader,
-      textTransform: "uppercase",
     },
-    companyName: {
-      color: "green",
+    school: {
+      ...styles.paragraph,
+
     },
     duration: {
-      color: "brown",
+      ...styles.paragraph
     },
   };
 
@@ -37,7 +37,7 @@ function ResumeView(props: propsType) {
       <View style={styles.sectionContainer}>
         {state.list.map((edu, index) => {
           const { about } = edu;
-          const lines = about.split("|");
+          const lines = about.split("•");
           return (
             <View style={styles.subSectionContainer}>
               <View
@@ -47,16 +47,16 @@ function ResumeView(props: propsType) {
               >
                 <View>
                   <Text>
-                    <Text style={workHistoryStyles.jobTitle}>
-                      {edu.degree}{" "}
+                    <Text style={educationStyles.degree}>
+                      {edu.degree}{" "}|{" "}
                     </Text>
-                    <Text style={workHistoryStyles.companyName}>
+                    <Text style={educationStyles.school}>
                       {edu.school}
                     </Text>
                   </Text>
                 </View>
                 <View>
-                  <Text style={workHistoryStyles.duration}>
+                  <Text style={educationStyles.duration}>
                     {`${edu.fromMonth} ${edu.fromYear}`}{" "}{`to ${edu.toMonth} ${edu.toYear}`}
                     {/* {!exp.isCurrent
                       ? `to ${exp.toMonth} ${exp.toYear}`
@@ -66,16 +66,15 @@ function ResumeView(props: propsType) {
               </View>
               <View>
                 {/* Job description */}
-                <Text>xxx{about}</Text>
-                {/* <UL>
+                <UL>
                   {lines.map((line, index) => {
                     return (
                       <LI key={index}>
-                        <Text>{line}</Text>
+                        <Text>{line.trim()}</Text>
                       </LI>
                     );
                   })}
-                </UL> */}
+                </UL>
               </View>
             </View>
           );

@@ -28,10 +28,13 @@ export const summarySlice = createSlice({
     setActive: (state, action) => {
       state.active = action.payload;
     },
+    setAltName: (state, action) => {
+      state.altName = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSummary, setActive } = summarySlice.actions;
+export const { setSummary, setActive,setAltName } = summarySlice.actions;
 
 export default summarySlice.reducer;

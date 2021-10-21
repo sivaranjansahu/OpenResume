@@ -34,7 +34,8 @@ function Preview({ resumeData }: temp) {
   const [templateId, setTemplateId] = useState<string>("temp1");
   const [accentColor, setAccentColor] = useState("#333");
   const [layout, setLayout] = useState("template1");
-  const [selectedFont, setSelectedFont] = useState("opensans");
+  const [headingFont, setHeadingFont] = useState("opensans");
+  const [bodyFont, setBodyFont] = useState("opensans");
   const state = useAppSelector((state) => state);
 
   registerFonts();
@@ -62,11 +63,13 @@ function Preview({ resumeData }: temp) {
         onClose={onClose}
         setLayout={setLayout}
         updateAccentColor={updateAccentColor}
-        setSelectedFont={setSelectedFont}
+        setHeadingFont={setHeadingFont}
+        setBodyFont={setBodyFont}
         state={state}
-        accentColor={accentColor}
+        accentColor={accentColor} 
         layout={layout}
-        selectedFont={selectedFont}
+        headingFont={headingFont}
+        bodyFont={bodyFont}
       />
       
 
@@ -80,7 +83,8 @@ function Preview({ resumeData }: temp) {
           state={state}
           accentColor={accentColor}
           layout={layout}
-          selectedFont={selectedFont}
+          headingFont={headingFont}
+        bodyFont={bodyFont}
         />
       </PDFViewer>
     </Box>

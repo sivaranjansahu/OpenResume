@@ -23,10 +23,9 @@ function ResumeView(props: propsType) {
   const projectStyles: { [key: string]: PDFStyle } = {
     title: {
       ...styles.subSectionHeader,
-      textTransform: "uppercase",
     },
     year: {
-      color: "brown",
+      ...styles.paragraph
     },
   };
 
@@ -35,18 +34,19 @@ function ResumeView(props: propsType) {
       <Text style={styles.sectionHeader}>Relevant Projects</Text>
       {state.list.map((project: IProject, index: number) => {
         const { about } = project;
-        const lines = about.split("|");
+        const lines = about.split("•");
         return (
           <View style={styles.subSectionContainer}>
+            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
             <Text style={styles.subSectionHeader} >{project.title}</Text>
             <Text style={projectStyles.year}>{project.year}</Text>
+            </View>
             <View>
-                {/* Job description */}
                 <UL>
                   {lines.map((line, index) => {
                     return (
                       <LI key={index}>
-                        <Text>{line}</Text>
+                        <Text>{line.trim()}</Text>
                       </LI>
                     );
                   })}
