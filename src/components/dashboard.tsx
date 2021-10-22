@@ -123,6 +123,17 @@ function Dashboard() {
           active: true,
           list: [],
         },
+        "componentOrder": {
+          "order": [
+            "summary",
+            "skills",
+            "workExperience",
+            "projects",
+            "education",
+            "courses",
+            "links"
+          ]
+        },
       },
     };
     electron.ipcRenderer.send(channels.CREATE_PROFILE, newProfile);
