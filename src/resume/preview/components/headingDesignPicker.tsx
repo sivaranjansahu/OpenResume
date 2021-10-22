@@ -75,7 +75,7 @@ import { RadioCard } from "./layoutpicker";
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                Layout
+                Header styles
               </Box>
               <AccordionIcon />
             </AccordionButton>
