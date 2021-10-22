@@ -15,7 +15,7 @@ type propType={
 }
 
 function FontPicker({ setSelectedFont,type }: propType) {
-  const fonts = ["opensans", "roboto", "inter", "quicksand", "koh"];
+  const fonts = ["opensans", "roboto", "inter", "quicksand", "lora","lato"];
   const [fontIndex, setFontIndex] = useState(0);
   function updateFont(font: string, index: number) {
     setSelectedFont(font);

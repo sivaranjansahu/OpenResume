@@ -21,7 +21,7 @@ type propType = {
   bodyColor?:string;
 };
 
-export default function Template1(props: propType) {
+export default function Template3(props: propType) {
   const styles = styleGen({
     headingFont: props.headingFont,
     bodyFont:props.bodyFont,
@@ -49,8 +49,7 @@ export default function Template1(props: propType) {
   styles.subSectionHeader = {
     ...styles.subSectionHeader,
     fontWeight:500,
-    //textTransform:"uppercase"
-    fontStyle:"italic"
+    textTransform:"uppercase"
   };
   
 
@@ -65,7 +64,7 @@ export default function Template1(props: propType) {
     },
     main:{
       flex:1,
-      width: "71vw",
+      width: "92vw",
       padding:"2vw"
     },
     aside:{
@@ -86,11 +85,12 @@ export default function Template1(props: propType) {
         <View  style={templateStyles.main}>
         <Text style={[styles.heading1,{fontSize:24,fontWeight:500,textTransform:"uppercase"}]}>{state.basicInfo.info.fullName}</Text>
         <Text >Design Technologist, Innovator @ Microsoft Research, UX Engineer, Designer who codes.</Text>
-        </View>
+        
         <View  style={[templateStyles.aside,styles.tiny]}>
         <Text >{state.basicInfo.info.address}</Text>
         <Text >{state.basicInfo.info.phoneno}</Text>
         <Text >{state.basicInfo.info.email}</Text>
+        </View>
         </View>
       </View>
       <View style={templateStyles.container}>
@@ -127,10 +127,7 @@ export default function Template1(props: propType) {
           })}
  
         </View>
-      {/* Right column */}
-      <View style={templateStyles.aside}>
-        <LinkView headingDesign={headingDesign} state={state.links} styles={styles} />
-      </View>
+     
       </View>
     </Page>
   );

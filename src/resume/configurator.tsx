@@ -22,6 +22,7 @@ import { useState } from "react";
 import { RiDownloadLine } from "react-icons/ri";
 import { VscClose, VscCloudDownload } from "react-icons/vsc";
 import { number } from "yup";
+import generateTestDoc from "./generators/docx/docxgen";
 import MyDocument from "./generators/pdf/pdfgen";
 import ColorPicker from "./preview/components/colorpicker";
 import FontPicker from "./preview/components/fontpicker";
@@ -97,6 +98,7 @@ function DownloadButtons({
           leftIcon={<VscCloudDownload />}
           bgColor="primary.400"
           color="white"
+          onClick={()=>generateTestDoc(state)}
         >
           Download Docx
         </Button>

@@ -38,7 +38,7 @@ function ResumeView(props: propsType) {
         const { about } = project;
         const lines = about.split("•");
         return (
-          <View style={styles.subSectionContainer}>
+          <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]}>
             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
             <Text style={styles.subSectionHeader} >{project.title}</Text>
             <Text style={projectStyles.year}>{project.year}</Text>

@@ -72,7 +72,7 @@ export const SectionHeading2 = ({styles,title}:any) =>{
             textTransform:"uppercase",
             fontWeight:600,
             letterSpacing:2,
-            marginBottom:8
+            marginBottom:4
             }}>
         <Text style={[styles.sectionHeader,{fontSize:10}]}>{title}</Text>
         </View>
@@ -89,7 +89,7 @@ export const SectionHeading3 = ({styles,title}:any) =>{
             letterSpacing:2,
             fontWeight:600,
             fontSize:10,
-            marginBottom:8
+            marginBottom:4
             }}>
         <Text style={[styles.sectionHeader,{fontSize:10,}]}>{title}</Text>
         </View>
@@ -106,7 +106,7 @@ export const SectionHeading4 = ({styles,title}:any) =>{
             letterSpacing:2,
             
             fontSize:10,
-            marginBottom:8
+            marginBottom:4
             }}>
         <Text style={[styles.sectionHeader,{fontSize:10,fontWeight:500,}]}>{title}</Text>
         </View>

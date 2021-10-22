@@ -36,12 +36,12 @@ function ResumeView(props: propsType) {
     <View style={styles.section}>
       {/* <Text style={[styles.sectionHeader]} >Relevant Experience</Text> */}
       <SectionHeading headingtype={headingDesign} title="Relevant Experience" styles={styles}/>
-      <View style={styles.sectionContainer} >
+      <View style={styles.sectionContainer}  >
         {state.list.map((exp, index) => {
           const { jobDescription } = exp;
           const lines = jobDescription.split("•");
           return (
-            <View style={[styles.subSectionContainer]} >
+            <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]} >
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },

@@ -4,6 +4,7 @@ import {
 import React from "react";
 import Template1 from "./templates/template1";
 import Template2 from "./templates/template2";
+import Template3 from "./templates/template3";
 
 
 type templateType = {
@@ -13,7 +14,7 @@ type templateType = {
 const templates: templateType = {
   template1: Template1,
   template2: Template2,
-  template3: Template1,
+  template3: Template3,
 };
 
 //const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
