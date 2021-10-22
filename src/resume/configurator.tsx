@@ -156,7 +156,14 @@ function Configurator(props: Proptype) {
             </FormControl>
           </Box>
           <Heading as="h4" size="xs" mb={2} px={4}>
-            Style
+            Layouts
+          </Heading>
+          <Accordion>
+          <LayoutPicker setLayout={setLayout} />
+            <HeadingPicker setHeadingDesign={setHeadingDesign}/>
+          </Accordion>
+          <Heading as="h4" size="xs" mb={2} px={4}>
+            Colors
           </Heading>
           <Accordion
             defaultIndex={[0]}
@@ -165,12 +172,17 @@ function Configurator(props: Proptype) {
           >
             <ColorPicker type="accent" setColor={updateAccentColor} />
             <ColorPicker type="body" setColor={updateBodyColor} />
-            <LayoutPicker setLayout={setLayout} />
-            <HeadingPicker setHeadingDesign={setHeadingDesign}/>
+            
+          </Accordion>
+          <Heading as="h4" size="xs" mb={2} px={4}>
+            Fonts
+          </Heading>
+          <Accordion>
+          
             <FontPicker type="heading" setSelectedFont={setHeadingFont} />
             <FontPicker type="body" setSelectedFont={setBodyFont} />
           </Accordion>
-
+          
           <DownloadButtons
             state={state}
             format={format}
