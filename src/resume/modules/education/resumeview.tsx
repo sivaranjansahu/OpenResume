@@ -1,4 +1,4 @@
-import { IWorkHistory } from "../../interfaces/forminterfaces";
+import { IEducation, IWorkHistory } from "../../interfaces/forminterfaces";
 import { View, Text } from "@react-pdf/renderer";
 import { Style as PDFStyle } from "@react-pdf/types";
 import { LI, UL } from "../../preview/components/list";
@@ -7,7 +7,7 @@ import SectionHeading from "../../generators/pdf/templates/headingstyles";
 
 type propsType = {
   state: {
-    list: IWorkHistory[];
+    list: IEducation[];
     active?: boolean;
   };
   styles: resumeStyleType;
@@ -20,12 +20,13 @@ function ResumeView(props: propsType) {
     return null;
   }
 
-  const workHistoryStyles: { [key: string]: PDFStyle } = {
-    jobTitle: {
+  const educationStyles: { [key: string]: PDFStyle } = {
+    degree: {
       ...styles.subSectionHeader,
     },
-    companyName: {
-      ...styles.paragraph
+    school: {
+      ...styles.paragraph,
+
     },
     duration: {
       ...styles.paragraph
@@ -34,14 +35,13 @@ function ResumeView(props: propsType) {
 
   return (
     <View style={styles.section}>
-      {/* <Text style={[styles.sectionHeader]} >Relevant Experience</Text> */}
-      <SectionHeading headingtype={headingDesign} title="Relevant Experience" styles={styles}/>
-      <View style={styles.sectionContainer}  >
-        {state.list.map((exp, index) => {
-          const { jobDescription } = exp;
-          const lines = jobDescription.split("•");
+      <SectionHeading headingtype={headingDesign} title="Education" styles={styles}/>
+      <View style={styles.sectionContainer}>
+        {state.list.map((edu, index) => {
+          const { about } = edu;
+          const lines = about.split("•");
           return (
-            <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]} >
+            <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]}>
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },
@@ -49,31 +49,29 @@ function ResumeView(props: propsType) {
               >
                 <View>
                   <Text>
-                    <Text style={workHistoryStyles.jobTitle}>
-                      {exp.jobTitle}{" "}|{" "}
+                    <Text style={educationStyles.degree}>
+                      {edu.degree}{" "}|{" "}
                     </Text>
-                    <Text style={workHistoryStyles.companyName}>
-                      {exp.employedIn}
+                    <Text style={educationStyles.school}>
+                      {edu.school}
                     </Text>
                   </Text>
                 </View>
                 <View>
-                  <Text style={workHistoryStyles.duration}>
-                    {`${exp.fromMonth} ${exp.fromYear}`}{" "}
-                    {!exp.isCurrent
+                  <Text style={educationStyles.duration}>
+                    {`${edu.fromMonth} ${edu.fromYear}`}{" "}{`to ${edu.toMonth} ${edu.toYear}`}
+                    {/* {!exp.isCurrent
                       ? `to ${exp.toMonth} ${exp.toYear}`
-                      : "to present"}
+                      : "to present"} */}
                   </Text>
                 </View>
               </View>
               <View>
-                {/* <Text style={styles.paragraph}>{jobDescription}</Text> */}
-              
                 {/* Job description */}
                 <UL>
                   {lines.map((line, index) => {
                     return (
-                      <LI key={index} lastItem = {index===lines.length-1}>
+                      <LI key={index}>
                         <Text>{line.trim()}</Text>
                       </LI>
                     );

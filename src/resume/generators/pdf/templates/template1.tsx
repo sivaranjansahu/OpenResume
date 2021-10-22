@@ -3,95 +3,134 @@ import { IProfile } from "../../../interfaces/forminterfaces";
 import BasicInfoView from "../../../modules/basicinfo/resumeview";
 import LinkView from "../../../modules/links/resumeview";
 import SkillsView from "../../../modules/skills/resumeview";
+import SummaryView from "../../../modules/summary/summaryview";
+import EducationView from "../../../modules/education/resumeview";
 import WorkHistoryView from "../../../modules/workhistory/resumeview";
+import CourseView from "../../../modules/courses/resumeview";
+import ProjectView from "../../../modules/projects/resumeview";
 import styleGen from "../basestyles";
+import {
+  StyleSheet
+} from "@react-pdf/renderer";
 type propType = {
   state: IProfile;
-  font: string;
+  headingFont: string;
+  headingDesign:number;
+  bodyFont:string;
   accentColor: string;
+  bodyColor?:string;
 };
 
 export default function Template1(props: propType) {
   const styles = styleGen({
-    fontFamily: props.font,
+    headingFont: props.headingFont,
+    bodyFont:props.bodyFont,
     accentColor: props.accentColor,
+    
   });
 
+  styles.page={
+    ...styles.page,
+    backgroundColor:props.bodyColor
+  }
+  styles.section = {
+    ...styles.section,
+    //marginBottom:6,
+    //marginBottom:10
+  }
+  styles.subSectionContainer = {
+    marginTop:6
+  }
   styles.sectionHeader = {
     ...styles.sectionHeader,
-    textTransform: "uppercase",
+    marginBottom:2,
+    //textTransform: "uppercase",
   };
   styles.subSectionHeader = {
     ...styles.subSectionHeader,
-    textTransform: "uppercase",
+    fontWeight:500,
+    //textTransform:"uppercase"
+    fontStyle:"italic"
   };
+  
+
+  const templateStyles =StyleSheet.create( {
+    container:{
+      flexDirection:"row",
+      paddingLeft:"4vw",
+      paddingRight:"4vw",
+      marginBottom:"2vw",
+      width:"100vw",
+      
+    },
+    main:{
+      flex:1,
+      width: "71vw",
+      padding:"2vw"
+    },
+    aside:{
+      width:"21vw",
+      //backgroundColor:"#eaeaea",
+      padding:"2vw"
+    }
+  })
+
   //styles.blockHeader = { ...styles.blockHeader, textTransform: "uppercase" };
 
-  const { state, accentColor } = props;
-  const { skills, workHistory, education, basicInfo } = state;
-
+  const { state, accentColor,bodyColor,headingDesign } = props;
+  const { skills, workHistory, education, basicInfo, componentOrder } = state;
+  console.log("resumeData", componentOrder);
   return (
-    <Page size="A4" style={styles.page}>
-      {/* Left column */}
-      <View style={styles.section}>
-        <View style={styles.main}>
-          <BasicInfoView info={state.basicInfo.info} styles={styles} />
-
-          {/* Skills */}
-          <SkillsView state={state.skills} styles={styles} />
-
-          {/* Workex */}
-          <WorkHistoryView
-            // history={state.workHistory.list}
-            // active={state.workHistory.active}
-            state={state.workHistory}
-            styles={styles}
-          />
-
-          {/* Education */}
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeader}>Education</Text>
-            <View style={styles.subSectionContainer}>
-              <View style={styles.expHeader}>
-                <View>
-                  <Text style={styles.subSectionHeader}>
-                    Masters <Text>CalTech</Text>
-                  </Text>
-                </View>
-                <View>
-                  <Text>Jun 2004 to Dec 2007</Text>
-                </View>
-              </View>
-
-              {/* <UL style={{}}>
-                  <LI>
-                    <Text>
-                      Designed and developed a multilayered solution to generate
-                      synthetic medical pill images from seed images. ThreeJS,
-                      NodeJS, Blender, React
-                    </Text>
-                  </LI>
-                </UL> */}
-            </View>
-          </View>
+    <Page size="A4" style={styles.page} >
+      <View style={templateStyles.container}>
+        <View  style={templateStyles.main}>
+        <Text style={[styles.heading1,{fontSize:24,fontWeight:500,textTransform:"uppercase"}]}>{state.basicInfo.info.fullName}</Text>
+        <Text >Design Technologist, Innovator @ Microsoft Research, UX Engineer, Designer who codes.</Text>
+        </View>
+        <View  style={[templateStyles.aside,styles.tiny]}>
+        <Text >{state.basicInfo.info.address}</Text>
+        <Text >{state.basicInfo.info.phoneno}</Text>
+        <Text >{state.basicInfo.info.email}</Text>
         </View>
       </View>
+      <View style={templateStyles.container}>
+      {/* Left column */}
+        <View style={templateStyles.main}>
+          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
+          
+          {componentOrder?.order.map((compname, index) => {
+            const sectionStyles = Object.create(styles);
+            sectionStyles.accentColor = accentColor;
+            sectionStyles.bodyColor = bodyColor;
+            switch (compname) {
+              case "skills":
+                return <SkillsView headingDesign={headingDesign} state={state.skills} styles={sectionStyles}  />;
+              case "workExperience":
+                return (
+                  <WorkHistoryView headingDesign={headingDesign} state={state.workHistory} styles={sectionStyles} />
+                );
+              case "summary":
+                return <SummaryView headingDesign={headingDesign} summary={state.summary} styles={sectionStyles} />;
+              case "education":
+                return (
+                  <EducationView headingDesign={headingDesign}  state={state.education} styles={sectionStyles} />
+                );
+              case "courses":
+                return <CourseView headingDesign={headingDesign}  state={state.courses} styles={sectionStyles} />;
+              case "projects":
+                return <ProjectView headingDesign={headingDesign}  state={state.projects} styles={sectionStyles} />;
+                case "links":
+                return <LinkView headingDesign={headingDesign}  state={state.links} styles={sectionStyles} />;
+              default:
+                return <LinkView headingDesign={headingDesign}  state={state.links} styles={sectionStyles} />;
+            }
+          })}
+ 
+        </View>
       {/* Right column */}
-      <View style={styles.aside}>
-        <LinkView state={state.links} styles={styles} />
-        {/* <View style={styles.contentblock}>
-            <Text style={{ ...styles.h4, ...styles.blockHeader }}>Links</Text>
-            <Text style={styles.sm}>https://siva.studio</Text>
-            <Text style={styles.sm}>https://cryptomash.io</Text>
-          </View> */}
-        <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Publications</Text>
-          <Text>https://nature.com/pillid</Text>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Awards</Text>
-          <Text>Best Innovator Award 2016, Microsoft Services</Text>
-        </View>
+      <View style={templateStyles.aside}>
+        <LinkView headingDesign={headingDesign} state={state.links} styles={styles} />
+      </View>
       </View>
     </Page>
   );

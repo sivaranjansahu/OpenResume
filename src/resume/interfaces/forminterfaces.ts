@@ -41,6 +41,7 @@ export interface IWorkHistory {
   employedIn: string;
   fromYear: number;
   toYear: number;
+  
   fromMonth: string;
   toMonth: string;
   jobTitle: string;
@@ -86,33 +87,44 @@ export interface IProfile {
   basicInfo: {
     info: IBasicInfo;
     active: boolean;
+    altName?:string;
   };
   summary: {
-    info: ISummary;
+    content: string;
     active: boolean;
+    altName?:string;
   };
   skills: {
     active: boolean;
     list: ISkill[];
+    altName?:string;
   };
   workHistory: {
     active: boolean;
+    altName?:string;
     list: IWorkHistory[];
   };
   education: {
     active: boolean;
     list: IEducation[];
+    altName?:string;
   };
   courses: {
     active: boolean;
     list: ICourse[];
+    altName?:string;
   };
   links: {
     list: ILink[];
     active: boolean;
+    altName?:string;
   };
   projects: {
     list: IProject[];
     active: boolean;
+    altName?:string;
   };
+  componentOrder?:{
+    order:string[]
+  }
 }

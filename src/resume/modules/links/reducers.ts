@@ -5,6 +5,7 @@ import { ILink } from "../../interfaces/forminterfaces";
 interface LinksState {
   active: boolean;
   list: ILink[];
+  altName?:string;
 }
 
 // Define the initial state using that type
@@ -19,6 +20,10 @@ export const linksSlice = createSlice({
     setInitialLinks: (state, action) => {
       state.list = action.payload ? action.payload.list: [];
       state.active = action.payload ?  action.payload.active: true;
+      state.altName= action.payload.altName;
+    },
+    setAltName: (state, action) => {
+      state.altName = action.payload;
     },
     setActive: (state, action) => {
       state.active = action.payload;
@@ -36,7 +41,7 @@ export const linksSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addLink, deleteLink, setActive, setInitialLinks } =
+export const { addLink, deleteLink, setActive, setInitialLinks,setAltName } =
   linksSlice.actions;
 
 export default linksSlice.reducer;

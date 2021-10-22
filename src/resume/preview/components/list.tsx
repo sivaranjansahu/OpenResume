@@ -34,24 +34,24 @@ export const Bullet = () => {
       style={{
         width: 4,
         height: 4,
-        backgroundColor: colors.accent,
+        backgroundColor: '#444',
         marginRight: 8,
         borderRadius: "50%",
-        marginTop: 3,
+        marginTop: 6,
       }}
     ></View>
   );
 };
 export const UL = ({ children, ...props }: any) => {
   return (
-    <View {...props} style={styles.listBlock}>
+    <View {...props} style={styles.listBlock} >
       <View>{children}</View>
     </View>
   );
 };
-export const LI = ({ children, ...props }: any) => {
+export const LI = ({ children,lastItem, ...props }: any) => {
   return (
-    <View {...props} style={styles.listItem}>
+    <View {...props} style={[styles.listItem,{marginBottom: lastItem ? 0 : 4}]} >
       <Bullet />
       <View>{children}</View>
     </View>

@@ -5,6 +5,7 @@ import { IBasicInfo } from "../../interfaces/forminterfaces";
 interface BasicInfoState {
   active: boolean;
   info: IBasicInfo;
+  altName?:string;
 }
 
 // Define the initial state using that type
@@ -24,7 +25,6 @@ export const basicInfoSlice = createSlice({
   initialState: initialState,
   reducers: {
     setBasicInfo: (state, action) => {
-      console.log("action", action);
       state.info = action.payload.info;
       state.active = true;
     },

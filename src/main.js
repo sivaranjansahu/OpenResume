@@ -5,16 +5,19 @@ const {
   ipcMain,
   ipcRenderer,
   Notification,
+  Menu,MenuItem
 } = require("electron");
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS,
 } = require("electron-devtools-installer");
+
 require('@electron/remote/main').initialize()
 
 const { channels } = require("./shared/constants");
 const Store = require("electron-store");
+
 
 const store = new Store({
   name: "Resumes",
@@ -39,6 +42,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
+      spellcheck: true
       // preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -60,6 +64,57 @@ function createWindow() {
 
   // Open the DevTools.
   win.webContents.openDevTools();
+
+  
+
+  const resumeDict = {
+    "happy":[
+      "elated",
+      "joyous",
+      'ecstatic','stoked'
+    ],
+    "sad":[
+      "dejected",
+      "gloomy",
+      "upset","depresed"
+    ]
+  };
+
+win.webContents.on('context-menu', (event,params) => {
+  console.log(params)
+  const template = [
+    {
+      label: 'Menu Item 1',
+      click: () => { event.sender.send('context-menu-command', 'menu-item-1') }
+    },
+    { type: 'separator' },
+    { label: 'Menu Item 2', type: 'checkbox', checked: true }
+  ]
+  const menu = Menu.buildFromTemplate(template);
+
+
+   // Add each spelling suggestion
+   for (const suggestion of params.dictionarySuggestions) {
+    menu.append(new MenuItem({
+      label: suggestion,
+      click: () => win.webContents.replaceMisspelling(suggestion)
+    }))
+  }
+
+  // Allow users to add the misspelled word to the dictionary
+  if (params.misspelledWord) {
+    menu.append(
+      new MenuItem({
+        label: 'Add to dictionary',
+        click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+      })
+    )
+  }
+
+  menu.popup()
+
+  menu.popup(BrowserWindow.fromWebContents(event.sender))
+})
 }
 
 // This method will be called when Electron has finished
@@ -87,6 +142,7 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+ 
 });
 
 app.whenReady().then(() => {
@@ -102,6 +158,9 @@ app.whenReady().then(() => {
     globalShortcut.unregister("F5", reload);
     globalShortcut.unregister("CommandOrControl+R", reload);
   });
+
+
+
 });
 
 app.on("will-quit", () => {
@@ -180,3 +239,13 @@ ipcMain.on(channels.MINIMIZE_WINDOW,()=>{
 ipcMain.on(channels.TOGGLE_MAXIMIZE,()=>{
   win.isMaximized() ? win.unmaximize() : win.maximize();
 })
+
+
+
+//Context menu
+
+// ipcRenderer.on('context-menu-command', (e, command) => {
+//   // ...
+//   console.log(e)
+// })
+

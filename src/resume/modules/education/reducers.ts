@@ -5,6 +5,7 @@ import { IEducation } from "../../interfaces/forminterfaces";
 interface edState {
   active: boolean;
   list: IEducation[];
+  altName?:string;
 }
 
 // Define the initial state using that type
@@ -19,6 +20,10 @@ export const educationSlice = createSlice({
     setInitialEducation: (state, action) => {
       state.list = action.payload.list;
       state.active = action.payload.active;
+      state.altName= action.payload.altName;
+    },
+    setAltName: (state, action) => {
+      state.altName = action.payload;
     },
     setActive: (state, action) => {
       state.active = action.payload;
@@ -36,7 +41,7 @@ export const educationSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addEducation, removeEducation, setActive, setInitialEducation } =
+export const { addEducation, removeEducation, setActive, setInitialEducation,setAltName } =
   educationSlice.actions;
 
 export default educationSlice.reducer;

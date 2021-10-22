@@ -1,9 +1,15 @@
-import { IBasicInfo } from "../../interfaces/forminterfaces";
+import { IBasicInfo, ISummary } from "../../interfaces/forminterfaces";
 import { View, Text } from "@react-pdf/renderer";
 import { type } from "os";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
+import SectionHeading, { SectionHeading1 } from "../../generators/pdf/templates/headingstyles";
 type propsType = {
-  info: IBasicInfo;
-  styles?: any;
+  summary:{
+    content:string,
+    active:boolean
+  };
+  styles: resumeStyleType;
+  headingDesign:number
 };
 
 export type stylesType = {
@@ -11,23 +17,48 @@ export type stylesType = {
   h4?: any;
   contentblock?: any;
 };
-const BasicInfoView: React.FC<propsType> = ({ info, styles }) => {
+const SummaryView: React.FC<propsType> = ({ summary, styles,headingDesign }:propsType) => {
+  if(!summary.active){
+    return null
+  }
+  
   return (
-    <View style={styles?.contentblock}>
-      <Text style={styles?.h2}>{info.fullName}</Text>
+    <View>
+    <View style={styles.section}>
+      <SectionHeading headingtype={headingDesign} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+      </View>
+      {/* <View style={styles.section}>
+      <SectionHeading headingtype={2} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+      </View>
+      <View style={styles.section}>
+      <SectionHeading headingtype={3} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+      </View>
+      <View style={styles.section}>
+      <SectionHeading headingtype={4} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+    </View>
+    <View style={styles.section}>
+      <SectionHeading headingtype={5} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+      </View>
+      <View style={styles.section}>
+      <SectionHeading headingtype={6} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+    </View>
+    <View style={styles.section}>
+      <SectionHeading headingtype={7} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+    </View>
+    <View style={styles.section}>
+      <SectionHeading headingtype={8} title="Summary" styles={styles}/>
+      <Text style={styles.paragraph}>{summary.content}</Text>
+    </View> */}
     </View>
   );
 };
 
-export const Contactview: React.FC<propsType> = ({ info, styles }) => {
-  return (
-    <View style={styles?.contentblock}>
-      <Text style={{ ...styles?.h4, ...styles?.blockHeader }}>Contact</Text>
-      <Text style={styles?.sm}>{info?.email}</Text>
-      <Text style={styles?.sm}>{info?.address}</Text>
-      <Text style={styles?.sm}>{info?.phoneno}</Text>
-    </View>
-  );
-};
 
-export default BasicInfoView;
+export default SummaryView;

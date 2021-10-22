@@ -8,8 +8,14 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useState } from "react";
-function FontPicker({ setSelectedFont }: any) {
-  const fonts = ["opensans", "roboto", "inter", "quicksand", "koh"];
+
+type propType={
+  setSelectedFont:any,
+  type:"heading"|"body"
+}
+
+function FontPicker({ setSelectedFont,type }: propType) {
+  const fonts = ["opensans", "roboto", "inter", "quicksand", "lora","lato"];
   const [fontIndex, setFontIndex] = useState(0);
   function updateFont(font: string, index: number) {
     setSelectedFont(font);
@@ -21,7 +27,7 @@ function FontPicker({ setSelectedFont }: any) {
         <h2>
           <AccordionButton>
             <Box flex="1" textAlign="left">
-              Font
+              {type==="heading" ? "Heading font" : "Body font"}
             </Box>
             <AccordionIcon />
           </AccordionButton>

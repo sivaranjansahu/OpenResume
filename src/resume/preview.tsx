@@ -33,8 +33,11 @@ interface temp {
 function Preview({ resumeData }: temp) {
   const [templateId, setTemplateId] = useState<string>("temp1");
   const [accentColor, setAccentColor] = useState("#333");
+  const [bodyColor, updateBodyColor] = useState("#fff");
   const [layout, setLayout] = useState("template1");
-  const [selectedFont, setSelectedFont] = useState("opensans");
+  const [headingDesign,setHeadingDesign] = useState<number>(0);
+  const [headingFont, setHeadingFont] = useState("opensans");
+  const [bodyFont, setBodyFont] = useState("opensans");
   const state = useAppSelector((state) => state);
 
   registerFonts();
@@ -43,7 +46,6 @@ function Preview({ resumeData }: temp) {
     setAccentColor(color);
   }
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [placement, setPlacement] = useState(0);
   return (
     <Box>
       <Flex width="full" justifyContent="flex-end" mb={4}>
@@ -63,32 +65,34 @@ function Preview({ resumeData }: temp) {
         onClose={onClose}
         setLayout={setLayout}
         updateAccentColor={updateAccentColor}
-        setSelectedFont={setSelectedFont}
+        updateBodyColor={updateBodyColor}
+        setHeadingFont={setHeadingFont}
+        setBodyFont={setBodyFont}
+        setHeadingDesign={setHeadingDesign}
         state={state}
-        accentColor={accentColor}
+        accentColor={accentColor} 
         layout={layout}
-        selectedFont={selectedFont}
+        headingFont={headingFont}
+        bodyFont={bodyFont}
+        headingDesign={headingDesign}
+        bodyColor={bodyColor}
       />
-      <button
-        onClick={() => {
-          setPlacement(placement + 1);
-        }}
-      >
-        refresh
-      </button>
+      
 
       <PDFViewer
         width="100%"
         height="900px"
         showToolbar={false}
         className="frame"
-        key={placement}
       >
         <MyDocument
           state={state}
           accentColor={accentColor}
+          bodyColor={bodyColor}
           layout={layout}
-          selectedFont={selectedFont}
+          headingFont={headingFont}
+          headingDesign={headingDesign}
+        bodyFont={bodyFont}
         />
       </PDFViewer>
     </Box>
