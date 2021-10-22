@@ -3,6 +3,7 @@ import { View, Text } from "@react-pdf/renderer";
 import { Style as PDFStyle } from "@react-pdf/types";
 import { LI, UL } from "../../preview/components/list";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
+import SectionHeading from "../../generators/pdf/templates/headingstyles";
 
 type propsType = {
   state: {
@@ -10,10 +11,11 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
+  headingDesign:number
 };
 
 function ResumeView(props: propsType) {
-  const { state, styles } = props;
+  const { state, styles,headingDesign } = props;
   if (!state.active) {
     return null;
   }
@@ -32,13 +34,14 @@ function ResumeView(props: propsType) {
 
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionHeader]}>Relevant Experience</Text>
-      <View style={styles.sectionContainer}>
+      {/* <Text style={[styles.sectionHeader]} >Relevant Experience</Text> */}
+      <SectionHeading headingtype={headingDesign} title="Relevant Experience" styles={styles}/>
+      <View style={styles.sectionContainer} >
         {state.list.map((exp, index) => {
           const { jobDescription } = exp;
           const lines = jobDescription.split("•");
           return (
-            <View    style={[styles.subSectionContainer]}>
+            <View style={[styles.subSectionContainer]} >
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },

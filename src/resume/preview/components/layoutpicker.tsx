@@ -20,7 +20,7 @@ import {
 } from "react-icons/ri";
 
 // 1. Create a component that consumes the `useRadio` hook
-function RadioCard(props: any) {
+export function RadioCard(props: any) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
 
   const input = getInputProps();
@@ -33,7 +33,7 @@ function RadioCard(props: any) {
         {...checkbox}
         cursor="pointer"
         borderWidth="1px"
-        borderRadius="md"
+        borderRadius="none"
         boxShadow="md"
         _checked={{
           bg: "teal.600",
@@ -43,8 +43,9 @@ function RadioCard(props: any) {
         _focus={{
           boxShadow: "outline",
         }}
-        px={5}
-        py={3}
+        // px={5}
+        // py={3}
+        p={1}
       >
         {props.children}
       </Box>

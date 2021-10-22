@@ -25,7 +25,7 @@ const getTokens = (baseSize:number) => ({
     lineHeight:1.6,
   },
   gap:{
-    marginTop:baseSize*1.3
+    marginBottom:baseSize*1.4
   },
   p:{
     fontSize:baseSize,
@@ -54,6 +54,7 @@ export type resumeStyleType = {
   heading1:PDFStyle;
   heading2:PDFStyle;
   heading3:PDFStyle;
+  tiny:PDFStyle;
 };
 
 // Create styles
@@ -101,14 +102,17 @@ const styleGen = ({ headingFont,bodyFont="opensans", accentColor = "#3182CE" }: 
     fontFamily:headingFont,
     // fontWeight:500
     },
-    sectionContainer: {},
+    sectionContainer: {
+
+    },
     subSectionContainer: {
-      marginTop: 8,
     },
     subSectionHeader:{
       ...tokens.heading3
     },
-
+    tiny:{
+      ...tokens.tiny
+    },
     main: {
       width: "100%",
       padding: 10,
@@ -119,6 +123,7 @@ const styleGen = ({ headingFont,bodyFont="opensans", accentColor = "#3182CE" }: 
       backgroundColor: "#ebebeb",
       padding: 10,
     },
+    
     
   };
 

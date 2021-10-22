@@ -25,6 +25,7 @@ import { number } from "yup";
 import MyDocument from "./generators/pdf/pdfgen";
 import ColorPicker from "./preview/components/colorpicker";
 import FontPicker from "./preview/components/fontpicker";
+import HeadingPicker from "./preview/components/headingDesignPicker";
 import LayoutPicker from "./preview/components/layoutpicker";
 
 type Proptype = {
@@ -34,12 +35,16 @@ type Proptype = {
   state: any;
   accentColor: string;
   updateAccentColor: Function;
+  updateBodyColor:Function;
   setLayout: Function;
   setHeadingFont: Function;
   setBodyFont: Function;
+  setHeadingDesign:Function;
   layout: string;
   headingFont: string;
   bodyFont:string;
+  bodyColor:string;
+  headingDesign:number
 };
 
 const radioOptions = [
@@ -54,6 +59,8 @@ function DownloadButtons({
   headingFont,
   bodyFont,
   layout,
+  bodyColor,
+  headingDesign
 }: any) {
   return (
     <Flex gridGap={2} p={4}>
@@ -66,6 +73,8 @@ function DownloadButtons({
               layout={layout}
               headingFont={headingFont}
               bodyFont={bodyFont}
+              bodyColor={bodyColor}
+              headingDesign={headingDesign}
             />
           }
           fileName="somename.pdf"
@@ -103,18 +112,22 @@ function Configurator(props: Proptype) {
     onOpen,
     onClose,
     updateAccentColor,
+    updateBodyColor,
     setLayout,
     setHeadingFont,
     setBodyFont,
+    setHeadingDesign,
     state,
     accentColor,
     headingFont,
-    bodyFont
+    bodyFont,
+    bodyColor,
+    headingDesign
   } = props;
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
-    <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-      <DrawerOverlay />
+    <Drawer  placement={placement} onClose={onClose} isOpen={isOpen}>
+      {/* <DrawerOverlay /> */}
       <DrawerContent>
         <DrawerHeader borderBottomWidth="1px" px={4}>
           <Flex justifyContent="space-between" alignItems="center">
@@ -148,8 +161,10 @@ function Configurator(props: Proptype) {
             allowToggle={true}
             allowMultiple={false}
           >
-            <ColorPicker setAccentColor={updateAccentColor} />
+            <ColorPicker type="accent" setColor={updateAccentColor} />
+            <ColorPicker type="body" setColor={updateBodyColor} />
             <LayoutPicker setLayout={setLayout} />
+            <HeadingPicker setHeadingDesign={setHeadingDesign}/>
             <FontPicker type="heading" setSelectedFont={setHeadingFont} />
             <FontPicker type="body" setSelectedFont={setBodyFont} />
           </Accordion>
@@ -160,6 +175,8 @@ function Configurator(props: Proptype) {
             accentColor={accentColor}
             headingFont={headingFont}
             bodyFont={bodyFont}
+            bodyColor={bodyColor}
+  headingDesign={headingDesign}
           />
         </DrawerBody>
       </DrawerContent>

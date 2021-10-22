@@ -2,6 +2,7 @@ import { Text, View } from "@react-pdf/renderer";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { Style as PDFStyle } from "@react-pdf/types";
 import { ICourse, ILink } from "../../interfaces/forminterfaces";
+import SectionHeading from "../../generators/pdf/templates/headingstyles";
 
 type propsType = {
   state: {
@@ -9,11 +10,12 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
+  headingDesign:number
 };
 
 
 function ResumeView(props: propsType) {
-  const { state, styles } = props;
+  const { state, styles,headingDesign } = props;
   if (!state.active) {
     return null;
   }
@@ -34,7 +36,8 @@ function ResumeView(props: propsType) {
 
   return (
     <View style={styles?.section}>
-      <Text style={styles.sectionHeader}>Courses / Certifications</Text>
+      <SectionHeading headingtype={headingDesign} title="Courses / Certifications" styles={styles}/>
+
       {state.list.map((course: ICourse, index: number) => {
         return (
           <View style={styles.subSectionContainer}>

@@ -33,7 +33,9 @@ interface temp {
 function Preview({ resumeData }: temp) {
   const [templateId, setTemplateId] = useState<string>("temp1");
   const [accentColor, setAccentColor] = useState("#333");
+  const [bodyColor, updateBodyColor] = useState("#fff");
   const [layout, setLayout] = useState("template1");
+  const [headingDesign,setHeadingDesign] = useState<number>(0);
   const [headingFont, setHeadingFont] = useState("opensans");
   const [bodyFont, setBodyFont] = useState("opensans");
   const state = useAppSelector((state) => state);
@@ -63,13 +65,17 @@ function Preview({ resumeData }: temp) {
         onClose={onClose}
         setLayout={setLayout}
         updateAccentColor={updateAccentColor}
+        updateBodyColor={updateBodyColor}
         setHeadingFont={setHeadingFont}
         setBodyFont={setBodyFont}
+        setHeadingDesign={setHeadingDesign}
         state={state}
         accentColor={accentColor} 
         layout={layout}
         headingFont={headingFont}
         bodyFont={bodyFont}
+        headingDesign={headingDesign}
+        bodyColor={bodyColor}
       />
       
 
@@ -82,8 +88,10 @@ function Preview({ resumeData }: temp) {
         <MyDocument
           state={state}
           accentColor={accentColor}
+          bodyColor={bodyColor}
           layout={layout}
           headingFont={headingFont}
+          headingDesign={headingDesign}
         bodyFont={bodyFont}
         />
       </PDFViewer>

@@ -15,8 +15,10 @@ import {
 type propType = {
   state: IProfile;
   headingFont: string;
+  headingDesign:number;
   bodyFont:string;
   accentColor: string;
+  bodyColor?:string;
 };
 
 export default function Template1(props: propType) {
@@ -24,15 +26,24 @@ export default function Template1(props: propType) {
     headingFont: props.headingFont,
     bodyFont:props.bodyFont,
     accentColor: props.accentColor,
+    
   });
 
+  styles.page={
+    ...styles.page,
+    backgroundColor:props.bodyColor
+  }
   styles.section = {
     ...styles.section,
-    marginBottom:6
+    //marginBottom:6,
+    //marginBottom:10
+  }
+  styles.subSectionContainer = {
+    marginTop:6
   }
   styles.sectionHeader = {
     ...styles.sectionHeader,
-    marginBottom:4,
+    marginBottom:2,
     //textTransform: "uppercase",
   };
   styles.subSectionHeader = {
@@ -40,13 +51,16 @@ export default function Template1(props: propType) {
     fontWeight:500,
     textTransform:"uppercase"
   };
+  
 
   const templateStyles =StyleSheet.create( {
     container:{
       flexDirection:"row",
-      padding:"4vw",
+      paddingLeft:"4vw",
+      paddingRight:"4vw",
+      marginBottom:"2vw",
       width:"100vw",
-      backgroundColor:"#F7F7F7"
+      
     },
     main:{
       flex:1,
@@ -62,49 +76,59 @@ export default function Template1(props: propType) {
 
   //styles.blockHeader = { ...styles.blockHeader, textTransform: "uppercase" };
 
-  const { state, accentColor } = props;
+  const { state, accentColor,bodyColor,headingDesign } = props;
   const { skills, workHistory, education, basicInfo, componentOrder } = state;
   console.log("resumeData", componentOrder);
   return (
-    <Page size="A4" style={styles.page}>
+    <Page size="A4" style={styles.page} >
       <View style={templateStyles.container}>
-      {/* Left column */}
-      <View style={styles.section}>
-        <View style={templateStyles.main}>
-          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
-          <Text style={styles.heading1}>{state.basicInfo.info.fullName}</Text>
-          {componentOrder?.order.map((compname, index) => {
-            let Comp;
-            switch (compname) {
-              case "skills":
-                console.log(compname);
-                return <SkillsView state={state.skills} styles={styles}  />;
-              case "workExperience":
-                return (
-                  <WorkHistoryView state={state.workHistory} styles={styles} />
-                );
-              case "summary":
-                return <SummaryView summary={state.summary} styles={styles} />;
-              case "education":
-                return (
-                  <EducationView state={state.education} styles={styles} />
-                );
-              case "courses":
-                return <CourseView state={state.courses} styles={styles} />;
-              case "projects":
-                return <ProjectView state={state.projects} styles={styles} />;
-                case "links":
-                return <LinkView state={state.links} styles={styles} />;
-              default:
-                return <LinkView state={state.links} styles={styles} />;
-            }
-          })}
-
+        <View  style={templateStyles.main}>
+        <Text style={[styles.heading1,{fontSize:24,fontWeight:500,textTransform:"uppercase"}]}>{state.basicInfo.info.fullName}</Text>
+        <Text >Design Technologist, Innovator @ Microsoft Research, UX Engineer, Designer who codes.</Text>
+        </View>
+        <View  style={[templateStyles.aside,styles.tiny]}>
+        <Text >{state.basicInfo.info.address}</Text>
+        <Text >{state.basicInfo.info.phoneno}</Text>
+        <Text >{state.basicInfo.info.email}</Text>
         </View>
       </View>
+      <View style={templateStyles.container}>
+      {/* Left column */}
+        <View style={templateStyles.main}>
+          {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
+          
+          {componentOrder?.order.map((compname, index) => {
+            const sectionStyles = Object.create(styles);
+            sectionStyles.accentColor = accentColor;
+            sectionStyles.bodyColor = bodyColor;
+            switch (compname) {
+              case "skills":
+                return <SkillsView headingDesign={headingDesign} state={state.skills} styles={sectionStyles}  />;
+              case "workExperience":
+                return (
+                  <WorkHistoryView headingDesign={headingDesign} state={state.workHistory} styles={sectionStyles} />
+                );
+              case "summary":
+                return <SummaryView headingDesign={headingDesign} summary={state.summary} styles={sectionStyles} />;
+              case "education":
+                return (
+                  <EducationView headingDesign={headingDesign}  state={state.education} styles={sectionStyles} />
+                );
+              case "courses":
+                return <CourseView headingDesign={headingDesign}  state={state.courses} styles={sectionStyles} />;
+              case "projects":
+                return <ProjectView headingDesign={headingDesign}  state={state.projects} styles={sectionStyles} />;
+                case "links":
+                return <LinkView headingDesign={headingDesign}  state={state.links} styles={sectionStyles} />;
+              default:
+                return <LinkView headingDesign={headingDesign}  state={state.links} styles={sectionStyles} />;
+            }
+          })}
+ 
+        </View>
       {/* Right column */}
       <View style={templateStyles.aside}>
-        <LinkView state={state.links} styles={styles} />
+        <LinkView headingDesign={headingDesign} state={state.links} styles={styles} />
       </View>
       </View>
     </Page>

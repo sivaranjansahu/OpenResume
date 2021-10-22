@@ -4,12 +4,14 @@ import { useAppSelector } from "../../../store/reduxhooks";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { IProfile, ISkill } from "../../interfaces/forminterfaces";
 import { Style as PDFStyle } from "@react-pdf/types";
+import SectionHeading from "../../generators/pdf/templates/headingstyles";
 type propsType = {
   state: {
     list: ISkill[];
     active?: boolean;
   };
   styles: resumeStyleType;
+  headingDesign:number
 };
 type maptype = {
   Intermediate: ISkill[];
@@ -19,7 +21,7 @@ type maptype = {
 
 function SkillsView(props: propsType) {
   //const state = useAppSelector((state) => state);
-  const { styles, state } = props;
+  const { styles, state,headingDesign } = props;
   const [skillsMap, setSkillsMap] = useState<maptype>({
     Intermediate: [],
     Expert: [],
@@ -61,7 +63,7 @@ function SkillsView(props: propsType) {
 
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionHeader}>Skills</Text>
+      <SectionHeading headingtype={headingDesign} title="Skills" styles={styles}/>
       <View style={{ flexDirection: "row" }}>
         {skillsMap?.Expert.length > 0 && (
           <View style={{ flexGrow: 1, paddingRight: 10 }} debug={false}>

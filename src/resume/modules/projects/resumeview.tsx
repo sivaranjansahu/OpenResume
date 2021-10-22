@@ -3,6 +3,7 @@ import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { Style as PDFStyle } from "@react-pdf/types";
 import { ICourse, ILink, IProject } from "../../interfaces/forminterfaces";
 import { UL,LI } from "../../preview/components/list";
+import SectionHeading from "../../generators/pdf/templates/headingstyles";
 
 type propsType = {
   state: {
@@ -10,11 +11,12 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
+  headingDesign:number
 };
 
 
 function ResumeView(props: propsType) {
-  const { state, styles } = props;
+  const { state, styles,headingDesign } = props;
   if (!state.active) {
     return null;
   }
@@ -31,7 +33,7 @@ function ResumeView(props: propsType) {
 
   return (
     <View style={styles?.section}>
-      <Text style={styles.sectionHeader}>Relevant Projects</Text>
+      <SectionHeading headingtype={headingDesign} title="Relevant Projects" styles={styles}/>
       {state.list.map((project: IProject, index: number) => {
         const { about } = project;
         const lines = about.split("•");
@@ -45,7 +47,7 @@ function ResumeView(props: propsType) {
                 <UL>
                   {lines.map((line, index) => {
                     return (
-                      <LI key={index}>
+                      <LI key={index} lastItem = {index===lines.length-1}>
                         <Text>{line.trim()}</Text>
                       </LI>
                     );

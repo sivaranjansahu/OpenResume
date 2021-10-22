@@ -2,38 +2,41 @@ import { Button } from "@chakra-ui/button";
 import { Flex, HStack, Text ,AccordionItem,AccordionIcon,AccordionPanel,AccordionButton,Box} from "@chakra-ui/react";
 
 const colors = [
-  "F56565",
-  "DD6B20",
-  "D69E2E",
-  "2F855A",
-  "319795",
-  "00B5D8",
-  "3182CE",
-  "purple",
-  "553C9A",
-  "718096",
+  "9F5C5C",
+  "9F745C",
+  "7E9F5C",
+  "5C9F93",
+  "5C879F",
+  "665C9F",
+  "9F5C9D",
+  
 ];
+
+const bodyColor = ["fff","fafafa","F9F6F2","F5F9F2","F2F8F9","F2F4F9","F9F2F9","F9F2F3"];
+
 type propType = {
-  setAccentColor: Function;
+  setColor: Function;
+  type:"body"|"accent"
 };
-export default function ColorPicker({ setAccentColor }: propType) {
+export default function ColorPicker({ setColor,type }: propType) {
+  const selectedColors = type==="accent" ? colors:bodyColor;
   return (
     <AccordionItem>
         <h2>
           <AccordionButton>
             <Box flex="1" textAlign="left">
-              Accent color
+              {type==="accent" ? "Accent color" : "Body color"}
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
       <Flex wrap="wrap" gridGap={2}>
-        {colors.map((color, index) => {
+        {selectedColors.map((color, index) => {
           return (
             <Button
             ml={0}
-              onClick={() => setAccentColor("#" + color)}
+              onClick={() => setColor("#" + color)}
               key={index}
               backgroundColor={"#" + color}
               size="xs"

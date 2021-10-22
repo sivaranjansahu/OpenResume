@@ -25,8 +25,10 @@ const PDFDocument = (props: any) => {
   const {
     state,
     accentColor,
+    bodyColor="#fff",
     layout = "template1",
     headingFont = "opensans",
+    headingDesign,
     bodyFont="opensans",
     forceUpdate = 1,
   } = props;
@@ -36,8 +38,10 @@ const PDFDocument = (props: any) => {
     <Document>
       <TemplateComponent
         state={state}
+        bodyColor={bodyColor}
         accentColor={accentColor}
         headingFont={headingFont}
+        headingDesign={headingDesign}
         bodyFont={bodyFont}
         forceUpdate={forceUpdate}
       />
