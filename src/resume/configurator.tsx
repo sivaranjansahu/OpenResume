@@ -36,16 +36,16 @@ type Proptype = {
   state: any;
   accentColor: string;
   updateAccentColor: Function;
-  updateBodyColor:Function;
+  updateBodyColor: Function;
   setLayout: Function;
   setHeadingFont: Function;
   setBodyFont: Function;
-  setHeadingDesign:Function;
+  setHeadingDesign: Function;
   layout: string;
   headingFont: string;
-  bodyFont:string;
-  bodyColor:string;
-  headingDesign:number
+  bodyFont: string;
+  bodyColor: string;
+  headingDesign: number;
 };
 
 const radioOptions = [
@@ -61,7 +61,7 @@ function DownloadButtons({
   bodyFont,
   layout,
   bodyColor,
-  headingDesign
+  headingDesign,
 }: any) {
   return (
     <Flex gridGap={2} p={4}>
@@ -98,7 +98,21 @@ function DownloadButtons({
           leftIcon={<VscCloudDownload />}
           bgColor="primary.400"
           color="white"
-          onClick={()=>generateTestDoc(state)}
+          onClick={() =>
+            generateTestDoc(state, {
+              headerstyle: "style1",
+              headerFont: "Palatino",
+              bodyFont: "Lato",
+              colorScheme: {
+                headerColor: accentColor,
+                subHeaderColor: "2F5496",
+                bodyColor: bodyColor,
+                shadingColor: "eaeaea",
+                bodyTextColor: "333333",
+              },
+            })
+          }
+          //onClick={() => generateHeadings(state)}
         >
           Download Docx
         </Button>
@@ -124,11 +138,11 @@ function Configurator(props: Proptype) {
     headingFont,
     bodyFont,
     bodyColor,
-    headingDesign
+    headingDesign,
   } = props;
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
-    <Drawer  placement={placement} onClose={onClose} isOpen={isOpen}>
+    <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
       {/* <DrawerOverlay /> */}
       <DrawerContent>
         <DrawerHeader borderBottomWidth="1px" px={4}>
@@ -140,12 +154,12 @@ function Configurator(props: Proptype) {
           </Flex>
         </DrawerHeader>
         <DrawerBody pt={8} padding={0}>
-          <Box p={4} mb={4}>
+          <Heading as="h4" size="sm" mt={4} mb={2} px={4}>
+            Format
+          </Heading>
+          <Box px={4} mb={4}>
             {/* <DownloadType /> */}
             <FormControl>
-              <Heading as="h4" size="xs" mb={2}>
-                Format
-              </Heading>
               <RadioGroup onChange={setFormat} value={format}>
                 <Stack direction="row">
                   {radioOptions.map((r, i) => {
@@ -155,34 +169,48 @@ function Configurator(props: Proptype) {
               </RadioGroup>
             </FormControl>
           </Box>
-          <Heading as="h4" size="xs" mb={2} px={4}>
-            Layouts
-          </Heading>
-          <Accordion>
-          <LayoutPicker setLayout={setLayout} />
-            <HeadingPicker setHeadingDesign={setHeadingDesign}/>
-          </Accordion>
-          <Heading as="h4" size="xs" mb={2} px={4}>
-            Colors
-          </Heading>
-          <Accordion
-            defaultIndex={[0]}
-            allowToggle={true}
-            allowMultiple={false}
-          >
-            <ColorPicker type="accent" setColor={updateAccentColor} />
-            <ColorPicker type="body" setColor={updateBodyColor} />
-            
-          </Accordion>
-          <Heading as="h4" size="xs" mb={2} px={4}>
-            Fonts
-          </Heading>
-          <Accordion>
-          
-            <FontPicker type="heading" setSelectedFont={setHeadingFont} />
-            <FontPicker type="body" setSelectedFont={setBodyFont} />
-          </Accordion>
-          
+          <Box mb={4}>
+            <Heading as="h4" size="sm" mb={2} px={4}>
+              Layouts
+            </Heading>
+            <Accordion allowToggle={true}>
+              <LayoutPicker setLayout={setLayout} />
+              <HeadingPicker
+                setHeadingDesign={setHeadingDesign}
+                selectedDesign={headingDesign}
+              />
+            </Accordion>
+          </Box>
+          <Box mb={4}>
+            <Heading as="h4" size="sm" mb={2} px={4}>
+              Colors
+            </Heading>
+            <Accordion
+              defaultIndex={[0]}
+              allowToggle={true}
+              allowMultiple={false}
+            >
+              <ColorPicker
+                type="accent"
+                setColor={updateAccentColor}
+                selectedColor={accentColor}
+              />
+              <ColorPicker
+                type="body"
+                setColor={updateBodyColor}
+                selectedColor={bodyColor}
+              />
+            </Accordion>
+          </Box>
+          <Box mb={4}>
+            <Heading as="h4" size="sm" mb={2} px={4}>
+              Fonts
+            </Heading>
+            <Accordion allowToggle={true}>
+              <FontPicker type="heading" setSelectedFont={setHeadingFont} />
+              <FontPicker type="body" setSelectedFont={setBodyFont} />
+            </Accordion>
+          </Box>
           <DownloadButtons
             state={state}
             format={format}
@@ -190,7 +218,7 @@ function Configurator(props: Proptype) {
             headingFont={headingFont}
             bodyFont={bodyFont}
             bodyColor={bodyColor}
-  headingDesign={headingDesign}
+            headingDesign={headingDesign}
           />
         </DrawerBody>
       </DrawerContent>

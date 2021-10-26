@@ -32,7 +32,8 @@ export function RadioCard(props: any) {
       <Box
         {...checkbox}
         cursor="pointer"
-        borderWidth="1px"
+        borderColor={props.selected ? "secondary.400" : "transparent"}
+        borderWidth="3px"
         borderRadius="none"
         boxShadow="md"
         _checked={{
@@ -81,31 +82,29 @@ function LayoutPicker({ setLayout, ...props }: any) {
   const group = getRootProps();
 
   return (
-    
-      <AccordionItem>
-        <h2>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Layout
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-        </h2>
-        <AccordionPanel pb={4}>
-          <HStack {...group}>
-            {options.map(({ id, icon }) => {
-              const radio = getRadioProps({ value: id });
-              return (
-                <RadioCard key={id} {...radio}>
-                  {/* {id} */}
-                  <Icon as={icon} />
-                </RadioCard>
-              );
-            })}
-          </HStack>
-        </AccordionPanel>
-      </AccordionItem>
-    
+    <AccordionItem>
+      <h2>
+        <AccordionButton>
+          <Box flex="1" textAlign="left">
+            Layout
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel pb={4}>
+        <HStack {...group}>
+          {options.map(({ id, icon }) => {
+            const radio = getRadioProps({ value: id });
+            return (
+              <RadioCard key={id} {...radio}>
+                {/* {id} */}
+                <Icon as={icon} />
+              </RadioCard>
+            );
+          })}
+        </HStack>
+      </AccordionPanel>
+    </AccordionItem>
   );
 
   //   return (
