@@ -54,8 +54,9 @@ export function RadioCard(props: any) {
   );
 }
 
-function LayoutPicker({ setLayout, ...props }: any) {
-  const options = [
+function LayoutPicker({ setLayout, format = "docx", ...props }: any) {
+  let options;
+  const pdfLayoutOptions = [
     {
       id: "template1",
       icon: RiLayoutRightLine,
@@ -69,6 +70,16 @@ function LayoutPicker({ setLayout, ...props }: any) {
       icon: RiLayoutTopLine,
     },
   ];
+  const docLayoutOptions = [
+    {
+      id: "template1",
+      icon: RiLayoutRightLine,
+    },
+    {
+      id: "template2",
+      icon: RiLayoutLeftLine,
+    },
+  ];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
@@ -80,7 +91,7 @@ function LayoutPicker({ setLayout, ...props }: any) {
   });
 
   const group = getRootProps();
-
+  options = format === "docx" ? docLayoutOptions : pdfLayoutOptions;
   return (
     <AccordionItem>
       <h2>
@@ -106,30 +117,6 @@ function LayoutPicker({ setLayout, ...props }: any) {
       </AccordionPanel>
     </AccordionItem>
   );
-
-  //   return (
-  //     <Grid gridGap={2} gridTemplateColumns="1fr 1fr 1fr">
-  //         <input {...input} />
-  //       <Button
-  //       _checked={{
-  //         bg: "teal.600",
-  //         color: "white",
-  //         borderColor: "teal.600",
-  //       }}
-  //       _focus={{
-  //         boxShadow: "outline",
-  //       }}
-  //       >
-  //         <Icon as={RiLayoutTopLine} onClick={() => setLayout("template1")} />
-  //       </Button>
-  //       <Button>
-  //         <Icon as={RiLayoutRightLine} onClick={() => setLayout("template2")} />
-  //       </Button>
-  //       <Button>
-  //         <Icon as={RiLayoutLeftLine} onClick={() => setLayout("template3")} />
-  //       </Button>
-  //     </Grid>
-  //   );
 }
 
 export default LayoutPicker;

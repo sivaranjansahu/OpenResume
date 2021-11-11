@@ -174,6 +174,6 @@ export default function styleGenerator(config: configProps) {
   return {
     runSettings: runSettings[config.headerstyle],
     otherStyles: headerOptions[config.headerstyle],
-    subHeaderOptions: subHeaderOptions[config.headerstyle],
+    subHeaderOptions: subHeaderOptions[config.subHeaderStyle],
   };
 }

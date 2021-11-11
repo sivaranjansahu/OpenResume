@@ -35,7 +35,8 @@ function Preview({ resumeData }: temp) {
   const [accentColor, setAccentColor] = useState("#333");
   const [bodyColor, updateBodyColor] = useState("#fff");
   const [layout, setLayout] = useState("template1");
-  const [headingDesign,setHeadingDesign] = useState<number>(0);
+  const [headingDesign, setHeadingDesign] = useState<number>(1);
+  const [bullet, setBullet] = useState<string>("•");
   const [headingFont, setHeadingFont] = useState("opensans");
   const [bodyFont, setBodyFont] = useState("opensans");
   const state = useAppSelector((state) => state);
@@ -60,7 +61,6 @@ function Preview({ resumeData }: temp) {
       </Flex>
 
       <Configurator
-        onOpen={onOpen}
         isOpen={isOpen}
         onClose={onClose}
         setLayout={setLayout}
@@ -70,14 +70,15 @@ function Preview({ resumeData }: temp) {
         setBodyFont={setBodyFont}
         setHeadingDesign={setHeadingDesign}
         state={state}
-        accentColor={accentColor} 
+        accentColor={accentColor}
         layout={layout}
         headingFont={headingFont}
         bodyFont={bodyFont}
         headingDesign={headingDesign}
         bodyColor={bodyColor}
+        bullet={bullet}
+        setBullet={setBullet}
       />
-      
 
       <PDFViewer
         width="100%"
@@ -92,7 +93,7 @@ function Preview({ resumeData }: temp) {
           layout={layout}
           headingFont={headingFont}
           headingDesign={headingDesign}
-        bodyFont={bodyFont}
+          bodyFont={bodyFont}
         />
       </PDFViewer>
     </Box>

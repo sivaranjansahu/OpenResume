@@ -23,10 +23,21 @@ import heading4 from "../../../assets/headingimages/4.png";
 import heading5 from "../../../assets/headingimages/5.png";
 import heading6 from "../../../assets/headingimages/6.png";
 import heading7 from "../../../assets/headingimages/7.png";
+import docHeading1 from "../../../assets/headingimages/docx/1.png";
+import docHeading2 from "../../../assets/headingimages/docx/2.png";
+import docHeading3 from "../../../assets/headingimages/docx/3.png";
+import docHeading4 from "../../../assets/headingimages/docx/4.png";
+import docHeading5 from "../../../assets/headingimages/docx/5.png";
 import { RadioCard } from "./layoutpicker";
 
-function HeadingPicker({ setHeadingDesign, selectedDesign, ...props }: any) {
-  const options = [
+function HeadingPicker({
+  setHeadingDesign,
+  selectedDesign,
+  format,
+  ...props
+}: any) {
+  let options;
+  const pdfHeaderOptions = [
     {
       id: 0,
       image: heading0,
@@ -61,6 +72,31 @@ function HeadingPicker({ setHeadingDesign, selectedDesign, ...props }: any) {
     },
   ];
 
+  const docxHeaderOptions = [
+    {
+      id: 1,
+      image: docHeading1,
+    },
+    {
+      id: 2,
+      image: docHeading2,
+    },
+    {
+      id: 3,
+      image: docHeading3,
+    },
+    {
+      id: 4,
+      image: docHeading4,
+    },
+    {
+      id: 5,
+      image: docHeading5,
+    },
+  ];
+
+  options = format === "docx" ? docxHeaderOptions : pdfHeaderOptions;
+
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
     defaultValue: "react",
@@ -84,7 +120,7 @@ function HeadingPicker({ setHeadingDesign, selectedDesign, ...props }: any) {
       </h2>
       <AccordionPanel pb={4}>
         <VStack {...group} gridGap={1}>
-          {options.map(({ id, image }) => {
+          {options.map(({ id, image }: any) => {
             const radio = getRadioProps({ value: id });
             return (
               <RadioCard selected={selectedDesign === id} key={id} {...radio}>

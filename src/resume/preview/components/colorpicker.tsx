@@ -11,6 +11,9 @@ import {
 } from "@chakra-ui/react";
 
 const colors = [
+  "000000",
+  "0070C0",
+  "4472C4",
   "9F5C5C",
   "9F745C",
   "7E9F5C",

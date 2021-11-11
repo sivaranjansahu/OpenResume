@@ -59,10 +59,10 @@ export type configProps = {
   headerFont?: string;
   bodyFont?: string;
   headerstyle: string;
+  subHeaderStyle: string;
   colorScheme: colorScheme;
+  bullet: string;
 };
-
-const bullets = ["◽", "▶", "▷", "▸", "▹", "◉", "◈", "◻", "◼", "★", "☆", "⚪"];
 
 class DocumentCreator {
   // tslint:disable-next-line: typedef
@@ -94,7 +94,7 @@ class DocumentCreator {
               {
                 level: 0,
                 format: LevelFormat.BULLET,
-                text: "★",
+                text: this.config.bullet,
                 alignment: AlignmentType.LEFT,
                 style: {
                   paragraph: {
@@ -209,34 +209,31 @@ class DocumentCreator {
       switch (compname) {
         case "skills":
           selected = this.createSkillList(state.skills.list);
+          state.skills.active && sectionsArray.push(...selected);
           break;
         case "workExperience":
           selected = this.createWorkHistory(state.workHistory.list);
+          state.workHistory.active && sectionsArray.push(...selected);
           break;
         case "projects":
           selected = this.createProjects(state.projects.list);
+          state.projects.active && sectionsArray.push(...selected);
           break;
         //case "summary":
         case "education":
           selected = this.createEducation(state.education.list);
+          state.education.active && sectionsArray.push(...selected);
           break;
 
         case "courses":
           selected = this.createCourses(state.courses.list);
+          state.courses.active && sectionsArray.push(...selected);
           break;
-        // case "courses":
-        // case "projects":
         //   case "links":
         default:
       }
-      sectionsArray.push(...selected);
     });
     return sectionsArray;
-    // return [
-    //     ...this.createEducation(state.education.list),
-    //         ...this.createWorkHistory(state.workHistory.list),
-    //         ...this.createSkillList(state.skills.list),
-    // ]
   }
 
   public createEducation(educations: IEducation[]): Paragraph[] {

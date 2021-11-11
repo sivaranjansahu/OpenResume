@@ -24,6 +24,7 @@ import { VscClose, VscCloudDownload } from "react-icons/vsc";
 import { number } from "yup";
 import generateTestDoc from "./generators/docx/docxgen";
 import MyDocument from "./generators/pdf/pdfgen";
+import BulletPicker from "./preview/components/bulletpicker";
 import ColorPicker from "./preview/components/colorpicker";
 import FontPicker from "./preview/components/fontpicker";
 import HeadingPicker from "./preview/components/headingDesignPicker";
@@ -31,7 +32,6 @@ import LayoutPicker from "./preview/components/layoutpicker";
 
 type Proptype = {
   isOpen: boolean;
-  onOpen: any;
   onClose: any;
   state: any;
   accentColor: string;
@@ -46,6 +46,8 @@ type Proptype = {
   bodyFont: string;
   bodyColor: string;
   headingDesign: number;
+  bullet: string;
+  setBullet: Function;
 };
 
 const radioOptions = [
@@ -62,6 +64,7 @@ function DownloadButtons({
   layout,
   bodyColor,
   headingDesign,
+  bullet,
 }: any) {
   return (
     <Flex gridGap={2} p={4}>
@@ -100,13 +103,16 @@ function DownloadButtons({
           color="white"
           onClick={() =>
             generateTestDoc(state, {
-              headerstyle: "style1",
-              headerFont: "Palatino",
-              bodyFont: "Lato",
+              headerstyle: "style" + headingDesign,
+              subHeaderStyle: "style1",
+              headerFont: headingFont || "Palatino",
+              bodyFont: bodyFont || "Lato",
+              bullet: bullet || "•",
               colorScheme: {
-                headerColor: accentColor,
+                headerColor: accentColor || "2F5496",
                 subHeaderColor: "2F5496",
-                bodyColor: bodyColor,
+
+                bodyColor: bodyColor || "eaeaea",
                 shadingColor: "eaeaea",
                 bodyTextColor: "333333",
               },
@@ -125,7 +131,6 @@ function Configurator(props: Proptype) {
   const [format, setFormat] = useState("pdf");
   const {
     isOpen,
-    onOpen,
     onClose,
     updateAccentColor,
     updateBodyColor,
@@ -139,6 +144,8 @@ function Configurator(props: Proptype) {
     bodyFont,
     bodyColor,
     headingDesign,
+    bullet,
+    setBullet,
   } = props;
   const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
@@ -174,10 +181,11 @@ function Configurator(props: Proptype) {
               Layouts
             </Heading>
             <Accordion allowToggle={true}>
-              <LayoutPicker setLayout={setLayout} />
+              <LayoutPicker setLayout={setLayout} format={format} />
               <HeadingPicker
                 setHeadingDesign={setHeadingDesign}
                 selectedDesign={headingDesign}
+                format={format}
               />
             </Accordion>
           </Box>
@@ -207,8 +215,17 @@ function Configurator(props: Proptype) {
               Fonts
             </Heading>
             <Accordion allowToggle={true}>
-              <FontPicker type="heading" setSelectedFont={setHeadingFont} />
-              <FontPicker type="body" setSelectedFont={setBodyFont} />
+              <FontPicker
+                type="heading"
+                setSelectedFont={setHeadingFont}
+                format={format}
+              />
+              <FontPicker
+                type="body"
+                setSelectedFont={setBodyFont}
+                format={format}
+              />
+              <BulletPicker format={format} setBullet={setBullet} />
             </Accordion>
           </Box>
           <DownloadButtons
@@ -218,6 +235,7 @@ function Configurator(props: Proptype) {
             headingFont={headingFont}
             bodyFont={bodyFont}
             bodyColor={bodyColor}
+            bullet={bullet}
             headingDesign={headingDesign}
           />
         </DrawerBody>
@@ -225,41 +243,5 @@ function Configurator(props: Proptype) {
     </Drawer>
   );
 }
-
-// function FontPicker({ setSelectedFont }: any) {
-//   const fonts = ["opensans", "roboto", "inter", "quicksand", "koh"];
-//   const [fontIndex, setFontIndex] = useState(0);
-//   function updateFont(font: string, index: number) {
-//     setSelectedFont(font);
-//     setFontIndex(index);
-//   }
-//   return (
-//     <Accordion defaultIndex={[0]} allowMultiple>
-//       <AccordionItem>
-//         <h2>
-//           <AccordionButton>
-//             <Box flex="1" textAlign="left">
-//               Choose font
-//             </Box>
-//             <AccordionIcon />
-//           </AccordionButton>
-//         </h2>
-//         <AccordionPanel pb={4}>
-//           {fonts.map((font, index) => {
-//             return (
-//               <Button
-//                 key={index}
-//                 onClick={() => updateFont(font, index)}
-//                 colorScheme={fontIndex === index ? "blue" : "gray"}
-//               >
-//                 {font}
-//               </Button>
-//             );
-//           })}
-//         </AccordionPanel>
-//       </AccordionItem>
-//     </Accordion>
-//   );
-// }
 
 export default Configurator;
