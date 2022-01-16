@@ -11,11 +11,11 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
-  headingDesign:number
+  headingDesign: number;
 };
 
 function ResumeView(props: propsType) {
-  const { state, styles,headingDesign } = props;
+  const { state, styles, headingDesign } = props;
   if (!state.active) {
     return null;
   }
@@ -25,23 +25,35 @@ function ResumeView(props: propsType) {
       ...styles.subSectionHeader,
     },
     companyName: {
-      ...styles.paragraph
+      ...styles.paragraph,
     },
     duration: {
-      ...styles.paragraph
+      ...styles.paragraph,
     },
   };
 
   return (
     <View style={styles.section}>
       {/* <Text style={[styles.sectionHeader]} >Relevant Experience</Text> */}
-      <SectionHeading headingtype={headingDesign} title="Relevant Experience" styles={styles}/>
-      <View style={styles.sectionContainer}  >
+      <SectionHeading
+        headingtype={headingDesign}
+        title="Relevant Experience"
+        styles={styles}
+      />
+      <View style={styles.sectionContainer}>
         {state.list.map((exp, index) => {
           const { jobDescription } = exp;
           const lines = jobDescription.split("•");
           return (
-            <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]} >
+            <View
+              style={[
+                styles.subSectionContainer,
+                {
+                  marginTop:
+                    index === 0 ? 0 : styles.subSectionContainer.marginTop,
+                },
+              ]}
+            >
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },
@@ -50,7 +62,7 @@ function ResumeView(props: propsType) {
                 <View>
                   <Text>
                     <Text style={workHistoryStyles.jobTitle}>
-                      {exp.jobTitle}{" "}|{" "}
+                      {exp.jobTitle} |{" "}
                     </Text>
                     <Text style={workHistoryStyles.companyName}>
                       {exp.employedIn}
@@ -68,12 +80,12 @@ function ResumeView(props: propsType) {
               </View>
               <View>
                 {/* <Text style={styles.paragraph}>{jobDescription}</Text> */}
-              
+
                 {/* Job description */}
                 <UL>
                   {lines.map((line, index) => {
                     return (
-                      <LI key={index} lastItem = {index===lines.length-1}>
+                      <LI key={index} lastItem={index === lines.length - 1}>
                         <Text>{line.trim()}</Text>
                       </LI>
                     );

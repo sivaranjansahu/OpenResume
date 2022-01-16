@@ -22,7 +22,7 @@ export interface ISummary {
 //   jobdescription: string;
 // }
 
-export interface ISkill {
+export interface ISkill { 
   id: string;
   skillName: string;
   skillLevel: number;
@@ -34,6 +34,12 @@ export interface ICourse {
   title: string;
   institute: string;
   year: number;
+}
+
+export interface ICustomSection{
+  title:string,
+  summary: string;
+  active:boolean;
 }
 
 export interface IWorkHistory {
@@ -126,5 +132,8 @@ export interface IProfile {
   };
   componentOrder?:{
     order:string[]
+  };
+  customSections?:{
+    list:ICustomSection[]
   }
 }

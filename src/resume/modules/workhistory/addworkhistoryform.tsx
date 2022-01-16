@@ -140,7 +140,7 @@ export default function WorkHistoryForm() {
                               label="From"
                               name="fromMonth"
                               options={months}
-                              defaultValue="Jan"
+                              //defaultValue="Jan"
                             />
                             <FormikControl
                               control="input"

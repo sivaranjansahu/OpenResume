@@ -5,13 +5,13 @@ import { ISummary } from "../../interfaces/forminterfaces";
 interface SummaryState {
   active: boolean;
   content: string;
-  altName?:string;
+  altName?: string;
 }
 
 // Define the initial state using that type
 const initialState: SummaryState = {
   active: true,
-  content:""
+  content: "",
   // info: {
   //   summary: "",
   // },
@@ -21,9 +21,11 @@ export const summarySlice = createSlice({
   initialState: initialState,
   reducers: {
     setSummary: (state, action) => {
-      state.content = action.payload.content;
-      state.active = action.payload.active;
-      state.altName= action.payload.altName;
+      if (action.payload) {
+        state.content = action.payload.content;
+        state.active = action.payload.active;
+        state.altName = action.payload.altName;
+      }
     },
     setActive: (state, action) => {
       state.active = action.payload;
@@ -35,6 +37,6 @@ export const summarySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setSummary, setActive,setAltName } = summarySlice.actions;
+export const { setSummary, setActive, setAltName } = summarySlice.actions;
 
 export default summarySlice.reducer;

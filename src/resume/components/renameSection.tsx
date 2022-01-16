@@ -20,7 +20,7 @@ type propType = {
 function RenameSection({ setAltName, sectionName }: propType){
     const dispatch = useAppDispatch();
     const altName = useAppSelector((state) => state[sectionName].altName);
-    console.log('section '+sectionName+altName)
+    //console.log('section '+sectionName+altName)
     const [isRenameActive,setRenameActive] = useState(false);
     useEffect(() => {
         setRenameActive(!!altName)
@@ -28,12 +28,12 @@ function RenameSection({ setAltName, sectionName }: propType){
     
     return(
         <Flex alignItems="center" justifyContent="space-between">
-          <Input  width="250px" mr={2}  placeholder="Section name to appear on resume" id={"newName"+sectionName} size="xs"  defaultValue={altName} onChange={(e)=>{
+          <Input  width="250px" mr={2}  placeholder="Rename this section" id={"newName"+sectionName} size="xs"  defaultValue={altName} onChange={(e)=>{
               dispatch(setAltName(e.target.value))
               dispatch(setDirty({ isDirty: true }))
           }} />
           
-          <Tooltip placement="top" label="Use this field to specify how this section appears on the resume. E.g., you could choose a section name like 'Recent works' instead of the default name like 'Projects'">
+          <Tooltip size="sm" placement="top" label="Use a different title for this section on resume.E.g., you could choose a section name like 'Recent works' instead of the default name like 'Projects'">
           <Box>
           <Icon as={VscQuestion} boxSize={4}/>
           </Box>

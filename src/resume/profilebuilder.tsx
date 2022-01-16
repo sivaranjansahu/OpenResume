@@ -1,5 +1,4 @@
 import { CheckIcon } from "@chakra-ui/icons";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   Accordion,
   Box,
@@ -10,23 +9,28 @@ import {
   Grid,
   Heading,
   Input,
-  Slide,
-  Fade,
   Text,
-  Textarea,
   useDisclosure,
   useToast,
-  Icon,
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
 import { setInitialSkills } from "../resume/modules/skills/reducers";
 import { channels } from "../shared/constants";
 import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
+import { setDirty, setOrder } from "../store/store";
+import { capitalize } from "../utils/common";
+import Grabber from "./components/grabber";
 import { IProfile } from "./interfaces/forminterfaces";
 import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
+import Courses from "./modules/courses/courses";
+import { setInitialCourses } from "./modules/courses/reducers";
+import CustomSectionBlock from "./modules/custom-module/addcustomsectionform";
+import CustomSection from "./modules/custom-module/customsection";
+import { addCustomSection, setInitial as setInitialCustomSections } from "./modules/custom-module/reducers";
 import Education from "./modules/education/education";
 import { setInitialEducation } from "./modules/education/reducers";
 import Links from "./modules/links/links";
@@ -35,17 +39,12 @@ import Projects from "./modules/projects/projects";
 import { setInitialProjects } from "./modules/projects/reducers";
 import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
 import Skills from "./modules/skills/skills";
+import { setSummary } from "./modules/summary/reducers";
+import Summary from "./modules/summary/summary";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
-import Summary from "./modules/summary/summary";
-import { setSummary } from "./modules/summary/reducers";
-import { setInitialCourses } from "./modules/courses/reducers";
-import Courses from "./modules/courses/courses";
-import { capitalize } from "../utils/common";
-import { setDirty, setOrder } from "../store/store";
-import { VscClose, VscEye, VscEyeClosed } from "react-icons/vsc";
-import Grabber from "./components/grabber";
+
 const electron = window.require("electron");
 
 type ProfileParams = {
@@ -69,8 +68,6 @@ const setProfileData = (allState: any, profileId = "second") => {
     statevalue: allState,
   });
 };
-
-
 
 const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
@@ -103,7 +100,13 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setInitialProjects(currentProfile.projects));
     dispatch(setSummary(currentProfile.summary || ""));
     dispatch(setInitialCourses(currentProfile.courses));
+    dispatch(setInitialCustomSections(currentProfile.customSections ?? []));
     dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
+
+    const customSections = Object.values(currentProfile).filter((val) => {
+      return val.hasOwnProperty("custom");
+    });
+    console.log(customSections);
   };
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
@@ -139,6 +142,22 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   }, [isDirty]);
 
   const toast = useToast();
+
+  function addSection() {
+    dispatch(
+      addCustomSection({
+        title: "my new section",
+        content: "some randome content",
+      })
+    );
+    // setCustomSection({})
+    // allState["new_section"]= {
+    //   "custom":true,
+    //   "active": true,
+    //   "content": "dfgdfgdfgdfg sdf sdf sdf sdfs"
+    // }
+    dispatch(setDirty({ isDirty: true }));
+  }
 
   return (
     <Grid
@@ -273,50 +292,51 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                             <BasicInfo />
                           </Box>
                         </Flex>
+                        <Button
+                          onClick={() => {
+                            addSection();
+                          }}
+                        >
+                          Add custom
+                        </Button>
 
-                        {allState.componentOrder.order.map(
-                          (elname: string, i: number) => {
-                            const Comp = ComponentsMap[elname];
-                            return (
-                              <Draggable
-                                key={i}
-                                draggableId={`dragElem${i}`}
-                                index={i}
-                              >
-                                {(provided, snapshot) => (
-                                  <Box
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                  >
-                                    <Flex w="full" alignItems="stretch">
-                                      <Box
-                                        {...provided.dragHandleProps}
-                                        pl={2}
-                                        pt={6}
-                                        mb={2}
-                                        bg="white"
-                                      >
-                                        <Grabber />
-                                      </Box>
-                                      <Box flex={1}>
-                                        <Comp />
-                                      </Box>
-                                    </Flex>
-                                  </Box>
-                                )}
-                              </Draggable>
-                            );
-                          }
-                        )}
-
-                        {/* <BasicInfo />
-              <Summary />
-                <WorkHistory />
-                <Skills />
-                <Education />
-                <Courses />
-                <Links />
-                <Projects /> */}
+                        {allState.componentOrder.order &&
+                          allState.componentOrder.order.map(
+                            (elname: string, i: number) => {
+                              const Comp = ComponentsMap[elname];
+                              return (
+                                <Draggable
+                                  key={i}
+                                  draggableId={`dragElem${i}`}
+                                  index={i}
+                                >
+                                  {(provided, snapshot) => (
+                                    <Box
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                    >
+                                      <Flex w="full" alignItems="stretch">
+                                        <Box
+                                          {...provided.dragHandleProps}
+                                          pl={2}
+                                          pt={6}
+                                          mb={2}
+                                          bg="white"
+                                        >
+                                          <Grabber />
+                                        </Box>
+                                        <Box flex={1}>
+                                          <Comp />
+                                        </Box>
+                                      </Flex>
+                                    </Box>
+                                  )}
+                                </Draggable>
+                              );
+                            }
+                          )}
+                          <CustomSectionGroup list={allState.customSections.list}/>
+                        
                       </Box>
                     )}
                   </Droppable>
@@ -325,6 +345,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
             </Accordion>
           </Box>
         </Box>
+       
         {showPreview && (
           <Container
             maxW={{ lg: "container.lg", md: "container.lg" }}
@@ -351,3 +372,24 @@ const ProfileBuilder = ({ allProfiles }: any) => {
 };
 
 export default ProfileBuilder;
+
+const CustomSectionGroup = ({list}:{list:any})=>{
+  return(
+    list && list.map(
+      (section: any, index: number) => {
+        return (
+          <Box>
+            <Flex w="full" alignItems="stretch">
+              <Box pl={2} pt={6} mb={2} bg="white">
+                
+              </Box>
+              <Box flex={1}>
+                <CustomSection sectionData={section}/>
+              </Box>
+            </Flex>
+          </Box>
+        );
+      }
+    )
+  )
+}

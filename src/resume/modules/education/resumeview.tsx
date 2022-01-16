@@ -4,6 +4,7 @@ import { Style as PDFStyle } from "@react-pdf/types";
 import { LI, UL } from "../../preview/components/list";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
+import { useEffect, useState } from "react";
 
 type propsType = {
   state: {
@@ -11,11 +12,16 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
-  headingDesign:number
+  headingDesign: number;
 };
 
 function ResumeView(props: propsType) {
-  const { state, styles,headingDesign } = props;
+  const { state, styles, headingDesign } = props;
+  const [eduList, setEduList] = useState<IEducation[]>([]);
+  useEffect(() => {
+    setEduList(state.list);
+  }, [state.list]);
+
   if (!state.active) {
     return null;
   }
@@ -26,22 +32,33 @@ function ResumeView(props: propsType) {
     },
     school: {
       ...styles.paragraph,
-
     },
     duration: {
-      ...styles.paragraph
+      ...styles.paragraph,
     },
   };
 
   return (
     <View style={styles.section}>
-      <SectionHeading headingtype={headingDesign} title="Education" styles={styles}/>
+      <SectionHeading
+        headingtype={headingDesign}
+        title="Education"
+        styles={styles}
+      />
       <View style={styles.sectionContainer}>
-        {state.list.map((edu, index) => {
+        {eduList.map((edu, index) => {
           const { about } = edu;
           const lines = about.split("•");
           return (
-            <View style={[styles.subSectionContainer,{marginTop:index===0 ? 0 : styles.subSectionContainer.marginTop}]}>
+            <View
+              style={[
+                styles.subSectionContainer,
+                {
+                  marginTop:
+                    index === 0 ? 0 : styles.subSectionContainer.marginTop,
+                },
+              ]}
+            >
               <View
                 style={[
                   { flexDirection: "row", justifyContent: "space-between" },
@@ -49,17 +66,14 @@ function ResumeView(props: propsType) {
               >
                 <View>
                   <Text>
-                    <Text style={educationStyles.degree}>
-                      {edu.degree}{" "}|{" "}
-                    </Text>
-                    <Text style={educationStyles.school}>
-                      {edu.school}
-                    </Text>
+                    <Text style={educationStyles.degree}>{edu.degree} | </Text>
+                    <Text style={educationStyles.school}>{edu.school}</Text>
                   </Text>
                 </View>
                 <View>
                   <Text style={educationStyles.duration}>
-                    {`${edu.fromMonth} ${edu.fromYear}`}{" "}{`to ${edu.toMonth} ${edu.toYear}`}
+                    {`${edu.fromMonth} ${edu.fromYear}`}{" "}
+                    {`to ${edu.toMonth} ${edu.toYear}`}
                     {/* {!exp.isCurrent
                       ? `to ${exp.toMonth} ${exp.toYear}`
                       : "to present"} */}

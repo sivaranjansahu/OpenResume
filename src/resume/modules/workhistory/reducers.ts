@@ -5,32 +5,34 @@ import { IWorkHistory } from "../../interfaces/forminterfaces";
 interface WorkExState {
   active: boolean;
   list: IWorkHistory[];
-  altName?:string;
+  altName?: string;
 }
 
 // Define the initial state using that type
 const initialState: WorkExState = {
   active: true,
   list: [],
-  altName:""
+  altName: "",
 };
 export const workHistorySlice = createSlice({
   name: "workhistory",
   initialState: initialState,
   reducers: {
     setInitialWorkHistory: (state, action) => {
-      state.list = action.payload.list;
-      state.active = action.payload.active;
-      state.altName= action.payload.altName;
+      if (action.payload) {
+        state.list = action.payload.list;
+        state.active = action.payload.active;
+        state.altName = action.payload.altName;
+      }
     },
     setAllWorkHistory: (state, action) => {
-      state.list=action.payload;
+      state.list = action.payload;
     },
     setActive: (state, action) => {
       state.active = action.payload;
     },
     setAltName: (state, action) => {
-      console.log('setting name to '+action.payload)
+      console.log("setting name to " + action.payload);
       state.altName = action.payload;
     },
     addWorkHistory: (state, action) => {
@@ -52,7 +54,7 @@ export const {
   setActive,
   setInitialWorkHistory,
   setAllWorkHistory,
-  setAltName
+  setAltName,
 } = workHistorySlice.actions;
 
 export default workHistorySlice.reducer;
