@@ -37,8 +37,9 @@ export interface ICourse {
 }
 
 export interface ICustomSection{
+  guid:string,
   title:string,
-  summary: string;
+  content: string;
   active:boolean;
 }
 

@@ -1,8 +1,7 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/layout";
-import { Icon, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { IoReorderThree } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import Grabber from "../../components/grabber";
@@ -15,36 +14,36 @@ const levels: any = {
   "3": "Expert",
 };
 
-const SkillUnit = ({
-  skill,
-  index,
-  ...props
-}: {
-  skill: ISkill;
-  index: number;
-}) => {
-  //const { removeSkill } = useContext(SkillsContext);
-  const dispatch = useAppDispatch();
-  return (
-    <>
-      <Td px={0}>{skill.skillName}</Td>
-      <Td px={0}>{skill.skillYearsExperience}</Td>
-      <Td px={0}>{levels[skill.skillLevel.toString()]}</Td>
-      <Td px={0} textAlign="right">
-        <DeleteIcon
-          onClick={() => {
-            dispatch(setDirty({ isDirty: true }));
-            //dispatch(removeSkill(skill.id));
-          }}
-          cursor="pointer"
-          color="red.400"
-          boxSize={4}
-          mr={1}
-        />
-      </Td>
-    </>
-  );
-};
+// const SkillUnit = ({
+//   skill,
+//   index,
+//   ...props
+// }: {
+//   skill: ISkill;
+//   index: number;
+// }) => {
+//   //const { removeSkill } = useContext(SkillsContext);
+//   const dispatch = useAppDispatch();
+//   return (
+//     <>
+//       <Td px={0}>{skill.skillName}</Td>
+//       <Td px={0}>{skill.skillYearsExperience}</Td>
+//       <Td px={0}>{levels[skill.skillLevel.toString()]}</Td>
+//       <Td px={0} textAlign="right">
+//         <DeleteIcon
+//           onClick={() => {
+//             dispatch(setDirty({ isDirty: true }));
+//             //dispatch(removeSkill(skill.id));
+//           }}
+//           cursor="pointer"
+//           color="red.400"
+//           boxSize={4}
+//           mr={1}
+//         />
+//       </Td>
+//     </>
+//   );
+// };
 
 export default function SkillsList({ ...props }: any) {
   const skills = useAppSelector((state) => state.skills.list || []);

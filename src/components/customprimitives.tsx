@@ -16,12 +16,10 @@ import {
   Text,
   Textarea as ChakraTextarea,
   Tooltip,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { Field, FieldHookConfig, FieldProps, useField } from "formik";
 import React, { useState } from "react";
 import { VscListUnordered } from "react-icons/vsc";
-import * as Yup from "yup";
 import { dict } from "../shared/dict";
 
 
@@ -34,8 +32,8 @@ interface OtherProps {
 
 
 export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
-  const { name, type, placeholder, label } = props;
+  const [, meta, ] = useField(props);
+  const {  type,  label } = props;
   const [error, setError] = useState(false);
   return (
     <>
@@ -60,7 +58,7 @@ export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta, ] = useField(props);
   return (
     <>
       <FormControl id="fullname">
@@ -75,7 +73,7 @@ export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta, ] = useField(props);
   return (
     <>
       <FormControl id="fullname" isInvalid={!!meta.error}>
@@ -94,8 +92,8 @@ export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CRadio = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
-  const [value, setValue] = useState("1");
+  const [field, , ] = useField(props);
+
   return (
     <Radio {...field} type={props.type}>
       First
@@ -160,9 +158,9 @@ function Textarea(props: any) {
   const { label, name, help, showBullet = true, ...rest } = props;
   const [listActive, setListActive] = useState(false);
   let tbRef: any = null;
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [blacklist, setBlacklist] = useState<string[]>([]);
-  const [whitelist, setWhitelist] = useState<string[]>([]);
+
+  const [, setBlacklist] = useState<string[]>([]);
+  const [, setWhitelist] = useState<string[]>([]);
   // useEffect(()=>{
   //   tbRef.addEventListener('contextmenu', (event:any) => {
   //     event.preventDefault();
@@ -292,7 +290,7 @@ function Textarea(props: any) {
 }
 
 function RadioButtons(props: any) {
-  const { label, name, options, defaultValue, help, ...rest } = props;
+  const { label, name, options, defaultValue, help } = props;
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) => (
@@ -327,7 +325,7 @@ function RadioButtons(props: any) {
 }
 
 function Select(props: any) {
-  const { label, name, options, ...rest } = props;
+  const { label, name, options } = props;
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) => (

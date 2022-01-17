@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { string } from "yup/lib/locale";
-import { ISkill, IWorkHistory } from "../interfaces/forminterfaces";
 
 // Define a type for the slice state
 interface ResumeState {

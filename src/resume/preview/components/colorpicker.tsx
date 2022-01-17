@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Flex, HStack, Text ,AccordionItem,AccordionIcon,AccordionPanel,AccordionButton,Box} from "@chakra-ui/react";
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex } from "@chakra-ui/react";
 
 const colors = [
   "9F5C5C",

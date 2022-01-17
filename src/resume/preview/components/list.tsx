@@ -1,20 +1,8 @@
-import React from "react";
 import {
-  pdf,
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-  PDFViewer,
-  Font,
+  StyleSheet, View
 } from "@react-pdf/renderer";
+import React from "react";
 
-const colors = {
-  accent: "#4299E1",
-  body: "#111",
-  heading: "#444",
-};
 
 const styles = StyleSheet.create({
   listBlock: {

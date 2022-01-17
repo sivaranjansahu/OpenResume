@@ -1,70 +1,41 @@
 import {
-  Box,
-  calc,
-  Flex,
+  Box, Flex,
   Grid,
-  Heading,
-  Text,
-  useDisclosure,
-  useToast,
-  Tooltip,
-  Icon,
+  Heading, Icon, Text, Tooltip, useToast
 } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
-
-import "simplebar/dist/simplebar.css";
+import { VscQuestion } from "react-icons/vsc";
 import {
   Route,
   Switch,
-  useLocation,
-  useParams,
-  useRouteMatch,
+  useLocation, useRouteMatch
 } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "simplebar/dist/simplebar.css";
 import { v4 as uuidv4 } from "uuid";
 import { IProfile } from "../resume/interfaces/forminterfaces";
-import { setInitialSkills } from "../resume/modules/skills/reducers";
 import ProfileBuilder from "../resume/profilebuilder";
 import { channels } from "../shared/constants";
-import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
 import CreateProfile from "./createprofilemodal";
 import ProfileCard from "./profilecard";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { VscQuestion } from "react-icons/vsc";
+
 //import ProfileForm from "./profileform";
 const electron = window.require("electron");
 
-const setProfileData = (allState: any, profileId = "second") => {
-  console.log("setting profileid - dashboard", profileId, allState);
-  electron.ipcRenderer.send(channels.SET_PROFILE_DATA, {
-    proppath: profileId,
-    statevalue: allState,
-  });
-};
-type ProfileParams = {
-  profileId: string;
-};
+
 
 function Dashboard() {
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
   let { path, url } = useRouteMatch();
-  const dispatch = useAppDispatch();
-  const allState = useAppSelector((state) => state);
   const [allProfiles, setAllProfiles] = useState<IProfile[]>([]);
-  let { profileId } = useParams<ProfileParams>();
   const toast = useToast();
 
-  const updateState = (data: any) => {
-    dispatch(setInitialSkills(data.skills));
-  };
-  const location = useLocation();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  type createProfileProps = {
-    proppath: string;
-    stateValue: IProfile;
-  };
+  const location = useLocation();
+
+
 
   type createProfileInputType = {
     proppath: string;
@@ -164,10 +135,7 @@ function Dashboard() {
     });
   };
 
-  const confirmDelete = () => {
-    onOpen();
-  };
-
+ 
   const message = `Profiles are like database for your resumes. You should
   create different profiles if you apply to different
   kinds of jobs. For example if you are a Senior Developer

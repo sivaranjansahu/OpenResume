@@ -1,5 +1,4 @@
-import { Flex,Box, Checkbox, Input, FormLabel, Icon, Tooltip } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, Flex, Icon, Input, Tooltip } from "@chakra-ui/react";
 import { VscQuestion } from "react-icons/vsc";
 import { useAppDispatch, useAppSelector } from "../../store/reduxhooks";
 import { setDirty } from "../../store/store";
@@ -21,10 +20,10 @@ function RenameSection({ setAltName, sectionName }: propType){
     const dispatch = useAppDispatch();
     const altName = useAppSelector((state) => state[sectionName].altName);
     //console.log('section '+sectionName+altName)
-    const [isRenameActive,setRenameActive] = useState(false);
-    useEffect(() => {
-        setRenameActive(!!altName)
-    }, [altName])
+    // const [isRenameActive,setRenameActive] = useState(false);
+    // useEffect(() => {
+    //     setRenameActive(!!altName)
+    // }, [altName])
     
     return(
         <Flex alignItems="center" justifyContent="space-between">

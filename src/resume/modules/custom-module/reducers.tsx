@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ICustomSection, ISummary } from "../../interfaces/forminterfaces";
+import { ICustomSection } from "../../interfaces/forminterfaces";
 
 // Define a type for the slice state
 
@@ -25,7 +25,9 @@ export const customSectionSlice = createSlice({
     addCustomSection:(state,action)=>{
       state.list = [...state.list, action.payload];
     },
-
+    deleteCustomSection:(state,action)=>{
+      state.list = state.list.filter(item=>item.guid!==action.payload.customSectionId)
+    }
     // setActive: (state, action) => {
     //   state.active = action.payload;
     // },
@@ -37,6 +39,6 @@ export const customSectionSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addCustomSection,setInitial } = customSectionSlice.actions;
+export const { addCustomSection,setInitial,deleteCustomSection } = customSectionSlice.actions;
 
 export default customSectionSlice.reducer;

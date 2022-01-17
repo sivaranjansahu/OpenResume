@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ISummary } from "../../interfaces/forminterfaces";
 
 // Define a type for the slice state
 interface SummaryState {

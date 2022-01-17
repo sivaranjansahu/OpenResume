@@ -3,9 +3,7 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionItem,
-  AccordionPanel,
-  Button,
-  Text,
+  AccordionPanel, Text
 } from "@chakra-ui/react";
 import React from "react";
 type Props = {

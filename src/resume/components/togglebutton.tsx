@@ -2,9 +2,10 @@ import { CloseIcon, AddIcon } from "@chakra-ui/icons";
 import { Flex, Box } from "@chakra-ui/layout";
 import { AccordionButton, Button, Heading } from "@chakra-ui/react";
 
-const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
+const ToggleButton: React.FC<{ isExpanded: boolean; title: string; label?:string }> = ({
   isExpanded,
   title,
+  label="New"
 }) => {
   return (
     <Heading as="h4" mt={2}>
@@ -30,6 +31,7 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
                 leftIcon={<CloseIcon w={3} h={3} />}
                 colorScheme="primary"
                 size="sm"
+                variant={label==="New section" ? "outline" : "solid"}
               >
                 Cancel
               </Button>
@@ -39,8 +41,9 @@ const ToggleButton: React.FC<{ isExpanded: boolean; title: string }> = ({
                 leftIcon={<AddIcon w={3} h={3} />}
                 colorScheme="primary"
                 size="sm"
+                variant={label==="New section" ? "outline" : "solid"}
               >
-                New
+                {label}
               </Button>
             )}
           </Flex>

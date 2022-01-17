@@ -2,16 +2,14 @@ import { Grid, VStack } from "@chakra-ui/layout";
 import {
   Accordion,
   AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Heading,
+  AccordionPanel, Button,
+  Heading
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { useAppDispatch } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import ToggleButton from "../../components/togglebutton";
 import { addProject } from "./reducers";
@@ -31,7 +29,6 @@ const validationSchema = Yup.object({
 const AddProjectsForm = () => {
   // Use throughout your app instead of plain `useDispatch` and `useSelector`
 
-  const projects = useAppSelector((state) => state.projects.list);
   const dispatch = useAppDispatch();
   return (
     <Accordion allowToggle>

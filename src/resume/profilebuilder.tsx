@@ -11,9 +11,9 @@ import {
   Input,
   Text,
   useDisclosure,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
@@ -28,9 +28,9 @@ import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
 import Courses from "./modules/courses/courses";
 import { setInitialCourses } from "./modules/courses/reducers";
-import CustomSectionBlock from "./modules/custom-module/addcustomsectionform";
+import CustomSectionForm from "./modules/custom-module/addcustomsectionform";
 import CustomSection from "./modules/custom-module/customsection";
-import { addCustomSection, setInitial as setInitialCustomSections } from "./modules/custom-module/reducers";
+import { setInitial as setInitialCustomSections } from "./modules/custom-module/reducers";
 import Education from "./modules/education/education";
 import { setInitialEducation } from "./modules/education/reducers";
 import Links from "./modules/links/links";
@@ -75,7 +75,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   const allState = useAppSelector<any>((state) => state);
 
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {  onClose } = useDisclosure();
 
   const saveChanges = () => {
     setProfileData(allState, profileId);
@@ -83,7 +83,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setDirty({ isDirty: false }));
   };
 
-  const updateStateWithProfile = (allProfiles: IProfile[], profileId: any) => {
+  const updateStateWithProfile =useCallback( (allProfiles: IProfile[], profileId: any) => {
     //console.log("profilebuilder", allProfiles, profileId);
     const currentProfile = allProfiles[profileId];
     if (!currentProfile) {
@@ -107,25 +107,21 @@ const ProfileBuilder = ({ allProfiles }: any) => {
       return val.hasOwnProperty("custom");
     });
     console.log(customSections);
-  };
+  },[dispatch])
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
   //else create new profile
   useEffect(() => {
     allProfiles && profileId && updateStateWithProfile(allProfiles, profileId);
-  }, [allProfiles, profileId]);
+  }, [allProfiles, profileId,updateStateWithProfile]);
   const { isDirty } = allState.dirty;
+  const toast = useToast();
 
   useEffect(() => {
     //isDirty && onOpen();
     isDirty &&
       toast({
-        // title: "Save your changes",
-        // description:
-        //   "Your changes dont get saved until you click on the Save button.",
-        // status: "success",
-        // duration: 5000,
-        // isClosable: true,
+
         position: "bottom-right",
         render: ({ onClose }) => (
           <Box width="250px" color="white" p={3} bg="gray.600">
@@ -139,25 +135,11 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
         ),
       });
-  }, [isDirty]);
+  }, [isDirty,toast]);
 
-  const toast = useToast();
+  
 
-  function addSection() {
-    dispatch(
-      addCustomSection({
-        title: "my new section",
-        content: "some randome content",
-      })
-    );
-    // setCustomSection({})
-    // allState["new_section"]= {
-    //   "custom":true,
-    //   "active": true,
-    //   "content": "dfgdfgdfgdfg sdf sdf sdf sdfs"
-    // }
-    dispatch(setDirty({ isDirty: true }));
-  }
+
 
   return (
     <Grid
@@ -292,13 +274,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                             <BasicInfo />
                           </Box>
                         </Flex>
-                        <Button
-                          onClick={() => {
-                            addSection();
-                          }}
-                        >
-                          Add custom
-                        </Button>
+                        
 
                         {allState.componentOrder.order &&
                           allState.componentOrder.order.map(
@@ -335,7 +311,21 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                               );
                             }
                           )}
+                          <Box
+                  fontSize="sm"
+                  bg="primary.100"
+                  p={4}
+                  color="gray.700"
+                  mb={2}
+                  pt={8}
+                >
+                  <Heading as="h4" size="sm">
+                    Additional sections
+                  </Heading>
+                  <div>You can add additional sections if the above sections do not meet your purpose. These will appear at the bottom of your resume document.</div>
+                </Box>
                           <CustomSectionGroup list={allState.customSections.list}/>
+                          <CustomSectionForm/>
                         
                       </Box>
                     )}
@@ -345,6 +335,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
             </Accordion>
           </Box>
         </Box>
+
        
         {showPreview && (
           <Container
@@ -374,6 +365,9 @@ const ProfileBuilder = ({ allProfiles }: any) => {
 export default ProfileBuilder;
 
 const CustomSectionGroup = ({list}:{list:any})=>{
+  if(!list) {
+    return <></>
+  }
   return(
     list && list.map(
       (section: any, index: number) => {

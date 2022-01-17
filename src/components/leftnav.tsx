@@ -4,29 +4,29 @@ import React from "react";
 import { VscBriefcase, VscProject } from "react-icons/vsc";
 import { NavLink } from "react-router-dom";
 
-function NavUnit({ to, label, icon }: any) {
-  return (
-    <NavLink exact to="/" activeClassName="selected">
-      <Grid
-        as="li"
-        height="80px"
-        mb={4}
-        placeItems="center"
-        borderLeftWidth={4}
-        borderLeftColor="transparent"
-        _hover={{
-          borderLeftColor: "blue.400",
-          color: "blue.600",
-        }}
-      >
-        <Grid placeItems="center">
-          <Icon as={icon} boxSize={6} />
-          <Text fontSize="12px">{label}</Text>
-        </Grid>
-      </Grid>
-    </NavLink>
-  );
-}
+// function NavUnit({ to, label, icon }: any) {
+//   return (
+//     <NavLink exact to="/" activeClassName="selected">
+//       <Grid
+//         as="li"
+//         height="80px"
+//         mb={4}
+//         placeItems="center"
+//         borderLeftWidth={4}
+//         borderLeftColor="transparent"
+//         _hover={{
+//           borderLeftColor: "blue.400",
+//           color: "blue.600",
+//         }}
+//       >
+//         <Grid placeItems="center">
+//           <Icon as={icon} boxSize={6} />
+//           <Text fontSize="12px">{label}</Text>
+//         </Grid>
+//       </Grid>
+//     </NavLink>
+//   );
+// }
 
 function LeftNav() {
   return (

@@ -1,8 +1,6 @@
-import { IBasicInfo, ISummary } from "../../interfaces/forminterfaces";
-import { View, Text } from "@react-pdf/renderer";
-import { type } from "os";
+import { Text, View } from "@react-pdf/renderer";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
-import SectionHeading, { SectionHeading1 } from "../../generators/pdf/templates/headingstyles";
+import SectionHeading from "../../generators/pdf/templates/headingstyles";
 type propsType = {
   summary:{
     content:string,

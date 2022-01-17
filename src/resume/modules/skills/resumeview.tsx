@@ -1,10 +1,9 @@
-import { View, Text } from "@react-pdf/renderer";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../store/reduxhooks";
-import { resumeStyleType } from "../../generators/pdf/basestyles";
-import { IProfile, ISkill } from "../../interfaces/forminterfaces";
+import { Text, View } from "@react-pdf/renderer";
 import { Style as PDFStyle } from "@react-pdf/types";
+import { useEffect, useState } from "react";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
+import { ISkill } from "../../interfaces/forminterfaces";
 type propsType = {
   state: {
     list: ISkill[];
@@ -44,13 +43,13 @@ function SkillsView(props: propsType) {
       Beginner: [],
     };
     state.list.forEach((skill: ISkill) => {
-      if (skill.skillLevel == 1) {
+      if (skill.skillLevel === 1) {
         map.Beginner.push(skill);
       }
-      if (skill.skillLevel == 2) {
+      if (skill.skillLevel === 2) {
         map.Intermediate.push(skill);
       }
-      if (skill.skillLevel == 3) {
+      if (skill.skillLevel === 3) {
         map.Expert.push(skill);
       }
     });

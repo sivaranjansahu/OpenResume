@@ -1,10 +1,10 @@
-import { IEducation, IWorkHistory } from "../../interfaces/forminterfaces";
-import { View, Text } from "@react-pdf/renderer";
+import { Text, View } from "@react-pdf/renderer";
 import { Style as PDFStyle } from "@react-pdf/types";
-import { LI, UL } from "../../preview/components/list";
+import { useEffect, useState } from "react";
 import { resumeStyleType } from "../../generators/pdf/basestyles";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
-import { useEffect, useState } from "react";
+import { IEducation } from "../../interfaces/forminterfaces";
+import { LI, UL } from "../../preview/components/list";
 
 type propsType = {
   state: {

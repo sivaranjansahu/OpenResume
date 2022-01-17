@@ -1,25 +1,9 @@
 import {
-  useDisclosure,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Text,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  useToast,
+  Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 function ConfirmDelete({ deleteFunction, isOpen, onOpen, onClose, id }: any) {
-  const [profileName, setProfileName] = useState<string>("");
-  const toast = useToast();
 
   return (
     <>

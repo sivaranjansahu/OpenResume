@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ILink, IProject } from "../../interfaces/forminterfaces";
+import { IProject } from "../../interfaces/forminterfaces";
 
 // Define a type for the slice state
 interface ProjectsState {

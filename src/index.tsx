@@ -1,15 +1,14 @@
-import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import WebFont from "webfontloader";
-import theme from "./theme";
+import { css, Global } from "@emotion/react";
 import "@fontsource/inter/600.css";
 import "focus-visible/dist/focus-visible";
-import { Global, css } from "@emotion/react";
-import store from "./store/store";
+import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import App from "./App";
+import "./index.css";
+import store from "./store/store";
+import theme from "./theme";
 
 const GlobalStyles = css`
   /*

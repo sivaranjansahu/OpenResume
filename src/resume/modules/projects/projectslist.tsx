@@ -5,21 +5,14 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionItem,
-  AccordionPanel,
-  forwardRef,
-  Text,
-  Flex,
-  Icon,
-  Grid,
+  AccordionPanel, Flex, Grid
 } from "@chakra-ui/react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
-import { ILink, IProject } from "../../interfaces/forminterfaces";
-import { deleteProject, setAllProjects } from "./reducers";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { VscGrabber } from "react-icons/vsc";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import Grabber from "../../components/grabber";
+import { IProject } from "../../interfaces/forminterfaces";
+import { deleteProject, setAllProjects } from "./reducers";
 
 const ProjectsUnit = (
   { project, index }: { project: IProject; index: number },

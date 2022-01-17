@@ -1,28 +1,8 @@
-import { DragHandleIcon } from "@chakra-ui/icons";
 import { Container } from "@chakra-ui/layout";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useState } from "react";
-import { DragDropContext, Draggable, Droppable,} from "react-beautiful-dnd";
-import update from 'immutability-helper'
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-let months = [
-  {
-    index: 0,
-    title: "jan",
-  },
-  {
-    index: 1,
-    title: "feb",
-  },
-  {
-    index: 2,
-    title: "mar",
-  },
-  {
-    index: 3,
-    title: "apr",
-  },
-];
 
 export default function Tracker() {
   const [list,setList] = useState([

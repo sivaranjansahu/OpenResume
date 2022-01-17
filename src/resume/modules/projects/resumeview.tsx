@@ -1,9 +1,9 @@
 import { Text, View } from "@react-pdf/renderer";
-import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { Style as PDFStyle } from "@react-pdf/types";
-import { ICourse, ILink, IProject } from "../../interfaces/forminterfaces";
-import { UL,LI } from "../../preview/components/list";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
+import { IProject } from "../../interfaces/forminterfaces";
+import { LI, UL } from "../../preview/components/list";
 
 type propsType = {
   state: {

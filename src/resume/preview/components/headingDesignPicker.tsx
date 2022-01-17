@@ -1,14 +1,9 @@
 import {
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel, Box, HStack, Icon, useRadioGroup,Image, VStack
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel, Box, Image, useRadioGroup, VStack
 } from "@chakra-ui/react";
-import {
-    RiLayoutLeftLine,
-    RiLayoutRightLine,
-    RiLayoutTopLine
-} from "react-icons/ri";
 import heading0 from '../../../assets/headingimages/0.png';
 import heading1 from '../../../assets/headingimages/1.png';
 import heading2 from '../../../assets/headingimages/2.png';
