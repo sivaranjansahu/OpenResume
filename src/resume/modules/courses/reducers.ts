@@ -20,7 +20,7 @@ export const coursesSlice = createSlice({
     setInitialCourses: (state, action) => {
       state.list = action.payload ? action.payload.list: [];
       state.active = action.payload ?  action.payload.active: true;
-      state.altName= action.payload.altName;
+      state.altName=  action.payload ? action.payload.altName : "";
     },
     setAltName: (state, action) => {
       state.altName = action.payload;
@@ -35,7 +35,7 @@ export const coursesSlice = createSlice({
       state.list.push(action.payload);
     },
     deleteCourse: (state, action) => {
-      var index = state.list.findIndex((link) => {
+      const index = state.list.findIndex((link) => {
         return link.id === action.payload;
       });
       state.list.splice(index, 1);

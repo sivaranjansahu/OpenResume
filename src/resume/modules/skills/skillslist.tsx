@@ -1,8 +1,7 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/layout";
-import { Icon, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { IoReorderThree } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import Grabber from "../../components/grabber";
@@ -15,36 +14,6 @@ const levels: any = {
   "3": "Expert",
 };
 
-const SkillUnit = ({
-  skill,
-  index,
-  ...props
-}: {
-  skill: ISkill;
-  index: number;
-}) => {
-  //const { removeSkill } = useContext(SkillsContext);
-  const dispatch = useAppDispatch();
-  return (
-    <>
-      <Td px={0}>{skill.skillName}</Td>
-      <Td px={0}>{skill.skillYearsExperience}</Td>
-      <Td px={0}>{levels[skill.skillLevel.toString()]}</Td>
-      <Td px={0} textAlign="right">
-        <DeleteIcon
-          onClick={() => {
-            dispatch(setDirty({ isDirty: true }));
-            //dispatch(removeSkill(skill.id));
-          }}
-          cursor="pointer"
-          color="red.400"
-          boxSize={4}
-          mr={1}
-        />
-      </Td>
-    </>
-  );
-};
 
 export default function SkillsList({ ...props }: any) {
   const skills = useAppSelector((state) => state.skills.list || []);
@@ -59,7 +28,7 @@ export default function SkillsList({ ...props }: any) {
             console.log(params);
             const srcI = params.source.index;
             const destI = params.destination?.index || 0;
-            let newList = [...skills];
+            const newList = [...skills];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             //setList(newList);
             dispatch(setAllSkills(newList));
@@ -82,13 +51,13 @@ export default function SkillsList({ ...props }: any) {
               </Tr>
             </Thead>
             <Droppable droppableId="skillsdroppable">
-              {(provided, snapshot) => (
+              {(provided) => (
                 <Tbody ref={provided.innerRef} {...provided.droppableProps}>
                   {skills &&
                     skills?.map((skill: ISkill, i) => {
                       return (
                         <Draggable key={i} draggableId={`drag${i}`} index={i}>
-                          {(provided, snapshot) => (
+                          {(provided) => (
                             <Tr
                               width="100%"
                               ref={provided.innerRef}
@@ -100,11 +69,7 @@ export default function SkillsList({ ...props }: any) {
                                 width="5%"
                               >
                                 <Grabber />
-                                {/* <Icon
-                                  as={IoReorderThree}
-                                  boxSize={6}
-                                  color="gray.500"
-                                /> */}
+                              
                               </Td>
                               <Td px={0} width="50%">
                                 {skill.skillName}

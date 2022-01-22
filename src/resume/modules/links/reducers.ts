@@ -18,9 +18,11 @@ export const linksSlice = createSlice({
   initialState: initialState,
   reducers: {
     setInitialLinks: (state, action) => {
-      state.list = action.payload ? action.payload.list: [];
-      state.active = action.payload ?  action.payload.active: true;
-      state.altName= action.payload.altName;
+      if (action.payload) {
+        state.list = action.payload.list;
+        state.active = action.payload.active;
+        state.altName = action.payload.altName;
+      }
     },
     setAltName: (state, action) => {
       state.altName = action.payload;
@@ -32,7 +34,7 @@ export const linksSlice = createSlice({
       state.list.push(action.payload);
     },
     deleteLink: (state, action) => {
-      var index = state.list.findIndex((link) => {
+      const index = state.list.findIndex((link) => {
         return link.id === action.payload;
       });
       state.list.splice(index, 1);

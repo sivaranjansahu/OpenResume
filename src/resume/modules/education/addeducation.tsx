@@ -1,16 +1,15 @@
 import { Accordion, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
 import { Button } from "@chakra-ui/button";
-import { Box, Flex, Grid, Heading, VStack } from "@chakra-ui/layout";
-import { Formik, Form } from "formik";
-import FormikControl from "../../../components/customprimitives";
-import { months } from "../../../shared/constants";
-import ToggleButton from "../../components/togglebutton";
-import { addSkill } from "../skills/reducers";
-import { addEducation } from "./reducers";
+import { Flex, Grid, Heading, VStack } from "@chakra-ui/layout";
+import { Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
+import FormikControl from "../../../components/customprimitives";
+import { months } from "../../../shared/constants";
 import { useAppDispatch } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
+import ToggleButton from "../../components/togglebutton";
+import { addEducation } from "./reducers";
 
 const validationSchema = Yup.object({
   school: Yup.string()

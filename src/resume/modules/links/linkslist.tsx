@@ -1,19 +1,15 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/layout";
-import { Table, Tbody, Td, Th, Thead, Tr, Grid } from "@chakra-ui/react";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import { ILink } from "../../interfaces/forminterfaces";
 import { deleteLink } from "./reducers";
 
-const levels: any = {
-  "1": "Beginner",
-  "2": "Intermediate",
-  "3": "Expert",
-};
 
-const LinkUnit = ({ link, index }: { link: ILink; index: number }) => {
+
+const LinkUnit = ({ link }: { link: ILink; index: number }) => {
   //const { removeSkill } = useContext(SkillsContext);
   const dispatch = useAppDispatch();
   return (
@@ -38,7 +34,7 @@ const LinkUnit = ({ link, index }: { link: ILink; index: number }) => {
 
 export default function LinksList({ ...props }: any) {
   const links = useAppSelector((state) => state.links.list || []);
-  const dispatch = useAppDispatch();
+
 
   return (
     <Box as="article" {...props}>

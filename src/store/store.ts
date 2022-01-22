@@ -8,6 +8,7 @@ import linksReducer from "../resume/modules/links/reducers";
 import projectsReducer from "../resume/modules/projects/reducers";
 import summaryReducer from "../resume/modules/summary/reducers";
 import coursesReducer from "../resume/modules/courses/reducers";
+import customSectionreducer from "../resume/modules/custom-module/reducers";
 // ...
 
 const dirtySlice = createSlice({
@@ -22,15 +23,24 @@ const dirtySlice = createSlice({
 export const { setDirty } = dirtySlice.actions;
 
 const orderSlice = createSlice({
-  name:"componentOrder",
-  initialState:{order:["summary","workExperience","skills","education","courses","projects","links"]},
-  reducers:{
+  name: "componentOrder",
+  initialState: {
+    order: [
+      "summary",
+      "workExperience",
+      "skills",
+      "education",
+      "courses",
+      "projects",
+      "links",
+    ],
+  },
+  reducers: {
     setOrder: (state, action) => {
       state.order = action.payload.order;
     },
-  }
-
-})
+  },
+});
 export const { setOrder } = orderSlice.actions;
 
 const store = configureStore({
@@ -44,8 +54,10 @@ const store = configureStore({
     projects: projectsReducer,
     summary: summaryReducer,
     courses: coursesReducer,
+    customSections:customSectionreducer,
     dirty: dirtySlice.reducer,
-    componentOrder:orderSlice.reducer
+    componentOrder: orderSlice.reducer,
+
   },
 });
 

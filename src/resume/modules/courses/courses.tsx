@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/layout";
-import { Flex, useDisclosure } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import AccordionUnit from "../../components/accordionunit";
 import IncludeSwitch from "../../components/includeSwitch";
 import RenameSection from "../../components/renameSection";

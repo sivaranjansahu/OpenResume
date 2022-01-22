@@ -6,14 +6,14 @@ import {
   Flex,
   Grid,
   Heading,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
-import { Form, Formik, FormikBag, FormikState } from "formik";
-import { v4 as uuidv4, validate } from "uuid";
+import { Form, Formik } from "formik";
+import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
 import FormikControl from "../../../components/customprimitives";
 import { months } from "../../../shared/constants";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { useAppDispatch } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
 import ToggleButton from "../../components/togglebutton";
 import { addWorkHistory } from "./reducers";
@@ -61,7 +61,6 @@ const initVals = {
 };
 
 export default function WorkHistoryForm() {
-  const workHistory = useAppSelector((state) => state.workHistory.list);
   const dispatch = useAppDispatch();
   return (
     <Accordion allowToggle>
@@ -140,7 +139,7 @@ export default function WorkHistoryForm() {
                               label="From"
                               name="fromMonth"
                               options={months}
-                              defaultValue="Jan"
+                              //defaultValue="Jan"
                             />
                             <FormikControl
                               control="input"

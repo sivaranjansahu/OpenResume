@@ -1,13 +1,11 @@
-import { Box, Flex } from "@chakra-ui/layout";
+import { Flex } from "@chakra-ui/layout";
 import { Icon, Text } from "@chakra-ui/react";
-import { channels } from "../shared/constants";
-import {
-  VscChromeMaximize,
-  VscChromeClose,
-  VscChromeMinimize,
-  VscChromeRestore,
-} from "react-icons/vsc";
 import { useState } from "react";
+import {
+  VscChromeClose, VscChromeMaximize, VscChromeMinimize,
+  VscChromeRestore
+} from "react-icons/vsc";
+import { channels } from "../shared/constants";
 
 const electron = window.require("electron");
 

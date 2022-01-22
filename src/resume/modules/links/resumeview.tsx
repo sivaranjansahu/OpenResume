@@ -3,6 +3,7 @@ import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { ILink } from "../../interfaces/forminterfaces";
 import { Style as PDFStyle } from "@react-pdf/types";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
+import { useEffect, useState } from "react";
 
 type propsType = {
   state: {
@@ -10,12 +11,15 @@ type propsType = {
     active?: boolean;
   };
   styles: resumeStyleType;
-  headingDesign:number
+  headingDesign: number;
 };
 
-
 function ResumeView(props: propsType) {
-  const { state, styles,headingDesign} = props;
+  const { state, styles, headingDesign } = props;
+  const [links, setLinks] = useState<ILink[]>([]);
+  useEffect(() => {
+    setLinks(state.list);
+  }, [state.list]);
   if (!state.active) {
     return null;
   }
@@ -25,18 +29,21 @@ function ResumeView(props: propsType) {
       ...styles.subSectionHeader,
     },
     url: {
-      ...styles.paragraph
+      ...styles.paragraph,
     },
-    
   };
 
   return (
     <View style={styles.section}>
-      <SectionHeading headingtype={headingDesign} title="Links" styles={styles}/>
-      {state.list.map((link: ILink, index: number) => {
+      <SectionHeading
+        headingtype={headingDesign}
+        title="Links"
+        styles={styles}
+      />
+      {links.map((link: ILink, index: number) => {
         return (
-          <View style={styles.subSectionContainer}>
-            <Text style={linkStyles.title} >{link.title}</Text>
+          <View style={styles.subSectionContainer} key={index}>
+            <Text style={linkStyles.title}>{link.title}</Text>
             <Text>{link.url}</Text>
           </View>
         );

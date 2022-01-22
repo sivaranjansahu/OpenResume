@@ -18,9 +18,12 @@ export const educationSlice = createSlice({
   initialState: initialState,
   reducers: {
     setInitialEducation: (state, action) => {
-      state.list = action.payload.list;
-      state.active = action.payload.active;
-      state.altName= action.payload.altName;
+      if(action.payload){
+        state.list = action.payload.list;
+        state.active = action.payload.active;
+        state.altName= action.payload.altName;
+      }
+
     },
     setAltName: (state, action) => {
       state.altName = action.payload;
@@ -32,7 +35,7 @@ export const educationSlice = createSlice({
       state.list.push(action.payload);
     },
     removeEducation: (state, action) => {
-      var index = state.list.findIndex((ed) => {
+      const index = state.list.findIndex((ed) => {
         return ed.id === action.payload;
       });
       state.list.splice(index, 1);

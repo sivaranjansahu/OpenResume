@@ -25,7 +25,14 @@ export const basicInfoSlice = createSlice({
   initialState: initialState,
   reducers: {
     setBasicInfo: (state, action) => {
-      state.info = action.payload.info;
+      state.info =action.payload ?  action.payload.info : {
+        fullName: "",
+        email: "",
+        address: "",
+        linkedIn: "",
+        phoneno: "",
+        website: "",
+      }
       state.active = true;
     },
   },

@@ -1,15 +1,15 @@
 import { Switch, Tooltip, Box } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../store/reduxhooks";
 import { setDirty } from "../../store/store";
-
+ 
 type includeSwitchType = {
-  setActive: Function;
+  setActive: any;
   sectionName:
     | "education"
     | "projects"
     | "basicInfo"
     | "summary"
-    | "skills"
+    | "skills" 
     | "links"
     | "workHistory"
     | "courses";

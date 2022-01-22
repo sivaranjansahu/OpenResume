@@ -1,11 +1,10 @@
 import {
-  Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
+  Button
 } from "@chakra-ui/react";
 import { useState } from "react";
 

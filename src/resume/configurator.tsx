@@ -5,23 +5,15 @@ import {
   Button,
   Drawer,
   DrawerBody,
-  DrawerContent,
-  DrawerOverlay,
-  DrawerHeader,
+  DrawerContent, DrawerHeader,
   Flex,
-  Heading,
-  Radio,
-  RadioGroup,
-  SlideDirection,
-  Stack,
-  Text,
-  Icon,
+  Heading, Icon, Radio,
+  RadioGroup, Stack,
+  Text
 } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useState } from "react";
-import { RiDownloadLine } from "react-icons/ri";
 import { VscClose, VscCloudDownload } from "react-icons/vsc";
-import { number } from "yup";
 import generateTestDoc from "./generators/docx/docxgen";
 import MyDocument from "./generators/pdf/pdfgen";
 import ColorPicker from "./preview/components/colorpicker";
@@ -80,7 +72,7 @@ function DownloadButtons({
           }
           fileName="somename.pdf"
         >
-          {({ blob, url, loading, error }) => (
+          {({ loading }) => (
             <Button
               width="290px"
               leftIcon={<VscCloudDownload />}
@@ -111,7 +103,6 @@ function Configurator(props: Proptype) {
   const [format, setFormat] = useState("pdf");
   const {
     isOpen,
-    onOpen,
     onClose,
     updateAccentColor,
     updateBodyColor,
@@ -126,9 +117,8 @@ function Configurator(props: Proptype) {
     bodyColor,
     headingDesign
   } = props;
-  const [placement, setPlacement] = useState<SlideDirection>("right");
   return (
-    <Drawer  placement={placement} onClose={onClose} isOpen={isOpen}>
+    <Drawer  placement="right" onClose={onClose} isOpen={isOpen}>
       {/* <DrawerOverlay /> */}
       <DrawerContent>
         <DrawerHeader borderBottomWidth="1px" px={4}>
@@ -149,7 +139,7 @@ function Configurator(props: Proptype) {
               <RadioGroup onChange={setFormat} value={format}>
                 <Stack direction="row">
                   {radioOptions.map((r, i) => {
-                    return <Radio value={r.value}>{r.label}</Radio>;
+                    return <Radio key={i} value={r.value}>{r.label}</Radio>;
                   })}
                 </Stack>
               </RadioGroup>

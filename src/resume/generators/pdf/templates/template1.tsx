@@ -1,17 +1,13 @@
-import { Page, Text, View } from "@react-pdf/renderer";
+import { Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import { IProfile } from "../../../interfaces/forminterfaces";
-import BasicInfoView from "../../../modules/basicinfo/resumeview";
+import CourseView from "../../../modules/courses/resumeview";
+import EducationView from "../../../modules/education/resumeview";
 import LinkView from "../../../modules/links/resumeview";
+import ProjectView from "../../../modules/projects/resumeview";
 import SkillsView from "../../../modules/skills/resumeview";
 import SummaryView from "../../../modules/summary/summaryview";
-import EducationView from "../../../modules/education/resumeview";
 import WorkHistoryView from "../../../modules/workhistory/resumeview";
-import CourseView from "../../../modules/courses/resumeview";
-import ProjectView from "../../../modules/projects/resumeview";
 import styleGen from "../basestyles";
-import {
-  StyleSheet
-} from "@react-pdf/renderer";
 type propType = {
   state: IProfile;
   headingFont: string;
@@ -78,7 +74,7 @@ export default function Template1(props: propType) {
   //styles.blockHeader = { ...styles.blockHeader, textTransform: "uppercase" };
 
   const { state, accentColor,bodyColor,headingDesign } = props;
-  const { skills, workHistory, education, basicInfo, componentOrder } = state;
+  const { componentOrder } = state;
   console.log("resumeData", componentOrder);
   return (
     <Page size="A4" style={styles.page} >
@@ -98,7 +94,7 @@ export default function Template1(props: propType) {
         <View style={templateStyles.main}>
           {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
           
-          {componentOrder?.order.map((compname, index) => {
+          {componentOrder?.order.map((compname) => {
             const sectionStyles = Object.create(styles);
             sectionStyles.accentColor = accentColor;
             sectionStyles.bodyColor = bodyColor;

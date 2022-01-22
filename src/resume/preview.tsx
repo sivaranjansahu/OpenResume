@@ -1,37 +1,19 @@
 import { Flex } from "@chakra-ui/layout";
 import {
   Box,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  SlideDirection,
-  useDisclosure,
+  Button, useDisclosure
 } from "@chakra-ui/react";
-import { PDFDownloadLink, PDFViewer, BlobProvider } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 import React, { useState } from "react";
-import {
-  RiDownloadLine,
-  RiFileDownloadLine,
-  RiPaletteLine,
-} from "react-icons/ri";
-import "simplebar/dist/simplebar.css";
-import { useAppSelector } from "../store/reduxhooks";
-import DownloadType from "./components/filetypeswitch";
-import { IProfile } from "./interfaces/forminterfaces";
-import ColorPicker from "./preview/components/colorpicker";
-import MyDocument from "./generators/pdf/pdfgen";
-import Configurator from "./configurator";
-import registerFonts from "../fonts/index";
 import { VscSymbolColor } from "react-icons/vsc";
+import "simplebar/dist/simplebar.css";
+import registerFonts from "../fonts/index";
+import { useAppSelector } from "../store/reduxhooks";
+import Configurator from "./configurator";
+import MyDocument from "./generators/pdf/pdfgen";
 
-interface temp {
-  resumeData: IProfile;
-}
 
-function Preview({ resumeData }: temp) {
-  const [templateId, setTemplateId] = useState<string>("temp1");
+function Preview() {
   const [accentColor, setAccentColor] = useState("#333");
   const [bodyColor, updateBodyColor] = useState("#fff");
   const [layout, setLayout] = useState("template1");

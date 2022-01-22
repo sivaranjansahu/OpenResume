@@ -1,23 +1,10 @@
-import * as fs from 'fs'
 import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-  Table,
-  TableRow,
-  TableCell,
-  WidthType,
-  BorderStyle,
-  AlignmentType,
-  HeadingLevel,
-  TabStopPosition,
-  TabStopType,
+  AlignmentType, Document, HeadingLevel, Packer,
+  Paragraph, TabStopPosition,
+  TabStopType, TextRun
 } from 'docx'
 import { saveAs } from 'file-saver'
-import { useAppSelector } from '../../../store/reduxhooks'
-import { IEducation,IWorkHistory,ISkill } from '../../interfaces/forminterfaces'
-import EducationList from '../../modules/education/educationlist'
+import { IEducation, IWorkHistory } from '../../interfaces/forminterfaces'
 
 // Documents contain sections, you can have multiple sections per document, go here to learn more about sections
 // This simple example will only contain one section
@@ -65,7 +52,7 @@ class DocumentCreator {
   public createSections(state:any):Paragraph[]{
       const sectionsArray:Paragraph[] = [];
       //state.componentOrder.order
-      state.componentOrder.order.forEach((compname:string,index:number)=>{
+      state.componentOrder.order.forEach((compname:string)=>{
           console.log(compname);
           let selected:Paragraph[]=[];
           switch (compname) {

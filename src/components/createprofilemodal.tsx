@@ -1,19 +1,6 @@
 import {
-  useDisclosure,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Text,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  useToast,
+  Button, FormControl, FormLabel,
+  Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";

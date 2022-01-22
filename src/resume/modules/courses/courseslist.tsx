@@ -5,24 +5,17 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionItem,
-  AccordionPanel,
-  forwardRef,
-  Text,
-  Flex,
-  Icon,
-  Grid,
+  AccordionPanel, Flex, Grid, Icon
 } from "@chakra-ui/react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
-import { ICourse, ILink, IProject } from "../../interfaces/forminterfaces";
-import { deleteCourse, setAllCourses } from "./reducers";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { VscGrabber } from "react-icons/vsc";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
+import { ICourse } from "../../interfaces/forminterfaces";
+import { deleteCourse, setAllCourses } from "./reducers";
 
 const ProjectsUnit = (
-  { course, index }: { course: ICourse; index: number },
-  ref: any
+  { course }: { course: ICourse; index: number }
 ) => {
   //const { removeSkill } = useContext(SkillsContext);
   const dispatch = useAppDispatch();
@@ -68,7 +61,7 @@ export default function CoursesList({ ...props }: any) {
           onDragEnd={(params) => {
             const srcI = params.source.index;
             const destI = params.destination?.index || 0;
-            let newList = [...courses];
+            const newList = [...courses];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllCourses(newList));
             if (srcI !== destI) {
@@ -77,7 +70,7 @@ export default function CoursesList({ ...props }: any) {
           }}
         >
           <Droppable droppableId="workexdroppable">
-            {(provided, snapshot) => (
+            {(provided) => (
               <Accordion
                 allowToggle
                 allowMultiple
@@ -92,7 +85,7 @@ export default function CoursesList({ ...props }: any) {
                         draggableId={`drag${index}`}
                         index={index}
                       >
-                        {(provided, snapshot) => (
+                        {(provided) => (
                           <Flex
                             alignItems="flex-start"
                             ref={provided.innerRef}

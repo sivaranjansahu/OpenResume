@@ -5,23 +5,24 @@ import { ISkill } from "../../interfaces/forminterfaces";
 interface SkillsState {
   active: boolean;
   list: ISkill[];
-  altName?:string;
+  altName?: string;
 }
 
 // Define the initial state using that type
 const initialState: SkillsState = {
   active: true,
   list: [],
-
 };
 export const skillsSlice = createSlice({
   name: "skills",
   initialState: initialState,
   reducers: {
     setInitialSkills: (state, action) => {
-      state.list = action.payload.list;
-      state.active = action.payload.active;
-      state.altName= action.payload.altName;
+      if (action.payload) {
+        state.list = action.payload.list;
+        state.active = action.payload.active;
+        state.altName = action.payload.altName;
+      }
     },
     setAltName: (state, action) => {
       state.altName = action.payload;
@@ -33,10 +34,10 @@ export const skillsSlice = createSlice({
       state.list.push(action.payload);
     },
     setAllSkills: (state, action) => {
-      state.list=action.payload;
+      state.list = action.payload;
     },
     removeSkill: (state, action) => {
-      var index = state.list.findIndex((skill) => {
+      const index = state.list.findIndex((skill) => {
         return skill.id === action.payload;
       });
       state.list.splice(index, 1);
@@ -45,7 +46,13 @@ export const skillsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addSkill, removeSkill, setActive, setInitialSkills,setAllSkills,setAltName } =
-  skillsSlice.actions;
+export const {
+  addSkill,
+  removeSkill,
+  setActive,
+  setInitialSkills,
+  setAllSkills,
+  setAltName,
+} = skillsSlice.actions;
 
 export default skillsSlice.reducer;

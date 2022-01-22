@@ -15,11 +15,10 @@ import ConfirmDelete from "../components/modals/confirmdelete";
 const ProfileCard = ({
   profileKey,
   //profileName,
-  deleteProfile,
+  deleteProfile, 
   copyProfile,
   url,
   allProfiles,
-  openDeleteModal,
 }: any) => {
   const { profileName, profileNotes } = allProfiles[profileKey].meta;
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -1,23 +1,16 @@
 import {
-  Grid,
-  Icon,
-  useRadio,
-  Button,
-  Box,
-  useRadioGroup,
-  HStack,
-  Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
-  AccordionPanel,
+  AccordionPanel, Box, HStack, Icon,
+  useRadio, useRadioGroup
 } from "@chakra-ui/react";
-
 import {
   RiLayoutLeftLine,
   RiLayoutRightLine,
-  RiLayoutTopLine,
+  RiLayoutTopLine
 } from "react-icons/ri";
+
 
 // 1. Create a component that consumes the `useRadio` hook
 export function RadioCard(props: any) {
@@ -53,7 +46,7 @@ export function RadioCard(props: any) {
   );
 }
 
-function LayoutPicker({ setLayout, ...props }: any) {
+function LayoutPicker({ setLayout }: any) {
   const options = [
     {
       id: "template1",

@@ -36,14 +36,14 @@ export default function WordChoices(props: Proptype) {
           <DrawerBody pt={8} p={0}>
             
             <Heading as="h4" size="xs" mb={2} px={4}>
-              Blacklist
+              Buzzwords to avoid
             </Heading>
             <Box p={4} mb={4}>
             {JSON.stringify(blacklist)}              
             </Box>
             
             <Heading as="h4" size="xs" mb={2} px={4}>
-              Whitelist
+              Better alternatives
             </Heading>
             <Box p={4} mb={4}>
             {JSON.stringify(whitelist)}              

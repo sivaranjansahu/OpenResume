@@ -1,75 +1,34 @@
-import React, { useEffect, useRef } from "react";
+import { QuestionIcon } from "@chakra-ui/icons";
 import {
+  Box,
+  Button,
+  Checkbox as ChakraCheckbox,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
   Input as ChakraInput,
   Radio,
   RadioGroup,
   Select as ChakraSelect,
-  Checkbox as ChakraCheckbox,
-  Stack,
   Switch as ChakraSwitch,
+  Text,
   Textarea as ChakraTextarea,
   Tooltip,
-  Text,
-  Button,
-  Box,
-  Icon,
-  useDisclosure,
 } from "@chakra-ui/react";
-import {
-  Field,
-  FieldHelperProps,
-  FieldHookConfig,
-  FieldProps,
-  FormikFormProps,
-  FormikProps,
-  useField,
-} from "formik";
-import { useState } from "react";
-import * as Yup from "yup";
-
-import {
-  InfoIcon,
-  PhoneIcon,
-  QuestionIcon,
-  QuestionOutlineIcon,
-} from "@chakra-ui/icons";
-import { VscListUnordered, VscWarning } from "react-icons/vsc";
-import Hints from "../resume/components/hints";
+import { Field, FieldHookConfig, FieldProps, useField } from "formik";
+import React, { useState } from "react";
+import { VscListUnordered } from "react-icons/vsc";
 import { dict } from "../shared/dict";
-//import {ipcRenderer} from 'electron';
-//import remote from '@electron/remote'
-const electron = window.require("electron");
-//const { Menu } = window.require('@electron/remote')
-
-const cacheDir = "";
 
 interface OtherProps {
   label: string;
 }
 
-type Props = {
-  label: string;
-  props: FieldHookConfig<any>;
-};
-
-const ValidationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Too Short!")
-    .max(70, "Too Long!")
-    .required("Name is required."),
-  about: Yup.string()
-    .min(2, "Too Short!")
-    .max(70, "Too Long!")
-    .required("This field is required."),
-});
-
 export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
-  const { name, type, placeholder, label } = props;
+  const [, meta] = useField(props);
+  const { type, label } = props;
   const [error, setError] = useState(false);
   return (
     <>
@@ -94,7 +53,7 @@ export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <>
       <FormControl id="fullname">
@@ -109,7 +68,7 @@ export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <>
       <FormControl id="fullname" isInvalid={!!meta.error}>
@@ -128,30 +87,14 @@ export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CRadio = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
-  const [value, setValue] = useState("1");
+  const [field, ,] = useField(props);
+
   return (
     <Radio {...field} type={props.type}>
       First
     </Radio>
-    // <RadioGroup {...field} type={props.type} onChange={setValue} value={value}>
-    //   <Stack direction="row">
-    //     <Radio value="1">First</Radio>
-    //     <Radio value="2">Second</Radio>
-    //     <Radio value="3">Third</Radio>
-    //   </Stack>
-    // </RadioGroup>
   );
 };
-
-// const MySwitch = ({ field, form, ...props }) => {
-//   return <Switch {...field} {...props} />;
-// };
-
-// export const CSwitch = (props: OtherProps & FieldHookConfig<string>) => {
-//   const [field, meta, helpers] = useField(props);
-//   return <Field name="resinclude" component={MySwitch} />;
-// };
 
 function Input(props: any) {
   const { label, name, help, ...rest } = props;
@@ -176,12 +119,7 @@ function Input(props: any) {
   );
 }
 
-const resumeDict = {
-  happy: ["elated", "joyous", "ecstatic", "stoked"],
-  sad: ["dejected", "gloomy", "upset", "depresed"],
-} as any;
-
-function listWordsOfInterest(content: string, map: any) {
+function listWordsOfInterest(content: string) {
   const blacklist = [];
   const whitelist = [];
   const contentArr: string[] = content.replaceAll(",", "").split(" ");
@@ -207,9 +145,9 @@ function Textarea(props: any) {
   const { label, name, help, showBullet = true, ...rest } = props;
   const [listActive, setListActive] = useState(false);
   let tbRef: any = null;
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [blacklist, setBlacklist] = useState<string[]>([]);
-  const [whitelist, setWhitelist] = useState<string[]>([]);
+
+  const [, setBlacklist] = useState<string[]>([]);
+  const [, setWhitelist] = useState<string[]>([]);
   // useEffect(()=>{
   //   tbRef.addEventListener('contextmenu', (event:any) => {
   //     event.preventDefault();
@@ -236,38 +174,36 @@ function Textarea(props: any) {
                 borderColor="gray.300"
                 borderStyle="solid"
               >
-                 <Flex
-              justifyContent="space-between"
-              alignItems="center">
-                <Box>
-                {showBullet && (
-                  <Button
-                    variant="ghost"
-                    border="none"
-                    p={0}
-                    onClick={() => {
-                      if (listActive) {
-                        setListActive(false);
-                      } else {
-                        setListActive(true);
-                        form.setFieldValue(
-                          name,
-                          form.values[name] + `\n ${bullet} `
-                        );
-                      }
-                      tbRef.focus();
-                    }}
-                  >
-                    <Icon
-                      as={VscListUnordered}
-                      boxSize={6}
-                      color={listActive ? "gray.900" : "gray.400"}
-                    />
-                  </Button>
-                )}</Box>
-                <Flex>
-                
-                  <Button
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Box>
+                    {showBullet && (
+                      <Button
+                        variant="ghost"
+                        border="none"
+                        p={0}
+                        onClick={() => {
+                          if (listActive) {
+                            setListActive(false);
+                          } else {
+                            setListActive(true);
+                            form.setFieldValue(
+                              name,
+                              form.values[name] + `\n ${bullet} `
+                            );
+                          }
+                          tbRef.focus();
+                        }}
+                      >
+                        <Icon
+                          as={VscListUnordered}
+                          boxSize={6}
+                          color={listActive ? "gray.900" : "gray.400"}
+                        />
+                      </Button>
+                    )}
+                  </Box>
+                  <Flex>
+                    {/* <Button
                   fontWeight="normal"
                     variant="ghost"
                     disabled={blacklist.length===0}
@@ -288,16 +224,16 @@ function Textarea(props: any) {
                     size="sm"
                   >
                     Alternatives available
-                  </Button>
+                  </Button> */}
+                  </Flex>
                 </Flex>
-                </Flex>
-                <Hints
+                {/* <Hints
                   blacklist={blacklist}
                   whitelist={whitelist}
                   onOpen={onOpen}
                   isOpen={isOpen}
                   onClose={onClose}
-                />
+                /> */}
                 <ChakraTextarea
                   ref={(r) => (tbRef = r)}
                   id={name}
@@ -311,10 +247,7 @@ function Textarea(props: any) {
                   // }}
                   onKeyUp={(e) => {
                     if (e.key === " ") {
-                      const words = listWordsOfInterest(
-                        form.values[name],
-                        resumeDict
-                      );
+                      const words = listWordsOfInterest(form.values[name]);
                       setBlacklist(words.blacklist);
                       setWhitelist(words.whitelist);
                     }
@@ -341,7 +274,7 @@ function Textarea(props: any) {
 }
 
 function RadioButtons(props: any) {
-  const { label, name, options, defaultValue, help, ...rest } = props;
+  const { label, name, options, defaultValue, help } = props;
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) => (
@@ -376,7 +309,7 @@ function RadioButtons(props: any) {
 }
 
 function Select(props: any) {
-  const { label, name, options, ...rest } = props;
+  const { label, name, options } = props;
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) => (
@@ -398,10 +331,10 @@ function Select(props: any) {
 }
 
 function Switch(props: any) {
-  const { label, name, ...rest } = props;
+  const { name, ...rest } = props;
   return (
     <Field name={name}>
-      {({ field, form }: any) => {
+      {({ field }: any) => {
         return (
           <FormControl display="flex" alignItems="center">
             <ChakraSwitch id={name} {...rest} {...field} />
@@ -416,7 +349,7 @@ function Checkbox(props: any) {
   const { label, name, ...rest } = props;
   return (
     <Field name={name}>
-      {({ field, form }: any) => {
+      {({ field }: any) => {
         return (
           <FormControl alignItems="center">
             <FormLabel htmlFor={name} fontSize="sm" color="gray.600">

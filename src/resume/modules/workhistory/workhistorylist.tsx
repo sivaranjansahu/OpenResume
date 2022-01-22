@@ -1,26 +1,20 @@
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Box, Flex, Grid, Heading } from "@chakra-ui/layout";
+import { Box, Flex, Heading } from "@chakra-ui/layout";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  forwardRef,
-  Text,
-  Icon,
+  forwardRef, Icon, Text
 } from "@chakra-ui/react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { VscGrabber } from "react-icons/vsc";
-import { IoReorderThree } from "react-icons/io5";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { IoReorderThree } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
+import { setDirty } from "../../../store/store";
 import { IWorkHistory } from "../../interfaces/forminterfaces";
 import { removeWorkHistory, setAllWorkHistory } from "./reducers";
-import { setDirty } from "../../../store/store";
 
-interface props {}
-//{ exp }: { exp: IWorkHistory,ref:HTMLElement | null | undefined },ref
 const WorkHistoryUnit = forwardRef(
   ({ exp }: { exp: IWorkHistory }, ref: any) => {
     const dispatch = useAppDispatch();
@@ -92,7 +86,7 @@ const WorkHistoryList = ({ ...props }: any) => {
           onDragEnd={(params) => {
             const srcI = params.source.index;
             const destI = params.destination?.index || 0;
-            let newList = [...workHistory];
+            const newList = [...workHistory];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllWorkHistory(newList));
             if (srcI !== destI) {
@@ -101,7 +95,7 @@ const WorkHistoryList = ({ ...props }: any) => {
           }}
         >
           <Droppable droppableId="workexdroppable">
-            {(provided, snapshot) => (
+            {(provided) => (
               <Accordion
                 allowToggle
                 allowMultiple
@@ -115,7 +109,7 @@ const WorkHistoryList = ({ ...props }: any) => {
                       draggableId={`drag${index}`}
                       index={index}
                     >
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <Flex
                           alignItems="flex-start"
                           ref={provided.innerRef}

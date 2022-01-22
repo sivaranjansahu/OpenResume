@@ -1,19 +1,16 @@
 import {
-  AccordionItem,
   AccordionButton,
   AccordionIcon,
+  AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/accordion";
 import { DeleteIcon } from "@chakra-ui/icons";
-
 import { Box, Flex, Grid, Heading } from "@chakra-ui/layout";
-import exp from "constants";
-import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
-import { IEducation } from "../../interfaces/forminterfaces";
-import { removeWorkHistory } from "../workhistory/reducers";
 import { Accordion, Text } from "@chakra-ui/react";
-import { removeEducation } from "./reducers";
+import { useAppDispatch, useAppSelector } from "../../../store/reduxhooks";
 import { setDirty } from "../../../store/store";
+import { IEducation } from "../../interfaces/forminterfaces";
+import { removeEducation } from "./reducers";
 
 const EducationUnit = ({ ed }: { ed: IEducation }) => {
   const dispatch = useAppDispatch();

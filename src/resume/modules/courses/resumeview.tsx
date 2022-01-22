@@ -1,8 +1,8 @@
 import { Text, View } from "@react-pdf/renderer";
-import { resumeStyleType } from "../../generators/pdf/basestyles";
 import { Style as PDFStyle } from "@react-pdf/types";
-import { ICourse, ILink } from "../../interfaces/forminterfaces";
+import { resumeStyleType } from "../../generators/pdf/basestyles";
 import SectionHeading from "../../generators/pdf/templates/headingstyles";
+import { ICourse } from "../../interfaces/forminterfaces";
 
 type propsType = {
   state: {
@@ -40,7 +40,7 @@ function ResumeView(props: propsType) {
 
       {state.list.map((course: ICourse, index: number) => {
         return (
-          <View style={styles.subSectionContainer}>
+          <View key={index} style={styles.subSectionContainer}>
             <Text style={styles.subSectionHeader} >{course.title}</Text>
             <Text style={courseStyles.institute}>{course.institute}</Text>
             <Text style={courseStyles.year}>{course.year}</Text>

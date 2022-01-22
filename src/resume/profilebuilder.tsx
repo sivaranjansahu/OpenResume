@@ -1,5 +1,4 @@
 import { CheckIcon } from "@chakra-ui/icons";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   Accordion,
   Box,
@@ -10,23 +9,28 @@ import {
   Grid,
   Heading,
   Input,
-  Slide,
-  Fade,
   Text,
-  Textarea,
   useDisclosure,
-  useToast,
-  Icon,
+  useToast
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
+import React, { useCallback, useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
 import { setInitialSkills } from "../resume/modules/skills/reducers";
 import { channels } from "../shared/constants";
 import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
-import { IProfile } from "./interfaces/forminterfaces";
+import { setDirty, setOrder } from "../store/store";
+import { capitalize } from "../utils/common";
+import Grabber from "./components/grabber";
+import { ICustomSection, IProfile } from "./interfaces/forminterfaces";
 import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
+import Courses from "./modules/courses/courses";
+import { setInitialCourses } from "./modules/courses/reducers";
+import CustomSectionForm from "./modules/custom-module/addcustomsectionform";
+import CustomSection from "./modules/custom-module/customsection";
+import { setInitial as setInitialCustomSections } from "./modules/custom-module/reducers";
 import Education from "./modules/education/education";
 import { setInitialEducation } from "./modules/education/reducers";
 import Links from "./modules/links/links";
@@ -35,17 +39,12 @@ import Projects from "./modules/projects/projects";
 import { setInitialProjects } from "./modules/projects/reducers";
 import { setInitialMeta, setName, setNotes } from "./modules/resumereducers";
 import Skills from "./modules/skills/skills";
+import { setSummary } from "./modules/summary/reducers";
+import Summary from "./modules/summary/summary";
 import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
-import Summary from "./modules/summary/summary";
-import { setSummary } from "./modules/summary/reducers";
-import { setInitialCourses } from "./modules/courses/reducers";
-import Courses from "./modules/courses/courses";
-import { capitalize } from "../utils/common";
-import { setDirty, setOrder } from "../store/store";
-import { VscClose, VscEye, VscEyeClosed } from "react-icons/vsc";
-import Grabber from "./components/grabber";
+
 const electron = window.require("electron");
 
 type ProfileParams = {
@@ -70,15 +69,13 @@ const setProfileData = (allState: any, profileId = "second") => {
   });
 };
 
-
-
 const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
-  let { profileId } = useParams<ProfileParams>();
+  const { profileId } = useParams<ProfileParams>();
   const allState = useAppSelector<any>((state) => state);
 
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onClose } = useDisclosure();
 
   const saveChanges = () => {
     setProfileData(allState, profileId);
@@ -86,43 +83,48 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setDirty({ isDirty: false }));
   };
 
-  const updateStateWithProfile = (allProfiles: IProfile[], profileId: any) => {
-    //console.log("profilebuilder", allProfiles, profileId);
-    const currentProfile = allProfiles[profileId];
-    if (!currentProfile) {
-      return;
-    }
+  const updateStateWithProfile = useCallback(
+    (allProfiles: IProfile[], profileId: any) => {
+      //console.log("profilebuilder", allProfiles, profileId);
+      const currentProfile = allProfiles[profileId];
+      if (!currentProfile) {
+        return;
+      }
 
-    console.log("currentProfile", currentProfile);
-    dispatch(setInitialSkills(currentProfile.skills));
-    dispatch(setInitialWorkHistory(currentProfile.workHistory));
-    dispatch(setInitialEducation(currentProfile.education));
-    dispatch(setInitialMeta(currentProfile.meta));
-    dispatch(setBasicInfo(currentProfile.basicInfo));
-    dispatch(setInitialLinks(currentProfile.links));
-    dispatch(setInitialProjects(currentProfile.projects));
-    dispatch(setSummary(currentProfile.summary || ""));
-    dispatch(setInitialCourses(currentProfile.courses));
-    dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
-  };
+      console.log("currentProfile", currentProfile);
+      dispatch(setInitialSkills(currentProfile.skills));
+      dispatch(setInitialWorkHistory(currentProfile.workHistory));
+      dispatch(setInitialEducation(currentProfile.education));
+      dispatch(setInitialMeta(currentProfile.meta));
+      dispatch(setBasicInfo(currentProfile.basicInfo));
+      dispatch(setInitialLinks(currentProfile.links));
+      dispatch(setInitialProjects(currentProfile.projects));
+      dispatch(setSummary(currentProfile.summary || ""));
+      dispatch(setInitialCourses(currentProfile.courses));
+      dispatch(setInitialCustomSections(currentProfile.customSections ?? []));
+      dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
+
+      const customSections = Object.values(currentProfile).filter((val) => {
+        //return val.hasOwnProperty("custom");
+        return Object.prototype.hasOwnProperty.call(val, "custom");
+      });
+      console.log(customSections);
+    },
+    [dispatch]
+  );
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
   //else create new profile
   useEffect(() => {
     allProfiles && profileId && updateStateWithProfile(allProfiles, profileId);
-  }, [allProfiles, profileId]);
+  }, [allProfiles, profileId, updateStateWithProfile]);
   const { isDirty } = allState.dirty;
+  const toast = useToast();
 
   useEffect(() => {
     //isDirty && onOpen();
     isDirty &&
       toast({
-        // title: "Save your changes",
-        // description:
-        //   "Your changes dont get saved until you click on the Save button.",
-        // status: "success",
-        // duration: 5000,
-        // isClosable: true,
         position: "bottom-right",
         render: ({ onClose }) => (
           <Box width="250px" color="white" p={3} bg="gray.600">
@@ -136,9 +138,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
         ),
       });
-  }, [isDirty]);
-
-  const toast = useToast();
+  }, [isDirty, toast]);
 
   return (
     <Grid
@@ -252,7 +252,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                     console.log(params);
                     const srcI = params.source.index;
                     const destI = params.destination?.index || 0;
-                    let newList = [...allState.componentOrder.order];
+                    const newList = [...allState.componentOrder.order];
                     newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
                     console.log(newList);
                     //setList(newList);
@@ -263,7 +263,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                   }}
                 >
                   <Droppable droppableId="componentsDroppable">
-                    {(provided, snapshot) => (
+                    {(provided) => (
                       <Box ref={provided.innerRef} {...provided.droppableProps}>
                         <Flex w="full" alignItems="stretch">
                           <Box pl={2} pt={6} mb={2} bg="white">
@@ -274,49 +274,62 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                           </Box>
                         </Flex>
 
-                        {allState.componentOrder.order.map(
-                          (elname: string, i: number) => {
-                            const Comp = ComponentsMap[elname];
-                            return (
-                              <Draggable
-                                key={i}
-                                draggableId={`dragElem${i}`}
-                                index={i}
-                              >
-                                {(provided, snapshot) => (
-                                  <Box
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                  >
-                                    <Flex w="full" alignItems="stretch">
-                                      <Box
-                                        {...provided.dragHandleProps}
-                                        pl={2}
-                                        pt={6}
-                                        mb={2}
-                                        bg="white"
-                                      >
-                                        <Grabber />
-                                      </Box>
-                                      <Box flex={1}>
-                                        <Comp />
-                                      </Box>
-                                    </Flex>
-                                  </Box>
-                                )}
-                              </Draggable>
-                            );
-                          }
-                        )}
-
-                        {/* <BasicInfo />
-              <Summary />
-                <WorkHistory />
-                <Skills />
-                <Education />
-                <Courses />
-                <Links />
-                <Projects /> */}
+                        {allState.componentOrder.order &&
+                          allState.componentOrder.order.map(
+                            (elname: string, i: number) => {
+                              const Comp = ComponentsMap[elname];
+                              return (
+                                <Draggable
+                                  key={i}
+                                  draggableId={`dragElem${i}`}
+                                  index={i}
+                                >
+                                  {(provided) => (
+                                    <Box
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                    >
+                                      <Flex w="full" alignItems="stretch">
+                                        <Box
+                                          {...provided.dragHandleProps}
+                                          pl={2}
+                                          pt={6}
+                                          mb={2}
+                                          bg="white"
+                                        >
+                                          <Grabber />
+                                        </Box>
+                                        <Box flex={1}>
+                                          <Comp />
+                                        </Box>
+                                      </Flex>
+                                    </Box>
+                                  )}
+                                </Draggable>
+                              );
+                            }
+                          )}
+                        <Box
+                          fontSize="sm"
+                          bg="primary.100"
+                          p={4}
+                          color="gray.700"
+                          mb={2}
+                          pt={8}
+                        >
+                          <Heading as="h4" size="sm">
+                            Additional sections
+                          </Heading>
+                          <div>
+                            You can add additional sections if the above
+                            sections do not meet your purpose. These will appear
+                            at the bottom of your resume document.
+                          </div>
+                        </Box>
+                        <CustomSectionGroup
+                          list={allState.customSections.list}
+                        />
+                        <CustomSectionForm />
                       </Box>
                     )}
                   </Droppable>
@@ -325,29 +338,39 @@ const ProfileBuilder = ({ allProfiles }: any) => {
             </Accordion>
           </Box>
         </Box>
+
         {showPreview && (
           <Container
             maxW={{ lg: "container.lg", md: "container.lg" }}
             height="100%"
           >
-            {/* <Heading
-              size="sm"
-              mb="4"
-              pb={2}
-              borderBottomColor="gray.200"
-              borderBottomWidth={1}
-            >
-              Resume preview
-            </Heading> */}
-            <Preview resumeData={allState} />
+            <Preview />
           </Container>
         )}
       </Flex>
-      {/* <Box bg="gray.400">
-        
-      </Box> */}
     </Grid>
   );
 };
 
 export default ProfileBuilder;
+
+const CustomSectionGroup = ({ list }: { list: any }) => {
+  if (!list) {
+    return <></>;
+  }
+  return (
+    list &&
+    list.map((section: ICustomSection) => {
+      return (
+        <Box key={section.guid}>
+          <Flex w="full" alignItems="stretch">
+            <Box pl={2} pt={6} mb={2} bg="white"></Box>
+            <Box flex={1}>
+              <CustomSection sectionData={section} />
+            </Box>
+          </Flex>
+        </Box>
+      );
+    })
+  );
+};
