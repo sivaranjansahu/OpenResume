@@ -46,7 +46,7 @@ export function RadioCard(props: any) {
   );
 }
 
-function LayoutPicker({ setLayout, ...props }: any) {
+function LayoutPicker({ setLayout }: any) {
   const options = [
     {
       id: "template1",

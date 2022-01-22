@@ -37,7 +37,7 @@ export const skillsSlice = createSlice({
       state.list = action.payload;
     },
     removeSkill: (state, action) => {
-      var index = state.list.findIndex((skill) => {
+      const index = state.list.findIndex((skill) => {
         return skill.id === action.payload;
       });
       state.list.splice(index, 1);

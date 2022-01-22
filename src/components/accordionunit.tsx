@@ -1,18 +1,14 @@
 import { Box, Heading } from "@chakra-ui/layout";
 import {
-  AccordionItem,
   AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
+  AccordionIcon, AccordionItem, AccordionPanel
 } from "@chakra-ui/react";
-import { FormikValues } from "formik";
 import React from "react";
-import AboutForm from "./forms/about";
-type Props = {
+type props = {
   title: string;
   children: React.ReactNode;
 };
-const AccordionUnit: React.FC<Props> = ({ title, children }) => {
+const AccordionUnit: React.FC<props> = ({ title, children }) => {
   return (
     <AccordionItem border="none" flex="1" bg="white">
       <AccordionButton _expanded={{ bg: "gray.200" }}>

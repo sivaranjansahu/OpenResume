@@ -86,7 +86,7 @@ const WorkHistoryList = ({ ...props }: any) => {
           onDragEnd={(params) => {
             const srcI = params.source.index;
             const destI = params.destination?.index || 0;
-            let newList = [...workHistory];
+            const newList = [...workHistory];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllWorkHistory(newList));
             if (srcI !== destI) {
@@ -95,7 +95,7 @@ const WorkHistoryList = ({ ...props }: any) => {
           }}
         >
           <Droppable droppableId="workexdroppable">
-            {(provided, snapshot) => (
+            {(provided) => (
               <Accordion
                 allowToggle
                 allowMultiple
@@ -109,7 +109,7 @@ const WorkHistoryList = ({ ...props }: any) => {
                       draggableId={`drag${index}`}
                       index={index}
                     >
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <Flex
                           alignItems="flex-start"
                           ref={provided.innerRef}

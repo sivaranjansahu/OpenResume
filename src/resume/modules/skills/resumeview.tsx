@@ -69,7 +69,7 @@ function SkillsView(props: propsType) {
             <Text style={skillStyles.skillLevel}>Expert</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Expert.map((skill: ISkill, index: number) => {
-                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
+                return <Text key={index} style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>
@@ -79,7 +79,7 @@ function SkillsView(props: propsType) {
             <Text style={skillStyles.skillLevel}>Intermediate</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Intermediate.map((skill: ISkill, index: number) => {
-                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
+                return <Text key={index} style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>
@@ -89,7 +89,7 @@ function SkillsView(props: propsType) {
             <Text style={skillStyles.skillLevel}>Beginner</Text>
             <Text style={{ width: "30%" }}>
               {skillsMap?.Beginner.map((skill: ISkill, index: number) => {
-                return <Text style={styles.paragraph}>{skill.skillName},</Text>;
+                return <Text key={index} style={styles.paragraph}>{skill.skillName},</Text>;
               })}
             </Text>
           </View>

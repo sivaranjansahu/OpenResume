@@ -35,7 +35,7 @@ export const educationSlice = createSlice({
       state.list.push(action.payload);
     },
     removeEducation: (state, action) => {
-      var index = state.list.findIndex((ed) => {
+      const index = state.list.findIndex((ed) => {
         return ed.id === action.payload;
       });
       state.list.splice(index, 1);

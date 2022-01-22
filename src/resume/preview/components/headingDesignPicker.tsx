@@ -16,7 +16,7 @@ import { RadioCard } from "./layoutpicker";
 
   
   
-  function HeadingPicker({ setHeadingDesign, ...props }: any) {
+  function HeadingPicker({ setHeadingDesign }: any) {
       const options = [
           {
               id:0,

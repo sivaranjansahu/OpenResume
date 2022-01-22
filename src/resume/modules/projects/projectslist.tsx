@@ -15,8 +15,7 @@ import { IProject } from "../../interfaces/forminterfaces";
 import { deleteProject, setAllProjects } from "./reducers";
 
 const ProjectsUnit = (
-  { project, index }: { project: IProject; index: number },
-  ref: any
+  { project }: { project: IProject; index: number }
 ) => {
   //const { removeSkill } = useContext(SkillsContext);
   const dispatch = useAppDispatch();
@@ -66,7 +65,7 @@ export default function ProjectsList({ ...props }: any) {
           onDragEnd={(params) => {
             const srcI = params.source.index;
             const destI = params.destination?.index || 0;
-            let newList = [...projects];
+            const newList = [...projects];
             newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
             dispatch(setAllProjects(newList));
             if (srcI !== destI) {
@@ -75,7 +74,7 @@ export default function ProjectsList({ ...props }: any) {
           }}
         >
           <Droppable droppableId="workexdroppable">
-            {(provided, snapshot) => (
+            {(provided) => (
               <Accordion
                 allowToggle
                 allowMultiple
@@ -90,7 +89,7 @@ export default function ProjectsList({ ...props }: any) {
                         draggableId={`drag${index}`}
                         index={index}
                       >
-                        {(provided, snapshot) => (
+                        {(provided) => (
                           <Flex
                             alignItems="flex-start"
                             ref={provided.innerRef}

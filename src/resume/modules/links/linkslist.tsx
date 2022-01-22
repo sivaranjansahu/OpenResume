@@ -9,7 +9,7 @@ import { deleteLink } from "./reducers";
 
 
 
-const LinkUnit = ({ link, index }: { link: ILink; index: number }) => {
+const LinkUnit = ({ link }: { link: ILink; index: number }) => {
   //const { removeSkill } = useContext(SkillsContext);
   const dispatch = useAppDispatch();
   return (

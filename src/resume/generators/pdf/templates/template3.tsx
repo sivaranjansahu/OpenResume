@@ -94,7 +94,7 @@ export default function Template3(props: propType) {
         <View style={templateStyles.main}>
           {/* <BasicInfoView info={state.basicInfo.info} styles={styles} /> */}
           
-          {componentOrder?.order.map((compname, index) => {
+          {componentOrder?.order.map((compname) => {
             const sectionStyles = Object.create(styles);
             sectionStyles.accentColor = accentColor;
             sectionStyles.bodyColor = bodyColor;

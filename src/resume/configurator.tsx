@@ -72,7 +72,7 @@ function DownloadButtons({
           }
           fileName="somename.pdf"
         >
-          {({ blob, url, loading, error }) => (
+          {({ loading }) => (
             <Button
               width="290px"
               leftIcon={<VscCloudDownload />}
@@ -139,7 +139,7 @@ function Configurator(props: Proptype) {
               <RadioGroup onChange={setFormat} value={format}>
                 <Stack direction="row">
                   {radioOptions.map((r, i) => {
-                    return <Radio value={r.value}>{r.label}</Radio>;
+                    return <Radio key={i} value={r.value}>{r.label}</Radio>;
                   })}
                 </Stack>
               </RadioGroup>

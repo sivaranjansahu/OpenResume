@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from "../store/reduxhooks";
 import { setDirty, setOrder } from "../store/store";
 import { capitalize } from "../utils/common";
 import Grabber from "./components/grabber";
-import { IProfile } from "./interfaces/forminterfaces";
+import { ICustomSection, IProfile } from "./interfaces/forminterfaces";
 import BasicInfo from "./modules/basicinfo/basicinfo";
 import { setBasicInfo } from "./modules/basicinfo/reducers";
 import Courses from "./modules/courses/courses";
@@ -71,11 +71,11 @@ const setProfileData = (allState: any, profileId = "second") => {
 
 const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
-  let { profileId } = useParams<ProfileParams>();
+  const { profileId } = useParams<ProfileParams>();
   const allState = useAppSelector<any>((state) => state);
 
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const {  onClose } = useDisclosure();
+  const { onClose } = useDisclosure();
 
   const saveChanges = () => {
     setProfileData(allState, profileId);
@@ -83,37 +83,41 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     dispatch(setDirty({ isDirty: false }));
   };
 
-  const updateStateWithProfile =useCallback( (allProfiles: IProfile[], profileId: any) => {
-    //console.log("profilebuilder", allProfiles, profileId);
-    const currentProfile = allProfiles[profileId];
-    if (!currentProfile) {
-      return;
-    }
+  const updateStateWithProfile = useCallback(
+    (allProfiles: IProfile[], profileId: any) => {
+      //console.log("profilebuilder", allProfiles, profileId);
+      const currentProfile = allProfiles[profileId];
+      if (!currentProfile) {
+        return;
+      }
 
-    console.log("currentProfile", currentProfile);
-    dispatch(setInitialSkills(currentProfile.skills));
-    dispatch(setInitialWorkHistory(currentProfile.workHistory));
-    dispatch(setInitialEducation(currentProfile.education));
-    dispatch(setInitialMeta(currentProfile.meta));
-    dispatch(setBasicInfo(currentProfile.basicInfo));
-    dispatch(setInitialLinks(currentProfile.links));
-    dispatch(setInitialProjects(currentProfile.projects));
-    dispatch(setSummary(currentProfile.summary || ""));
-    dispatch(setInitialCourses(currentProfile.courses));
-    dispatch(setInitialCustomSections(currentProfile.customSections ?? []));
-    dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
+      console.log("currentProfile", currentProfile);
+      dispatch(setInitialSkills(currentProfile.skills));
+      dispatch(setInitialWorkHistory(currentProfile.workHistory));
+      dispatch(setInitialEducation(currentProfile.education));
+      dispatch(setInitialMeta(currentProfile.meta));
+      dispatch(setBasicInfo(currentProfile.basicInfo));
+      dispatch(setInitialLinks(currentProfile.links));
+      dispatch(setInitialProjects(currentProfile.projects));
+      dispatch(setSummary(currentProfile.summary || ""));
+      dispatch(setInitialCourses(currentProfile.courses));
+      dispatch(setInitialCustomSections(currentProfile.customSections ?? []));
+      dispatch(setOrder({ order: currentProfile.componentOrder?.order }));
 
-    const customSections = Object.values(currentProfile).filter((val) => {
-      return val.hasOwnProperty("custom");
-    });
-    console.log(customSections);
-  },[dispatch])
+      const customSections = Object.values(currentProfile).filter((val) => {
+        //return val.hasOwnProperty("custom");
+        return Object.prototype.hasOwnProperty.call(val, "custom");
+      });
+      console.log(customSections);
+    },
+    [dispatch]
+  );
 
   //If profileId has been passed, pull the profile from appstore json and push it to the state
   //else create new profile
   useEffect(() => {
     allProfiles && profileId && updateStateWithProfile(allProfiles, profileId);
-  }, [allProfiles, profileId,updateStateWithProfile]);
+  }, [allProfiles, profileId, updateStateWithProfile]);
   const { isDirty } = allState.dirty;
   const toast = useToast();
 
@@ -121,7 +125,6 @@ const ProfileBuilder = ({ allProfiles }: any) => {
     //isDirty && onOpen();
     isDirty &&
       toast({
-
         position: "bottom-right",
         render: ({ onClose }) => (
           <Box width="250px" color="white" p={3} bg="gray.600">
@@ -135,11 +138,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
         ),
       });
-  }, [isDirty,toast]);
-
-  
-
-
+  }, [isDirty, toast]);
 
   return (
     <Grid
@@ -253,7 +252,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                     console.log(params);
                     const srcI = params.source.index;
                     const destI = params.destination?.index || 0;
-                    let newList = [...allState.componentOrder.order];
+                    const newList = [...allState.componentOrder.order];
                     newList.splice(destI, 0, newList.splice(srcI, 1)[0]);
                     console.log(newList);
                     //setList(newList);
@@ -264,7 +263,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                   }}
                 >
                   <Droppable droppableId="componentsDroppable">
-                    {(provided, snapshot) => (
+                    {(provided) => (
                       <Box ref={provided.innerRef} {...provided.droppableProps}>
                         <Flex w="full" alignItems="stretch">
                           <Box pl={2} pt={6} mb={2} bg="white">
@@ -274,7 +273,6 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                             <BasicInfo />
                           </Box>
                         </Flex>
-                        
 
                         {allState.componentOrder.order &&
                           allState.componentOrder.order.map(
@@ -286,7 +284,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                                   draggableId={`dragElem${i}`}
                                   index={i}
                                 >
-                                  {(provided, snapshot) => (
+                                  {(provided) => (
                                     <Box
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
@@ -311,22 +309,27 @@ const ProfileBuilder = ({ allProfiles }: any) => {
                               );
                             }
                           )}
-                          <Box
-                  fontSize="sm"
-                  bg="primary.100"
-                  p={4}
-                  color="gray.700"
-                  mb={2}
-                  pt={8}
-                >
-                  <Heading as="h4" size="sm">
-                    Additional sections
-                  </Heading>
-                  <div>You can add additional sections if the above sections do not meet your purpose. These will appear at the bottom of your resume document.</div>
-                </Box>
-                          <CustomSectionGroup list={allState.customSections.list}/>
-                          <CustomSectionForm/>
-                        
+                        <Box
+                          fontSize="sm"
+                          bg="primary.100"
+                          p={4}
+                          color="gray.700"
+                          mb={2}
+                          pt={8}
+                        >
+                          <Heading as="h4" size="sm">
+                            Additional sections
+                          </Heading>
+                          <div>
+                            You can add additional sections if the above
+                            sections do not meet your purpose. These will appear
+                            at the bottom of your resume document.
+                          </div>
+                        </Box>
+                        <CustomSectionGroup
+                          list={allState.customSections.list}
+                        />
+                        <CustomSectionForm />
                       </Box>
                     )}
                   </Droppable>
@@ -336,54 +339,38 @@ const ProfileBuilder = ({ allProfiles }: any) => {
           </Box>
         </Box>
 
-       
         {showPreview && (
           <Container
             maxW={{ lg: "container.lg", md: "container.lg" }}
             height="100%"
           >
-            {/* <Heading
-              size="sm"
-              mb="4"
-              pb={2}
-              borderBottomColor="gray.200"
-              borderBottomWidth={1}
-            >
-              Resume preview
-            </Heading> */}
-            <Preview resumeData={allState} />
+            <Preview />
           </Container>
         )}
       </Flex>
-      {/* <Box bg="gray.400">
-        
-      </Box> */}
     </Grid>
   );
 };
 
 export default ProfileBuilder;
 
-const CustomSectionGroup = ({list}:{list:any})=>{
-  if(!list) {
-    return <></>
+const CustomSectionGroup = ({ list }: { list: any }) => {
+  if (!list) {
+    return <></>;
   }
-  return(
-    list && list.map(
-      (section: any, index: number) => {
-        return (
-          <Box>
-            <Flex w="full" alignItems="stretch">
-              <Box pl={2} pt={6} mb={2} bg="white">
-                
-              </Box>
-              <Box flex={1}>
-                <CustomSection sectionData={section}/>
-              </Box>
-            </Flex>
-          </Box>
-        );
-      }
-    )
-  )
-}
+  return (
+    list &&
+    list.map((section: ICustomSection) => {
+      return (
+        <Box key={section.guid}>
+          <Flex w="full" alignItems="stretch">
+            <Box pl={2} pt={6} mb={2} bg="white"></Box>
+            <Box flex={1}>
+              <CustomSection sectionData={section} />
+            </Box>
+          </Flex>
+        </Box>
+      );
+    })
+  );
+};

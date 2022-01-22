@@ -40,7 +40,7 @@ function ResumeView(props: propsType) {
 
       {state.list.map((course: ICourse, index: number) => {
         return (
-          <View style={styles.subSectionContainer}>
+          <View key={index} style={styles.subSectionContainer}>
             <Text style={styles.subSectionHeader} >{course.title}</Text>
             <Text style={courseStyles.institute}>{course.institute}</Text>
             <Text style={courseStyles.year}>{course.year}</Text>

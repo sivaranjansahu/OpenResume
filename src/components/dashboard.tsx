@@ -28,7 +28,7 @@ function Dashboard() {
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
-  let { path, url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const [allProfiles, setAllProfiles] = useState<IProfile[]>([]);
   const toast = useToast();
 
@@ -145,7 +145,7 @@ function Dashboard() {
   const deleteProfile = (id: any) => {
     electron.ipcRenderer.send(channels.DELETE_PROFILE, { proppath: id });
     setAllProfiles((prevState) => {
-      let newState = { ...prevState };
+      const newState = { ...prevState };
       delete newState[id];
       return newState;
     });

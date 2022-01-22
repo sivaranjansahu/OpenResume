@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 
-export default function Tracker() {
+export default function Tracker():JSX.Element {
   const [list,setList] = useState([
     {
       index: 0,
@@ -38,7 +38,7 @@ export default function Tracker() {
             console.log(params)
             const srcI = params.source.index;
             const destI = params.destination?.index||0;
-            let newList = [...list];
+            const newList = [...list];
             newList.splice(destI,0,newList.splice(srcI,1)[0]);
             //list.splice(destI,0,list.splice(srcI,1)[0]);
             // list[srcI].index = destI;
@@ -61,12 +61,12 @@ export default function Tracker() {
           <Box bg="gray.300">
           <Droppable droppableId="d1">
             
-              {(provided, snapshot) => (
+              {(provided) => (
                 <ul ref={provided.innerRef} {...provided.droppableProps}>
                   {list.filter(m=>m.cat===1).map((m, i) => {
                     return (
                       <Draggable key={i} draggableId={`drag${i}`} index={i}>
-                        {(provided,snapshot)=>(
+                        {(provided)=>(
                           <li key={i} ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
                           {m.title}
                           </li>
@@ -83,12 +83,12 @@ export default function Tracker() {
             </Box>
             <Box bg="gray.500">
             <Droppable droppableId="d2">
-            {(provided, snapshot) => (
+            {(provided) => (
                 <ul ref={provided.innerRef} {...provided.droppableProps}>
                   {list.filter(m=>m.cat===2).map((m, i) => {
                     return (
                       <Draggable key={i} draggableId={`drag${i}`} index={i}>
-                        {(provided,snapshot)=>(
+                        {(provided)=>(
                           <li key={i} ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
                           {m.title}
                           </li>

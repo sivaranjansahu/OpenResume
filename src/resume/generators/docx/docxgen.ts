@@ -52,7 +52,7 @@ class DocumentCreator {
   public createSections(state:any):Paragraph[]{
       const sectionsArray:Paragraph[] = [];
       //state.componentOrder.order
-      state.componentOrder.order.forEach((compname:string,index:number)=>{
+      state.componentOrder.order.forEach((compname:string)=>{
           console.log(compname);
           let selected:Paragraph[]=[];
           switch (compname) {

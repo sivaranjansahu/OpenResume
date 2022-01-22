@@ -34,7 +34,7 @@ export const linksSlice = createSlice({
       state.list.push(action.payload);
     },
     deleteLink: (state, action) => {
-      var index = state.list.findIndex((link) => {
+      const index = state.list.findIndex((link) => {
         return link.id === action.payload;
       });
       state.list.splice(index, 1);

@@ -42,7 +42,7 @@ function ResumeView(props: propsType) {
       />
       {links.map((link: ILink, index: number) => {
         return (
-          <View style={styles.subSectionContainer}>
+          <View style={styles.subSectionContainer} key={index}>
             <Text style={linkStyles.title}>{link.title}</Text>
             <Text>{link.url}</Text>
           </View>

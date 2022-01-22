@@ -1,10 +1,15 @@
 import {
   Button,
-  Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 
-function ConfirmDelete({ deleteFunction, isOpen, onOpen, onClose, id }: any) {
-
+function ConfirmDelete({ deleteFunction, isOpen, onClose, id }: any) {
   return (
     <>
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>

@@ -15,7 +15,7 @@ export default function BasicInfo() {
             name="basicInfoIsActive"
             isChecked={true}
             isDisabled={true}
-            onChange={(e) => {
+            onChange={() => {
               //dispatch(setActive(e.target.checked));
               dispatch(setDirty({ isDirty: true }));
             }}

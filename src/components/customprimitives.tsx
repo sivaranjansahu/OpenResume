@@ -22,18 +22,13 @@ import React, { useState } from "react";
 import { VscListUnordered } from "react-icons/vsc";
 import { dict } from "../shared/dict";
 
-
 interface OtherProps {
   label: string;
 }
 
-
-
-
-
 export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
-  const [, meta, ] = useField(props);
-  const {  type,  label } = props;
+  const [, meta] = useField(props);
+  const { type, label } = props;
   const [error, setError] = useState(false);
   return (
     <>
@@ -58,7 +53,7 @@ export const CInput = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, ] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <>
       <FormControl id="fullname">
@@ -73,7 +68,7 @@ export const CTextArea = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, meta, ] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <>
       <FormControl id="fullname" isInvalid={!!meta.error}>
@@ -92,17 +87,14 @@ export const CSelect = (props: OtherProps & FieldHookConfig<string>) => {
 };
 
 export const CRadio = (props: OtherProps & FieldHookConfig<string>) => {
-  const [field, , ] = useField(props);
+  const [field, ,] = useField(props);
 
   return (
     <Radio {...field} type={props.type}>
       First
     </Radio>
-
   );
 };
-
-
 
 function Input(props: any) {
   const { label, name, help, ...rest } = props;
@@ -127,12 +119,7 @@ function Input(props: any) {
   );
 }
 
-const resumeDict = {
-  happy: ["elated", "joyous", "ecstatic", "stoked"],
-  sad: ["dejected", "gloomy", "upset", "depresed"],
-} as any;
-
-function listWordsOfInterest(content: string, map: any) {
+function listWordsOfInterest(content: string) {
   const blacklist = [];
   const whitelist = [];
   const contentArr: string[] = content.replaceAll(",", "").split(" ");
@@ -260,10 +247,7 @@ function Textarea(props: any) {
                   // }}
                   onKeyUp={(e) => {
                     if (e.key === " ") {
-                      const words = listWordsOfInterest(
-                        form.values[name],
-                        resumeDict
-                      );
+                      const words = listWordsOfInterest(form.values[name]);
                       setBlacklist(words.blacklist);
                       setWhitelist(words.whitelist);
                     }
@@ -347,10 +331,10 @@ function Select(props: any) {
 }
 
 function Switch(props: any) {
-  const { label, name, ...rest } = props;
+  const { name, ...rest } = props;
   return (
     <Field name={name}>
-      {({ field, form }: any) => {
+      {({ field }: any) => {
         return (
           <FormControl display="flex" alignItems="center">
             <ChakraSwitch id={name} {...rest} {...field} />
@@ -365,7 +349,7 @@ function Checkbox(props: any) {
   const { label, name, ...rest } = props;
   return (
     <Field name={name}>
-      {({ field, form }: any) => {
+      {({ field }: any) => {
         return (
           <FormControl alignItems="center">
             <FormLabel htmlFor={name} fontSize="sm" color="gray.600">

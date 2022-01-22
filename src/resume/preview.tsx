@@ -11,13 +11,9 @@ import registerFonts from "../fonts/index";
 import { useAppSelector } from "../store/reduxhooks";
 import Configurator from "./configurator";
 import MyDocument from "./generators/pdf/pdfgen";
-import { IProfile } from "./interfaces/forminterfaces";
 
-interface temp {
-  resumeData: IProfile;
-}
 
-function Preview({ resumeData }: temp) {
+function Preview() {
   const [accentColor, setAccentColor] = useState("#333");
   const [bodyColor, updateBodyColor] = useState("#fff");
   const [layout, setLayout] = useState("template1");

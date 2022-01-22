@@ -39,7 +39,7 @@ export const workHistorySlice = createSlice({
       state.list.push(action.payload);
     },
     removeWorkHistory: (state, action) => {
-      var index = state.list.findIndex((workhistory) => {
+      const index = state.list.findIndex((workhistory) => {
         return workhistory.id === action.payload;
       });
       state.list.splice(index, 1);
