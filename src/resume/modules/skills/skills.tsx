@@ -19,7 +19,7 @@ export default function SkillsSection() {
           title="Skills"
           subTitle="list of skills/competencies and the proficiency in each"
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="skills" setAltName={setAltName}/>
           <TipsButton sectionName="skills" title="Skills"/>
           </Flex>

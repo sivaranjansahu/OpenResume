@@ -18,7 +18,7 @@ export default function Projects() {
           title="Projects"
           subTitle="Highlight relevant recent work"
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="projects" setAltName={setAltName}/>
           <TipsButton sectionName="projects" title="Projects"/>
           </Flex>

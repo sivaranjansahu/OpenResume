@@ -19,7 +19,7 @@ export default function BasicInfo() {
           title="Summary"
           subTitle="Brief summary of your career/skills and objectives"
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="summary" setAltName={setAltName}/>
           <TipsButton sectionName="summary" title="Summary"/>
           </Flex>
