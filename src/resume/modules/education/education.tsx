@@ -18,7 +18,7 @@ export default function Education() {
           title="Education"
           subTitle="Degrees obtained and the related information"
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="education" setAltName={setAltName}/>
           <TipsButton sectionName="education" title="Education"/>
           </Flex>

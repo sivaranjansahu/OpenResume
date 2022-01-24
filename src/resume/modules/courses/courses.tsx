@@ -20,7 +20,7 @@ export default function Courses() {
           title="Courses"
           subTitle="and certifications, MOOCs, online learning"
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="courses" setAltName={setAltName}/>
           <TipsButton sectionName="courses" title="Courses"/>
           </Flex>

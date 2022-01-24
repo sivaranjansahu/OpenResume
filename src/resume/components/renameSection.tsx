@@ -1,10 +1,11 @@
-import { Box, Flex, Icon, Input, Tooltip } from "@chakra-ui/react";
-import { VscQuestion } from "react-icons/vsc";
+import { Button, Flex, Input, Tooltip } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { VscClose, VscEdit } from "react-icons/vsc";
 import { useAppDispatch, useAppSelector } from "../../store/reduxhooks";
 import { setDirty } from "../../store/store";
 
 type propType = {
-    setAltName: Function;
+  setAltName: Function;
   sectionName:
     | "education"
     | "projects"
@@ -16,31 +17,67 @@ type propType = {
     | "courses";
 };
 
-function RenameSection({ setAltName, sectionName }: propType){
-    const dispatch = useAppDispatch();
-    const altName = useAppSelector((state) => state[sectionName].altName);
-    //console.log('section '+sectionName+altName)
-    // const [isRenameActive,setRenameActive] = useState(false);
-    // useEffect(() => {
-    //     setRenameActive(!!altName)
-    // }, [altName])
-    
-    return(
-        <Flex alignItems="center" justifyContent="space-between">
-          <Input  width="250px" mr={2}  placeholder="Rename this section" id={"newName"+sectionName} size="xs"  defaultValue={altName} onChange={(e)=>{
-              dispatch(setAltName(e.target.value))
-              dispatch(setDirty({ isDirty: true }))
-          }} />
-          
-          <Tooltip size="sm" placement="top" label="Use a different title for this section on resume.E.g., you could choose a section name like 'Recent works' instead of the default name like 'Projects'">
-          <Box>
-          <Icon as={VscQuestion} boxSize={4}/>
-          </Box>
-  </Tooltip>
-          </Flex>
-          
-    )
+function RenameSection({ setAltName, sectionName }: propType) {
+  const dispatch = useAppDispatch();
+  const altName = useAppSelector((state) => state[sectionName].altName);
+  const [isRenameActive, setRenameActive] = useState(false);
+  useEffect(() => {
+    console.log("altName", altName);
+    setRenameActive(altName && altName.length > 0 ? true : false);
+  }, [altName]);
 
+  return (
+    <Flex alignItems="center" justifyContent="flex-end" mr={2}>
+      {isRenameActive && (
+        <Input
+          width="200px"
+          mr={2}
+          placeholder="Rename this section"
+          id={"newName" + sectionName}
+          size="xs"
+          defaultValue={altName}
+          onChange={(e) => {
+            e.target.value.length > 0 && dispatch(setAltName(e.target.value));
+            dispatch(setDirty({ isDirty: true }));
+          }}
+        />
+      )}
+
+      {!isRenameActive && (
+        <Tooltip
+          size="sm"
+          placement="top"
+          label="Rename section. You can choose a different name for this section to appear on the resume. "
+        >
+          <Button
+            leftIcon={<VscEdit />}
+            size="sm"
+            onClick={() => setRenameActive(!isRenameActive)}
+          />
+        </Tooltip>
+      )}
+      {isRenameActive && (
+        <Tooltip
+          size="sm"
+          placement="top"
+          label="Reset section name to default"
+        >
+          <Button
+            leftIcon={<VscClose />}
+            size="sm"
+            onClick={() => {
+              if (altName && altName?.length > 0) {
+                dispatch(setAltName(""));
+                dispatch(setDirty({ isDirty: true }));
+              }
+
+              setRenameActive(!isRenameActive);
+            }}
+          />
+        </Tooltip>
+      )}
+    </Flex>
+  );
 }
 
 export default RenameSection;

@@ -18,7 +18,7 @@ export default function Links() {
           title="Links"
           subTitle="Relevant links like portfolio website, LinkedIn, work hosted online."
         >
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
           <RenameSection sectionName="links" setAltName={setAltName}/>
           <TipsButton sectionName="links" title="Links"/>
           </Flex>
