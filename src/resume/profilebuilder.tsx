@@ -45,7 +45,7 @@ import { setInitialWorkHistory } from "./modules/workhistory/reducers";
 import WorkHistory from "./modules/workhistory/workhistory";
 import Preview from "./preview";
 
-const electron = window.require("electron");
+//const electron = window.require("electron");
 
 type ProfileParams = {
   profileId: string;
@@ -61,13 +61,13 @@ const ComponentsMap: { [key: string]: any } = {
   links: Links,
 };
 
-const setProfileData = (allState: any, profileId = "second") => {
-  console.log("setting profileid- builder", profileId, allState);
-  electron.ipcRenderer.send(channels.SET_PROFILE_DATA, {
-    proppath: profileId,
-    statevalue: allState,
-  });
-};
+// const setProfileData = (allState: any, profileId = "second") => {
+//   console.log("setting profileid- builder", profileId, allState);
+//   electron.ipcRenderer.send(channels.SET_PROFILE_DATA, {
+//     proppath: profileId,
+//     statevalue: allState,
+//   });
+// };
 
 const ProfileBuilder = ({ allProfiles }: any) => {
   const dispatch = useAppDispatch();
@@ -78,7 +78,7 @@ const ProfileBuilder = ({ allProfiles }: any) => {
   const { onClose } = useDisclosure();
 
   const saveChanges = () => {
-    setProfileData(allState, profileId);
+    //setProfileData(allState, profileId);
     onClose();
     dispatch(setDirty({ isDirty: false }));
   };
